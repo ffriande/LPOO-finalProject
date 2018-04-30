@@ -1,15 +1,12 @@
 # LPOO-finalProject
-
-<p>...>Main Functionalities</p>
-<p></p>
-<p> </p>
-<p>-Menu</p>
-<p>	.Start Game</p>
-<p>	.Options</p>
-<p>	.Exit</p>
+<pre>
+...>Main Functionalities
 
 
-
+  -Menu
+<p>	  .Start Game</p>
+<p>	  .Options</p>
+<p>	  .Exit</p>
 <p>   -Start Game</p>
 <p>	.Levels mode</p>
 <p>	.Infinite mode (not certain)</p>
@@ -22,12 +19,11 @@
 <p>   -Pause button</p>
 <p>	.Resume</p>
 <p>	.Exit to Main menu</p>
-<p>0 </p>
-<p> 0</p>
-<p> 0</p>
-<p> 0</p>
-<p>....>Tests</p>
 
+
+
+
+<p>....>Tests</p>
 <p>-Ball Jumps</p>
 <p>-Ball moves to the right</p>
 <p>-Ball moves to the left</p>
@@ -35,3 +31,10 @@
 <p>-Game win (reaches level's final platform)</p>
 <p>-Ball falls to next platform</p>
 <p>-Ball falls 3 units and destroys the next platform(not sure)</p>
+
+
+Mockups: https://github.com/ffriande/LPOO-finalProject/blob/master/LPOO%20midle/AndroidMockup.png
+Core Uml diagram: https://github.com/ffriande/LPOO-finalProject/blob/master/LPOO%20midle/CoreUml.pdf
+In-Game state machine diagram: https://github.com/ffriande/LPOO-finalProject/blob/master/LPOO%20midle/In-game%20StateMachine.pdf
+State Machine diagram: https://github.com/ffriande/LPOO-finalProject/blob/master/LPOO%20midle/StateMachine.pdf
+</pre>
