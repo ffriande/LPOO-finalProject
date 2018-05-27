@@ -3,7 +3,9 @@ package com.mygdx.fallball.view.entities;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.fallball.FallBall;
+import com.mygdx.fallball.model.Model;
 import com.mygdx.fallball.model.entities.EntityBaseModel;
+import com.mygdx.fallball.model.entities.PlatformModel;
 
 public abstract class EntityBaseView {
 
@@ -19,6 +21,11 @@ public abstract class EntityBaseView {
      * @param batch The sprite batch to be used for drawing.
      */
     public void draw(SpriteBatch batch) {
+        sprite.setSize(Model.getInstance().getBall().getRadius(),Model.getInstance().getBall().getRadius());
+        sprite.draw(batch);
+    }
+    public void draw(SpriteBatch batch, PlatformModel platformModel) {
+        sprite.setSize(platformModel.getWidth(),platformModel.getHeight());
         sprite.draw(batch);
     }
 

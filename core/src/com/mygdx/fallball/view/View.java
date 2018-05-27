@@ -1,19 +1,24 @@
 package com.mygdx.fallball.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.mygdx.fallball.FallBall;
 import com.mygdx.fallball.controller.Controller;
 import com.mygdx.fallball.model.Model;
-import com.mygdx.fallball.model.entities.BallModel;
+import com.mygdx.fallball.model.entities.EntityBaseModel;
+import com.mygdx.fallball.model.entities.PlatformModel;
 import com.mygdx.fallball.view.entities.BallView;
+import com.mygdx.fallball.view.entities.EntityBaseView;
+import com.mygdx.fallball.view.entities.PlatformView;
+
+import java.util.List;
 
 public class View extends ScreenAdapter implements GestureDetector.GestureListener{
     private FallBall game;
@@ -21,13 +26,15 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
     private Box2DDebugRenderer debugRenderer;
     private float lowestPoint;
     GestureDetector gestureDetector;
-
+    boolean debug;
     private float w;
     private float h;
 
-    int test=0;
+    private Matrix4 debugCamera;
+
 
     public View(FallBall g) {
+        debug=false;
         this.game = g;
        loadAssets();
         createCamera();
@@ -36,16 +43,28 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
         gestureDetector = new GestureDetector(this);
         Gdx.input.setInputProcessor(gestureDetector);
 
-        debugRenderer = new Box2DDebugRenderer();
+
     }
 
     private void createCamera() {
+
         w = Gdx.graphics.getWidth();
         h = Gdx.graphics.getHeight();
-        System.out.println(w +" " +h);
-        camera = new OrthographicCamera(20/0.02f, 20/0.02f * (h / w));
+        //System.out.println("ViewPort before: "+camera.viewportWidth +" " +camera.viewportHeight);
+        camera = new OrthographicCamera(40/0.02f, 40/0.02f * (h / w));
+
         camera.position.set(camera.viewportWidth / 2f, lowestPoint, 0);
         camera.update();
+        System.out.println("ViewPort after: "+camera.viewportWidth +" " +camera.viewportHeight);
+        System.out.println("CAmera pos after: "+camera.position.x +" " +camera.position.y );
+
+        if (debug) {
+            debugRenderer = new Box2DDebugRenderer();
+            debugCamera = camera.combined.cpy();
+            debugCamera.scl(1 / 0.02f);
+            camera.update();
+        }
+
 
     }
 
@@ -109,6 +128,7 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
        drawBackground();
        drawBall(); //TODO: por isto  a funcionar. funciona sem debug
+        drawPlats();
         //drawBackground();
         System.out.println(Model.getInstance().getBall().getX()+" - x;    "+Model.getInstance().getBall().getY()+" - y");
 
@@ -117,19 +137,34 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
 
 
-        debugRenderer.render(Controller.getInstance().getWorld(), camera.combined);
 
         game.getBatch().end();
+        if (debug) {
+            debugCamera = camera.combined.cpy();
+            debugCamera.scl(1 / 0.02f);
+            debugRenderer.render(Controller.getInstance().getWorld(), debugCamera);
+            camera.update();
+        }
     }
 
     private void handleInputs(float delta) {
     }
 
+
+    private void drawPlats(){
+        List<PlatformModel> p= Model.getInstance().getPlatforms();
+        for(PlatformModel it: p){
+            EntityBaseView b= new PlatformView(game);
+            b.update(it);
+            b.draw(game.getBatch(),it);
+        }
+    }
     private void drawBall(){
-        BallModel mod=Model.getInstance().getBall();
-        BallView b= new BallView(game);
+        EntityBaseModel mod=Model.getInstance().getBall();
+        EntityBaseView b= new BallView(game);
         b.update(mod);
         b.draw(game.getBatch());
+
     }
 
     private void drawBackground() {

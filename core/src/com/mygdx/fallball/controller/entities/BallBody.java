@@ -8,7 +8,7 @@ public class BallBody extends EntityBody {
             super(world, model, true);
         float   radius = model.getRadius(),
                 density = 1f,
-                friction = 0.4f,
+                friction = 0f,
                 restitution = 1f;
 
         createBallFixture(body, radius, density, friction, restitution);

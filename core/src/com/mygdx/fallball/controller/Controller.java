@@ -30,7 +30,7 @@ public class Controller {
 
 
     /*private*/Controller(){
-        world = new World(new Vector2(0, -1/0.02f), true);
+        world = new World(new Vector2(0, -10/0.02f), true);
         ball = new BallBody( world, Model.getInstance().getBall(),  true);
 
         platforms=new ArrayList<PlatformModel>();
