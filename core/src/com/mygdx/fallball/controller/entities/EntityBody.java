@@ -42,6 +42,7 @@ public abstract class EntityBody {
         fixtureDef.restitution = restitution; // Make it bounce a little bit
 
 
+
      /*   fixtureDef.filter.categoryBits = category; //filter is for not to happen collision acho eu
         fixtureDef.filter.maskBits = mask;
         */

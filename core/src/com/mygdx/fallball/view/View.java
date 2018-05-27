@@ -32,15 +32,18 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
        loadAssets();
         createCamera();
 
-        lowestPoint=h/w;
+        lowestPoint=h/w-2/0.02f;
         gestureDetector = new GestureDetector(this);
         Gdx.input.setInputProcessor(gestureDetector);
+
+        debugRenderer = new Box2DDebugRenderer();
     }
 
     private void createCamera() {
         w = Gdx.graphics.getWidth();
         h = Gdx.graphics.getHeight();
-        camera = new OrthographicCamera(90/0.02f, 90/0.02f * (h / w));
+        System.out.println(w +" " +h);
+        camera = new OrthographicCamera(20/0.02f, 20/0.02f * (h / w));
         camera.position.set(camera.viewportWidth / 2f, lowestPoint, 0);
         camera.update();
 
@@ -67,7 +70,7 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 ////        GameController.getInstance().update(delta);
 //
 //        camera.position.set(GameModel.getInstance().getShip().getX() / PIXEL_TO_METER, GameModel.getInstance().getShip().getY() / PIXEL_TO_METER, 0);
-//        camera.update(); //TODO: fazer funçao para altitude minima da bola
+//        camera.update();
 //        game.getBatch().setProjectionMatrix(camera.combined);
 //
 //        Gdx.gl.glClearColor( 103/255f, 69/255f, 117/255f, 1 );
@@ -103,8 +106,9 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
         game.getBatch().begin();
 
-     //   drawBackground();
-           drawBall();
+
+       drawBackground();
+       drawBall(); //TODO: por isto  a funcionar. funciona sem debug
         //drawBackground();
         System.out.println(Model.getInstance().getBall().getX()+" - x;    "+Model.getInstance().getBall().getY()+" - y");
 
@@ -113,7 +117,7 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
 
 
-        //debugRenderer.render(Controller.getInstance().getWorld(), camera.combined);
+        debugRenderer.render(Controller.getInstance().getWorld(), camera.combined);
 
         game.getBatch().end();
     }

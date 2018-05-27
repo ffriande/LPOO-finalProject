@@ -12,5 +12,6 @@ public class BallBody extends EntityBody {
                 restitution = 1f;
 
         createBallFixture(body, radius, density, friction, restitution);
+
     }
 }

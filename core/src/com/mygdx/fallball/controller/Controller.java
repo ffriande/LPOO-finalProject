@@ -9,8 +9,12 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.fallball.controller.entities.BallBody;
 import com.mygdx.fallball.controller.entities.PlatformBody;
 import com.mygdx.fallball.model.Model;
+import com.mygdx.fallball.model.entities.PlatformModel;
 
-public class Controller implements ContactListener {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Controller {
 
     private static Controller instance;
 
@@ -21,13 +25,19 @@ public class Controller implements ContactListener {
 
 
     private /*final*/ BallBody ball;
-    private PlatformBody platform;
+    private List<PlatformModel> platforms;
+    private float accumulator;
 
 
     /*private*/Controller(){
-        world = new World(new Vector2(0, -1000000f), true);
+        world = new World(new Vector2(0, -1/0.02f), true);
         ball = new BallBody( world, Model.getInstance().getBall(),  true);
-        platform = new PlatformBody(world, Model.getInstance().getPlatforms(),false);
+
+        platforms=new ArrayList<PlatformModel>();
+        platforms=Model.getInstance().getPlatforms();
+        for(PlatformModel plat: platforms)
+            new PlatformBody(world, plat,false);
+
     }
 
     public void moveBall(float deltaX){
@@ -42,15 +52,15 @@ public class Controller implements ContactListener {
 
     }
 
-    public void update(float delta){
+    public void update(float delta) {
 
         float frameTime = Math.min(delta, 0.25f);
-//        accumulator += frameTime;
-//        while (accumulator >= 1/60f) {
-            world.step(1/60f, 6, 2);
-//            accumulator -= 1/60f;
+        accumulator += frameTime;
+        while (accumulator >= 1 / 60f) {
+            world.step(1 / 60f, 6, 2);
+            accumulator -= 1 / 60f;
         }
-
+    }
       //TODO: modo infinito
 
     public World getWorld() {
@@ -60,25 +70,7 @@ public class Controller implements ContactListener {
     public BallBody getBall() {
         return ball;
     }
-    @Override
-    public void beginContact(Contact contact) {
 
-    }
-
-    @Override
-    public void endContact(Contact contact) {
-
-    }
-
-    @Override
-    public void preSolve(Contact contact, Manifold oldManifold) {
-
-    }
-
-    @Override
-    public void postSolve(Contact contact, ContactImpulse impulse) {
-
-    }
 
 
 }

@@ -2,15 +2,19 @@ package com.mygdx.fallball.model;
 
 
 import com.mygdx.fallball.model.entities.BallModel;
+import com.mygdx.fallball.model.entities.LevelMaker;
 import com.mygdx.fallball.model.entities.NormalPlatformModel;
 import com.mygdx.fallball.model.entities.PlatformModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Model {
     private static Model instance;
 
     private BallModel ball;
 
-    private /*List<PlatformModel>*/ PlatformModel platforms;
+    private List<PlatformModel> platforms = new ArrayList<PlatformModel>();
 
     public static Model getInstance() {
         if (instance == null){
@@ -20,17 +24,18 @@ public class Model {
     }
 
     Model(){
-        ball= new BallModel(10/0.02f,30/0.02f,6f);  //TODO: ajustar valores aqui
-        platforms = new NormalPlatformModel(-40,20,5,40); //TODO: e aqui
+        ball= new BallModel(10/0.02f,30/0.02f,1/0.02f);
 
+        platforms =new LevelMaker(1).getPlatforms();
     }
+
 
 
     public BallModel getBall() {
         return ball;
     }
 
-    public PlatformModel getPlatforms() {
+    public List<PlatformModel>  getPlatforms() {
         return platforms;
     }
 
