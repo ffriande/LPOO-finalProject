@@ -34,7 +34,6 @@ public abstract class EntityBody {
         CircleShape circle = new CircleShape();
         circle.setRadius(radius);
 
-        // Create a fixture definition to apply our shape to
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = circle;
         fixtureDef.density = density;
@@ -48,22 +47,15 @@ public abstract class EntityBody {
         */
 
 
-        // Create our fixture and attach it to the body
         body.createFixture(fixtureDef);
 
-// Remember to dispose of any shapes after you're done with them!
-// BodyDef and FixtureDef don't need disposing, but shapes do.
         circle.dispose();
     }
 
     final void createInertPlatformFixture(Body body, float width, float height ) {
         PolygonShape plat = new PolygonShape();
-// Set the polygon shape as a box which is twice the size of our view port and 20 high
-// (setAsBox takes half-width and half-height as arguments)
         plat.setAsBox(width, height);
-// Create a fixture from our polygon shape and add it to our ground body
         body.createFixture(plat,0.0f);
-// Clean up after ourselves
         plat.dispose();
     }
 

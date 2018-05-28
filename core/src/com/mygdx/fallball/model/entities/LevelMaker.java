@@ -32,30 +32,30 @@ public class LevelMaker {
 
 
     private void level1(){
-            /*float y=35/0.02f, x=0;
+            /*float y=35/0.08f, x=0;
             for (int i = 0; i < 100; i++){
                 x=0;
                 if(i%10!=0){
-                  PlatformModel platform = new NormalPlatformModel(x,y,5/0.02f,1/0.02f);
+                  PlatformModel platform = new NormalPlatformModel(x,y,5/0.08f,1/0.08f);
                   this.platforms.add(platform);}
                 else{
-                    PlatformModel platform = new RedPlatformModel(x,y,5/0.02f,1/0.02f, false);
+                    PlatformModel platform = new RedPlatformModel(x,y,5/0.08f,1/0.08f, false);
                     this.platforms.add(platform);}
                 }
-                y-=10/0.02f;
-                *//*if(x>=20/0.02f)
-                    x=10/0.02f;
+                y-=10/0.08f;
+                *//*if(x>=20/0.08f)
+                    x=10/0.08f;
                 else*//*
                 x+=randomX();*/
-        float y=30/0.02f, x=10/0.02f;
+        float y=30/0.08f, x=10/0.08f;
         for (int i = 0; i < 100; i++){
-            PlatformModel platform = new NormalPlatformModel(x,y,5/0.02f,1/0.02f);
+            PlatformModel platform = new NormalPlatformModel(x,y,5/0.08f,1/0.08f);
             this.platforms.add(platform);
-            y-=10/0.02f;
-            if(x>=20/0.02f)
-                x=10/0.02f;
+            y-=10/0.08f;
+            if(x>=20/0.08f)
+                x=10/0.08f;
             else
-                x+=10/0.02f;
+                x+=10/0.08f;
         }
         }
 
@@ -63,7 +63,7 @@ public class LevelMaker {
 
     private float randomX(){
         Random r = new Random();
-        return (r.nextInt((10+1)+5)/0.02f);
+        return (r.nextInt((10+1)+5)/0.08f);
     }
 
 

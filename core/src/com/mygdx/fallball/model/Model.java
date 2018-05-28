@@ -24,7 +24,7 @@ public class Model {
     }
 
     Model(){
-        ball= new BallModel(10/0.02f,40/0.02f,1/0.02f);
+        ball= new BallModel(10/0.08f,40/0.08f,1/0.08f);
 
         platforms =new LevelMaker(1).getPlatforms();
     }

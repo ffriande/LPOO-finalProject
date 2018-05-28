@@ -1,6 +1,7 @@
 package com.mygdx.fallball.controller;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -10,11 +11,12 @@ import com.mygdx.fallball.controller.entities.BallBody;
 import com.mygdx.fallball.controller.entities.PlatformBody;
 import com.mygdx.fallball.model.Model;
 import com.mygdx.fallball.model.entities.PlatformModel;
+import com.mygdx.fallball.model.entities.RedPlatformModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Controller {
+public class Controller implements ContactListener{
 
     private static Controller instance;
 
@@ -30,7 +32,7 @@ public class Controller {
 
 
     /*private*/Controller(){
-        world = new World(new Vector2(0, -10/0.02f), true);
+        world = new World(new Vector2(0, -10/0.08f), true);
         ball = new BallBody( world, Model.getInstance().getBall(),  true);
 
         platforms=new ArrayList<PlatformModel>();
@@ -41,7 +43,7 @@ public class Controller {
     }
 
     public void moveBall(float deltaX){
-        ball.setTransform(ball.getX()+deltaX/0.2f,ball.getY());
+        ball.setTransform(ball.getX()+deltaX/5f,ball.getY());
     }
 
     public static Controller getInstance() {
@@ -72,5 +74,28 @@ public class Controller {
     }
 
 
+    @Override
+    public void beginContact(Contact contact) {
+        Body bodyA = contact.getFixtureA().getBody();
+        Body bodyB = contact.getFixtureB().getBody();
 
+        if (bodyA.getUserData() instanceof BallBody && bodyB.getUserData() instanceof RedPlatformModel)
+            System.out.println("LOOSE GAME!!!");            //TODO:função perder nivel
+
+    }
+
+    @Override
+    public void endContact(Contact contact) {
+
+    }
+
+    @Override
+    public void preSolve(Contact contact, Manifold oldManifold) {
+
+    }
+
+    @Override
+    public void postSolve(Contact contact, ContactImpulse impulse) {
+
+    }
 }

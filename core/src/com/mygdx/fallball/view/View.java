@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.input.GestureDetector;
+//import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -13,7 +14,9 @@ import com.mygdx.fallball.FallBall;
 import com.mygdx.fallball.controller.Controller;
 import com.mygdx.fallball.model.Model;
 import com.mygdx.fallball.model.entities.EntityBaseModel;
+import com.mygdx.fallball.model.entities.NormalPlatformModel;
 import com.mygdx.fallball.model.entities.PlatformModel;
+import com.mygdx.fallball.model.entities.RedPlatformModel;
 import com.mygdx.fallball.view.entities.BallView;
 import com.mygdx.fallball.view.entities.EntityBaseView;
 import com.mygdx.fallball.view.entities.PlatformView;
@@ -29,6 +32,7 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
     boolean debug;
     private float w;
     private float h;
+    private float currVel=-1;
 
     private Matrix4 debugCamera;
 
@@ -37,9 +41,9 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
         debug=false;
         this.game = g;
        loadAssets();
-        createCamera();
+       createCamera();
 
-        lowestPoint=h/w-2/0.02f;
+        lowestPoint=h/w;
         gestureDetector = new GestureDetector(this);
         Gdx.input.setInputProcessor(gestureDetector);
 
@@ -50,21 +54,17 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
         w = Gdx.graphics.getWidth();
         h = Gdx.graphics.getHeight();
-        //System.out.println("ViewPort before: "+camera.viewportWidth +" " +camera.viewportHeight);
-        camera = new OrthographicCamera(40/0.02f, 40/0.02f * (h / w));
+        camera = new OrthographicCamera(40/0.08f, 40/0.08f * (h / w));
 
         camera.position.set(camera.viewportWidth / 2f, lowestPoint, 0);
         camera.update();
-        System.out.println("ViewPort after: "+camera.viewportWidth +" " +camera.viewportHeight);
-        System.out.println("CAmera pos after: "+camera.position.x +" " +camera.position.y );
 
         if (debug) {
             debugRenderer = new Box2DDebugRenderer();
             debugCamera = camera.combined.cpy();
-            debugCamera.scl(1 / 0.02f);
+            debugCamera.scl(1 / 0.08f);
             camera.update();
         }
-
 
     }
 
@@ -105,10 +105,10 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 ////            debugCamera.scl(1 / PIXEL_TO_METER);
 ////            debugRenderer.render(GameController.getInstance().getWorld(), debugCamera);
 //        }
-
+        hitEdge();
         Controller.getInstance().update(delta);
         Model.getInstance().update(Controller.getInstance().getBall().getX(),Controller.getInstance().getBall().getY());
-
+        game.getBatch().setProjectionMatrix(camera.combined);
 
         if(Controller.getInstance().getBall().getY()<lowestPoint && Controller.getInstance().getBall().getY()<(h / w)){
             camera.translate(0,Controller.getInstance().getBall().getY()-lowestPoint);
@@ -126,13 +126,16 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
         game.getBatch().begin();
 
 
+        System.out.println("CAmera pos after: "+camera.position.x +" " +camera.position.y );
        drawBackground();
-       drawBall(); //TODO: por isto  a funcionar. funciona sem debug
-        drawPlats();
-        //drawBackground();
-        System.out.println(Model.getInstance().getBall().getX()+" - x;    "+Model.getInstance().getBall().getY()+" - y");
 
-        System.out.println(Controller.getInstance().getBall().getX()+" - x;    "+Controller.getInstance().getBall().getY()+" - y");
+        drawPlats();
+        drawBall();
+        camera.update();
+        //drawBackground();
+//        System.out.println(Model.getInstance().getBall().getX()+" - x;    "+Model.getInstance().getBall().getY()+" - y");
+//
+//        System.out.println(Controller.getInstance().getBall().getX()+" - x;    "+Controller.getInstance().getBall().getY()+" - y");
 
 
 
@@ -141,7 +144,7 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
         game.getBatch().end();
         if (debug) {
             debugCamera = camera.combined.cpy();
-            debugCamera.scl(1 / 0.02f);
+            debugCamera.scl(1 / 0.08f);
             debugRenderer.render(Controller.getInstance().getWorld(), debugCamera);
             camera.update();
         }
@@ -156,7 +159,11 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
         for(PlatformModel it: p){
             EntityBaseView b= new PlatformView(game);
             b.update(it);
-            b.draw(game.getBatch(),it);
+            if(it instanceof NormalPlatformModel)
+                b.draw(game.getBatch(),it);
+            else if(it instanceof RedPlatformModel)
+                b.draw(game.getBatch(),it);//TODO: mudar isto e fazer outra imagem de plataforma red
+
         }
     }
     private void drawBall(){
@@ -170,8 +177,10 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
     private void drawBackground() {
         Texture background = game.getAssetManager().get("background.png", Texture.class);
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-        game.getBatch().draw(background, 0, 0, 0, 0, (int)w, (int)h);
+
+        game.getBatch().draw(background, camera.position.x - camera.viewportWidth/2 , camera.position.y-camera.viewportHeight/2, 0, 0, (int)camera.viewportWidth, (int)camera.viewportHeight);
     }
+
 
 
     @Override
@@ -218,6 +227,17 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
     @Override
     public void pinchStop() {
+
+    }
+
+    private void hitEdge(){
+
+        if(Controller.getInstance().getBall().getVelocity().y>0 && currVel<0  && Controller.getInstance().getBall().getVelocity().y< 10/0.08f){
+            Controller.getInstance().getBall().applyImpulse(1000000);
+            System.out.println("\n\n\n\n ZAAAS\n\n");
+        }
+        currVel =Controller.getInstance().getBall().getVelocity().y;
+        System.out.println("\n"+currVel+"\n");
 
     }
 }
