@@ -39,7 +39,6 @@ public class Controller implements ContactListener{
         platforms=Model.getInstance().getPlatforms();
         for(PlatformModel plat: platforms)
             new PlatformBody(world, plat,false);
-
     }
 
     public void moveBall(float deltaX){
@@ -62,6 +61,7 @@ public class Controller implements ContactListener{
             world.step(1 / 60f, 6, 2);
             accumulator -= 1 / 60f;
         }
+
     }
       //TODO: modo infinito
 

@@ -25,6 +25,8 @@ public abstract class EntityBaseView {
         sprite.draw(batch);
     }
     public void draw(SpriteBatch batch, PlatformModel platformModel) {
+
+        sprite.setPosition(platformModel.getX(),platformModel.getY());
         sprite.setSize(platformModel.getWidth(),platformModel.getHeight());
         sprite.draw(batch);
     }
@@ -32,6 +34,6 @@ public abstract class EntityBaseView {
     public abstract Sprite createSprite(FallBall game);
 
     public void update(EntityBaseModel model) {
-        sprite.setCenter(model.getX() , model.getY());
+        sprite.setCenter(model.getX(), model.getY());
     }
 }

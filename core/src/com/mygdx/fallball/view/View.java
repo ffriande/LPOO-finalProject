@@ -108,7 +108,6 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
         hitEdge();
         Controller.getInstance().update(delta);
         Model.getInstance().update(Controller.getInstance().getBall().getX(),Controller.getInstance().getBall().getY());
-        game.getBatch().setProjectionMatrix(camera.combined);
 
         if(Controller.getInstance().getBall().getY()<lowestPoint && Controller.getInstance().getBall().getY()<(h / w)){
             camera.translate(0,Controller.getInstance().getBall().getY()-lowestPoint);
@@ -126,16 +125,18 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
         game.getBatch().begin();
 
 
-        System.out.println("CAmera pos after: "+camera.position.x +" " +camera.position.y );
+//        System.out.println("CAmera pos after: "+camera.position.x +" " +camera.position.y );
        drawBackground();
 
         drawPlats();
         drawBall();
         camera.update();
+        game.getBatch().setProjectionMatrix(camera.combined);
+
         //drawBackground();
 //        System.out.println(Model.getInstance().getBall().getX()+" - x;    "+Model.getInstance().getBall().getY()+" - y");
 //
-//        System.out.println(Controller.getInstance().getBall().getX()+" - x;    "+Controller.getInstance().getBall().getY()+" - y");
+//        System.out.println("Ball body"+Controller.getInstance().getBall().getX()+" - x;    "+Controller.getInstance().getBall().getY()+" - y");
 
 
 
@@ -178,7 +179,7 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
         Texture background = game.getAssetManager().get("background.png", Texture.class);
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
 
-        game.getBatch().draw(background, camera.position.x - camera.viewportWidth/2 , camera.position.y-camera.viewportHeight/2, 0, 0, (int)camera.viewportWidth, (int)camera.viewportHeight);
+        game.getBatch().draw(background, camera.position.x - camera.viewportWidth/2 , camera.position.y-camera.viewportHeight/2, 0, 0, (int)camera.viewportWidth, (int)camera.viewportHeight+2);
     }
 
 
@@ -241,3 +242,8 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
     }
 }
+
+//TODO:Meter a bola a desaparecer de um lado e a aparecer no outro
+//TODO: Plataformas vermelhas a mexer
+//TODO: Condição de Win, aplicar maquina de estados
+//TODO: Menu

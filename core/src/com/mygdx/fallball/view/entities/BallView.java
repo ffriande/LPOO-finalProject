@@ -12,7 +12,7 @@ public class BallView extends EntityBaseView {
     }
 
     public Sprite createSprite(FallBall game) {
-Texture texture = game.getAssetManager().get("ball.png");
+    Texture texture = game.getAssetManager().get("ball.png");
         Sprite s= new Sprite(texture, texture.getWidth(), texture.getHeight());
         return s;
     }
