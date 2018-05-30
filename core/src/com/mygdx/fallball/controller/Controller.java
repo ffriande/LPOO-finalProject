@@ -34,7 +34,7 @@ public class Controller implements ContactListener{
 
 
     /*private*/Controller(){
-        world = new World(new Vector2(0, -10/PIXEL_TO_METER), true);
+        world = new World(new Vector2(0, -5), true);
         ball = new BallBody( world, Model.getInstance().getBall(),  true);
 
         platforms=new ArrayList<PlatformModel>();
@@ -45,7 +45,7 @@ public class Controller implements ContactListener{
 
     public void moveBall(float deltaX){
 
-        ball.setTransform(ball.getX()+deltaX/5f,ball.getY());
+        ball.setTransform(ball.getX()+deltaX/40f,ball.getY());
     }
 
     public static Controller getInstance() {

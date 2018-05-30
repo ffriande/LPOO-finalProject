@@ -49,15 +49,15 @@ public class LevelMaker {
                     x=10/PIXEL_TO_METER;
                 else*//*
                 x+=randomX();*/
-        float y=30/PIXEL_TO_METER, x=20/PIXEL_TO_METER;
+        float y=30, x=20;
         for (int i = 0; i < 100; i++){
-            PlatformModel platform = new NormalPlatformModel(x,y,5/PIXEL_TO_METER,1/PIXEL_TO_METER);
+            PlatformModel platform = new NormalPlatformModel(x,y,5,1);
             this.platforms.add(platform);
-            y-=10/PIXEL_TO_METER;
-            if(x>=40/PIXEL_TO_METER)
-                x=20/PIXEL_TO_METER;
+            y-=10;
+            if(x>=40)
+                x=20;
             else
-                x+=10/PIXEL_TO_METER;
+                x+=10;
         }
     }
 

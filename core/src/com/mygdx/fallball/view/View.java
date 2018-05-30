@@ -26,8 +26,8 @@ import java.util.List;
 public class View extends ScreenAdapter implements GestureDetector.GestureListener{
 
     public final static float PIXEL_TO_METER = 0.08f;
-    public final static float VIEWPORT_WIDTH = 30;
-    private static final boolean DEBUG_PHYSICS = false;
+    public final static float VIEWPORT_WIDTH = 60;
+    private static final boolean DEBUG_PHYSICS = true;
 
 
 
@@ -48,7 +48,7 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
        loadAssets();
        createCamera();
 
-        lowestPoint=h/w;
+        lowestPoint= (h / w) /2 + 200;
         gestureDetector = new GestureDetector(this);
         Gdx.input.setInputProcessor(gestureDetector);
 
@@ -68,8 +68,7 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
             debugRenderer = new Box2DDebugRenderer();
             debugCamera = camera.combined.cpy();
             debugCamera.scl(1 / PIXEL_TO_METER);
-           // camera.update();
-
+            camera.update();
         }
 
     }
@@ -111,14 +110,14 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 ////            debugCamera.scl(1 / PIXEL_TO_METER);
 ////            debugRenderer.render(GameController.getInstance().getWorld(), debugCamera);
 //        }
-        hitEdge();
+       hitEdge();
         Controller.getInstance().update(delta);
         Model.getInstance().update(Controller.getInstance().getBall().getX(),Controller.getInstance().getBall().getY());
 
-        if(Controller.getInstance().getBall().getY()<lowestPoint && Controller.getInstance().getBall().getY()<(h / w)){
-            camera.translate(0,Controller.getInstance().getBall().getY()-lowestPoint);
+        if(Controller.getInstance().getBall().getY()/PIXEL_TO_METER<lowestPoint && Controller.getInstance().getBall().getY()/PIXEL_TO_METER<(h/w)/2 +200){
+            camera.translate(0,Controller.getInstance().getBall().getY()/PIXEL_TO_METER-lowestPoint);
             camera.update();
-            lowestPoint=Controller.getInstance().getBall().getY();
+            lowestPoint=Controller.getInstance().getBall().getY()/PIXEL_TO_METER;
             System.out.println("YOOO  " +lowestPoint+ "  Camerapos: " + camera.position.y);
         }
 
@@ -163,7 +162,7 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
     private void drawPlats(){
         List<PlatformModel> p= Model.getInstance().getPlatforms();
         for(PlatformModel it: p){
-            EntityBaseView b= new PlatformView(game);
+            EntityBaseView b= new PlatformView(game);  //TODO: aplicar factory
             b.update(it);
             if(it instanceof NormalPlatformModel)
                 b.draw(game.getBatch(),it);

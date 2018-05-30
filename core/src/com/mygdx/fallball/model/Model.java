@@ -27,7 +27,7 @@ public class Model {
     }
 
     Model(){
-        ball= new BallModel(10/PIXEL_TO_METER,VIEWPORT_WIDTH/PIXEL_TO_METER,1/PIXEL_TO_METER);
+        ball= new BallModel(VIEWPORT_WIDTH/2f,(VIEWPORT_WIDTH),1);
 
         platforms =new LevelMaker(1).getPlatforms();
     }
