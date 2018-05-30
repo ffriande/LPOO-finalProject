@@ -50,6 +50,7 @@ public class BallBody extends EntityBody {
 
 
     public Vector2 getVelocity(){
+        body.setLinearVelocity(0,body.getLinearVelocity().y );
         return body.getLinearVelocity();
     }
 }

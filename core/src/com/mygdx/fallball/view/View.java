@@ -24,12 +24,18 @@ import com.mygdx.fallball.view.entities.PlatformView;
 import java.util.List;
 
 public class View extends ScreenAdapter implements GestureDetector.GestureListener{
+
+    public final static float PIXEL_TO_METER = 0.08f;
+    public final static float VIEWPORT_WIDTH = 30;
+    private static final boolean DEBUG_PHYSICS = false;
+
+
+
     private FallBall game;
     private OrthographicCamera camera;
     private Box2DDebugRenderer debugRenderer;
     private float lowestPoint;
     GestureDetector gestureDetector;
-    boolean debug;
     private float w;
     private float h;
     private float currVel=-1;
@@ -38,7 +44,6 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
 
     public View(FallBall g) {
-        debug=true;
         this.game = g;
        loadAssets();
        createCamera();
@@ -54,15 +59,15 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
         w = Gdx.graphics.getWidth();
         h = Gdx.graphics.getHeight();
-        camera = new OrthographicCamera(40/0.08f, 40/0.08f * (h / w));
+        camera = new OrthographicCamera(VIEWPORT_WIDTH/PIXEL_TO_METER, VIEWPORT_WIDTH/PIXEL_TO_METER * (h / w));
 
         camera.position.set(camera.viewportWidth / 2f, lowestPoint, 0);
         camera.update();
 
-        if (debug) {
+        if (DEBUG_PHYSICS) {
             debugRenderer = new Box2DDebugRenderer();
             debugCamera = camera.combined.cpy();
-            debugCamera.scl(1 / 0.08f);
+            debugCamera.scl(1 / PIXEL_TO_METER);
            // camera.update();
 
         }
@@ -115,7 +120,6 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
             camera.update();
             lowestPoint=Controller.getInstance().getBall().getY();
             System.out.println("YOOO  " +lowestPoint+ "  Camerapos: " + camera.position.y);
-
         }
 
 
@@ -144,9 +148,9 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
 
         game.getBatch().end();
-        if (debug) {
+        if (DEBUG_PHYSICS) {
             debugCamera = camera.combined.cpy();
-            debugCamera.scl(1 / 0.08f);
+            debugCamera.scl(1 / PIXEL_TO_METER);
             debugRenderer.render(Controller.getInstance().getWorld(), debugCamera);
            // camera.update();
         }
@@ -179,7 +183,6 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
     private void drawBackground() {
         Texture background = game.getAssetManager().get("background.png", Texture.class);
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-
         game.getBatch().draw(background, camera.position.x - camera.viewportWidth/2 , camera.position.y-camera.viewportHeight/2, 0, 0, (int)camera.viewportWidth, (int)camera.viewportHeight+2);
     }
 
@@ -234,7 +237,7 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
     private void hitEdge(){
 
-        if(Controller.getInstance().getBall().getVelocity().y>0 && currVel<0  && Controller.getInstance().getBall().getVelocity().y< 10/0.08f){
+        if(Controller.getInstance().getBall().getVelocity().y>0 && currVel<0  && Controller.getInstance().getBall().getVelocity().y< 10/PIXEL_TO_METER){
             Controller.getInstance().getBall().applyImpulse(1000000);
             System.out.println("\n\n\n\n ZAAAS\n\n");
         }

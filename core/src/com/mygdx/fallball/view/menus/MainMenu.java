@@ -36,7 +36,7 @@ public class MainMenu implements Screen {
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT);
     game.getBatch().begin();;
 
-        game.getBatch().draw( ); //TODO:completar
+//   game.getBatch().draw(); //TODO:completar
         //setScreen(new View(this));
 
     }

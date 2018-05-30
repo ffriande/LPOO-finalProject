@@ -9,6 +9,9 @@ import com.mygdx.fallball.model.entities.PlatformModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mygdx.fallball.view.View.PIXEL_TO_METER;
+import static com.mygdx.fallball.view.View.VIEWPORT_WIDTH;
+
 public class Model {
     private static Model instance;
 
@@ -24,7 +27,7 @@ public class Model {
     }
 
     Model(){
-        ball= new BallModel(10/0.08f,40/0.08f,1/0.08f);
+        ball= new BallModel(10/PIXEL_TO_METER,VIEWPORT_WIDTH/PIXEL_TO_METER,1/PIXEL_TO_METER);
 
         platforms =new LevelMaker(1).getPlatforms();
     }

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static com.mygdx.fallball.view.View.PIXEL_TO_METER;
+
 public class LevelMaker {
 
 
@@ -32,30 +34,30 @@ public class LevelMaker {
 
 
     private void level1(){
-            /*float y=35/0.08f, x=0;
+            /*float y=35/PIXEL_TO_METER, x=0;
             for (int i = 0; i < 100; i++){
                 x=0;
                 if(i%10!=0){
-                  PlatformModel platform = new NormalPlatformModel(x,y,5/0.08f,1/0.08f);
+                  PlatformModel platform = new NormalPlatformModel(x,y,5/PIXEL_TO_METER,1/PIXEL_TO_METER);
                   this.platforms.add(platform);}
                 else{
-                    PlatformModel platform = new RedPlatformModel(x,y,5/0.08f,1/0.08f, false);
+                    PlatformModel platform = new RedPlatformModel(x,y,5/PIXEL_TO_METER,1/PIXEL_TO_METER, false);
                     this.platforms.add(platform);}
                 }
-                y-=10/0.08f;
-                *//*if(x>=20/0.08f)
-                    x=10/0.08f;
+                y-=10/PIXEL_TO_METER;
+                *//*if(x>=20/PIXEL_TO_METER)
+                    x=10/PIXEL_TO_METER;
                 else*//*
                 x+=randomX();*/
-        float y=30/0.08f, x=20/0.08f;
+        float y=30/PIXEL_TO_METER, x=20/PIXEL_TO_METER;
         for (int i = 0; i < 100; i++){
-            PlatformModel platform = new NormalPlatformModel(x,y,5/0.08f,1/0.08f);
+            PlatformModel platform = new NormalPlatformModel(x,y,5/PIXEL_TO_METER,1/PIXEL_TO_METER);
             this.platforms.add(platform);
-            y-=10/0.08f;
-            if(x>=40/0.08f)
-                x=20/0.08f;
+            y-=10/PIXEL_TO_METER;
+            if(x>=40/PIXEL_TO_METER)
+                x=20/PIXEL_TO_METER;
             else
-                x+=10/0.08f;
+                x+=10/PIXEL_TO_METER;
         }
     }
 
@@ -63,7 +65,7 @@ public class LevelMaker {
 
     private float randomX(){
         Random r = new Random();
-        return (r.nextInt((10+1)+5)/0.08f);
+        return (r.nextInt((10+1)+5)/PIXEL_TO_METER);
     }
 
 

@@ -16,6 +16,8 @@ import com.mygdx.fallball.model.entities.RedPlatformModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mygdx.fallball.view.View.PIXEL_TO_METER;
+
 public class Controller implements ContactListener{
 
     private static Controller instance;
@@ -32,7 +34,7 @@ public class Controller implements ContactListener{
 
 
     /*private*/Controller(){
-        world = new World(new Vector2(0, -10/0.08f), true);
+        world = new World(new Vector2(0, -10/PIXEL_TO_METER), true);
         ball = new BallBody( world, Model.getInstance().getBall(),  true);
 
         platforms=new ArrayList<PlatformModel>();
@@ -42,6 +44,7 @@ public class Controller implements ContactListener{
     }
 
     public void moveBall(float deltaX){
+
         ball.setTransform(ball.getX()+deltaX/5f,ball.getY());
     }
 
