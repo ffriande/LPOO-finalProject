@@ -38,7 +38,7 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
 
     public View(FallBall g) {
-        debug=false;
+        debug=true;
         this.game = g;
        loadAssets();
        createCamera();
@@ -63,7 +63,8 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
             debugRenderer = new Box2DDebugRenderer();
             debugCamera = camera.combined.cpy();
             debugCamera.scl(1 / 0.08f);
-            camera.update();
+           // camera.update();
+
         }
 
     }
@@ -147,7 +148,7 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
             debugCamera = camera.combined.cpy();
             debugCamera.scl(1 / 0.08f);
             debugRenderer.render(Controller.getInstance().getWorld(), debugCamera);
-            camera.update();
+           // camera.update();
         }
     }
 

@@ -26,7 +26,7 @@ public abstract class EntityBaseView {
     }
     public void draw(SpriteBatch batch, PlatformModel platformModel) {
 
-      //  sprite.setPosition(platformModel.getX(),platformModel.getY());
+      // sprite.setPosition(platformModel.getX(),platformModel.getY());
         sprite.setSize(platformModel.getWidth(),platformModel.getHeight());
         sprite.draw(batch);
     }
@@ -35,5 +35,8 @@ public abstract class EntityBaseView {
 
     public void update(EntityBaseModel model) {
         sprite.setCenter(model.getX(), model.getY());
+    }
+    public void update(PlatformModel model) {
+        sprite.setCenter(model.getX()+model.getWidth(), model.getY()+model.getHeight());
     }
 }

@@ -26,40 +26,6 @@ public abstract class EntityBody {
         body.setUserData(model);
     }
 
-
-
-    final void createBallFixture(Body body,float radius, float density, float friction, float restitution/*,short category, short mask */ ) {
-
-
-        CircleShape circle = new CircleShape();
-        circle.setRadius(radius);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = circle;
-        fixtureDef.density = density;
-        fixtureDef.friction = friction;
-        fixtureDef.restitution = restitution; // Make it bounce a little bit
-
-
-
-     /*   fixtureDef.filter.categoryBits = category; //filter is for not to happen collision acho eu
-        fixtureDef.filter.maskBits = mask;
-        */
-
-
-        body.createFixture(fixtureDef);
-
-        circle.dispose();
-    }
-
-    final void createInertPlatformFixture(Body body, float width, float height ) {
-        PolygonShape plat = new PolygonShape();
-        plat.setAsBox(width, height);
-        body.createFixture(plat,0.0f);
-        plat.dispose();
-    }
-
-
     public float getX() {
         return body.getWorldCenter().x;  //pode ter de ser mudado para getWorldCenter
     }

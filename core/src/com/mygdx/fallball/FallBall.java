@@ -8,8 +8,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.fallball.view.View;
+import com.mygdx.fallball.view.menus.MainMenu;
 
-public class FallBall extends Game {
+public class FallBall extends Game {	
 	SpriteBatch batch;
 	AssetManager assMan;
 
@@ -21,7 +22,7 @@ public class FallBall extends Game {
 	}
 
 	private void startGame() {
-		setScreen(new View(this));
+		setScreen(new MainMenu(this));
 	}
 
 	@Override

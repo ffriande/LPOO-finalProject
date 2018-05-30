@@ -47,17 +47,17 @@ public class LevelMaker {
                     x=10/0.08f;
                 else*//*
                 x+=randomX();*/
-        float y=30/0.08f, x=10/0.08f;
+        float y=30/0.08f, x=20/0.08f;
         for (int i = 0; i < 100; i++){
             PlatformModel platform = new NormalPlatformModel(x,y,5/0.08f,1/0.08f);
             this.platforms.add(platform);
             y-=10/0.08f;
-            if(x>=20/0.08f)
-                x=10/0.08f;
+            if(x>=40/0.08f)
+                x=20/0.08f;
             else
                 x+=10/0.08f;
         }
-        }
+    }
 
     //TODO: fazer função auxiliar de randomize para o x das plataformas, tal como para as red plats
 
