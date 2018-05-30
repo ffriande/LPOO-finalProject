@@ -19,14 +19,18 @@ import com.mygdx.fallball.model.entities.PlatformModel;
 import com.mygdx.fallball.model.entities.RedPlatformModel;
 import com.mygdx.fallball.view.entities.BallView;
 import com.mygdx.fallball.view.entities.EntityBaseView;
-import com.mygdx.fallball.view.entities.PlatformView;
+import com.mygdx.fallball.view.entities.NormalPlatformView;
+import com.mygdx.fallball.view.entities.RedPlatformView;
 
 import java.util.List;
+
+import static com.mygdx.fallball.controller.Controller.GRAVITY;
+import static com.mygdx.fallball.model.entities.LevelMaker.DISTANCE_BETWEEN_PLATFORMS;
 
 public class View extends ScreenAdapter implements GestureDetector.GestureListener{
 
     public final static float PIXEL_TO_METER = 0.08f;
-    public final static float VIEWPORT_WIDTH = 60;
+    public final static float VIEWPORT_WIDTH = 50;
     private static final boolean DEBUG_PHYSICS = true;
 
 
@@ -38,7 +42,7 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
     GestureDetector gestureDetector;
     private float w;
     private float h;
-    private float currVel=-1;
+    private float currVel=1;
 
     private Matrix4 debugCamera;
 
@@ -48,7 +52,7 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
        loadAssets();
        createCamera();
 
-        lowestPoint= (h / w) /2 + 200;
+        lowestPoint= (h / w) /2 + DISTANCE_BETWEEN_PLATFORMS/0.08f;
         gestureDetector = new GestureDetector(this);
         Gdx.input.setInputProcessor(gestureDetector);
 
@@ -75,6 +79,7 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
     private void loadAssets() {
 
+        this.game.getAssetManager().load( "redplatform.jpg" , Texture.class);
         this.game.getAssetManager().load( "platform.jpg" , Texture.class);
         this.game.getAssetManager().load( "ball.png" , Texture.class);
 
@@ -86,45 +91,24 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
     @Override
     public void render(float delta) {
-////        GameController.getInstance().removeFlagged();
-////        GameController.getInstance().createNewAsteroids();
-//
-//        handleInputs(delta);
-//
-////        GameController.getInstance().update(delta);
-//
-//        camera.position.set(GameModel.getInstance().getShip().getX() / PIXEL_TO_METER, GameModel.getInstance().getShip().getY() / PIXEL_TO_METER, 0);
-//        camera.update();
-//        game.getBatch().setProjectionMatrix(camera.combined);
-//
-//        Gdx.gl.glClearColor( 103/255f, 69/255f, 117/255f, 1 );
-//        Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
-//
-//        game.getBatch().begin();
-//        drawBackground();
-//        drawBall();
-//        game.getBatch().end();
-//
-////        if (DEBUG_PHYSICS) {
-////            debugCamera = camera.combined.cpy();
-////            debugCamera.scl(1 / PIXEL_TO_METER);
-////            debugRenderer.render(GameController.getInstance().getWorld(), debugCamera);
-//        }
-       hitEdge();
-        Controller.getInstance().update(delta);
-        Model.getInstance().update(Controller.getInstance().getBall().getX(),Controller.getInstance().getBall().getY());
 
-        if(Controller.getInstance().getBall().getY()/PIXEL_TO_METER<lowestPoint && Controller.getInstance().getBall().getY()/PIXEL_TO_METER<(h/w)/2 +200){
+        velocityChecker();
+       //hitEdge();
+        Controller.getInstance().update(delta);
+
+        if(Controller.getInstance().getBall().getY()/PIXEL_TO_METER<lowestPoint && Controller.getInstance().getBall().getY()/PIXEL_TO_METER<lowestPoint){
             camera.translate(0,Controller.getInstance().getBall().getY()/PIXEL_TO_METER-lowestPoint);
             camera.update();
             lowestPoint=Controller.getInstance().getBall().getY()/PIXEL_TO_METER;
-            System.out.println("YOOO  " +lowestPoint+ "  Camerapos: " + camera.position.y);
+           // System.out.println("YOOO  " +lowestPoint+ "  Camerapos: " + camera.position.y);
         }
 
 
+        camera.update();
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        game.getBatch().setProjectionMatrix(camera.combined);
 
         game.getBatch().begin();
 
@@ -134,19 +118,15 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
         drawPlats();
         drawBall();
-        camera.update();
-        game.getBatch().setProjectionMatrix(camera.combined);
 
         //drawBackground();
 //        System.out.println(Model.getInstance().getBall().getX()+" - x;    "+Model.getInstance().getBall().getY()+" - y");
 //
 //        System.out.println("Ball body"+Controller.getInstance().getBall().getX()+" - x;    "+Controller.getInstance().getBall().getY()+" - y");
-
-
-
-
-
         game.getBatch().end();
+
+
+
         if (DEBUG_PHYSICS) {
             debugCamera = camera.combined.cpy();
             debugCamera.scl(1 / PIXEL_TO_METER);
@@ -162,12 +142,18 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
     private void drawPlats(){
         List<PlatformModel> p= Model.getInstance().getPlatforms();
         for(PlatformModel it: p){
-            EntityBaseView b= new PlatformView(game);  //TODO: aplicar factory
-            b.update(it);
-            if(it instanceof NormalPlatformModel)
-                b.draw(game.getBatch(),it);
-            else if(it instanceof RedPlatformModel)
-                b.draw(game.getBatch(),it);//TODO: mudar isto e fazer outra imagem de plataforma red
+            EntityBaseView b;
+            if(it instanceof NormalPlatformModel){
+                b= new NormalPlatformView(game);  //TODO: aplicar factory
+                b.update(it);
+            }
+            else {
+                b= new RedPlatformView(game);
+                b.update(it);
+            }
+            b.draw(game.getBatch(),it);
+
+           //TODO: mudar isto e fazer outra imagem de plataforma red
 
         }
     }
@@ -182,7 +168,7 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
     private void drawBackground() {
         Texture background = game.getAssetManager().get("background.png", Texture.class);
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-        game.getBatch().draw(background, camera.position.x - camera.viewportWidth/2 , camera.position.y-camera.viewportHeight/2, 0, 0, (int)camera.viewportWidth, (int)camera.viewportHeight+2);
+        game.getBatch().draw(background, camera.position.x - camera.viewportWidth/2f , camera.position.y-camera.viewportHeight/2f, 0, 0, (int)camera.viewportWidth, (int)camera.viewportHeight+200);
     }
 
 
@@ -209,8 +195,8 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
+        Controller.getInstance().getBall().setVelX_to_zero();
         Controller.getInstance().moveBall(deltaX);
-        System.out.println("Pan "+ deltaX);
         return false;
     }
 
@@ -234,14 +220,26 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
     }
 
-    private void hitEdge(){
+   /* private void hitEdge(){
 
         if(Controller.getInstance().getBall().getVelocity().y>0 && currVel<0  && Controller.getInstance().getBall().getVelocity().y< 10/PIXEL_TO_METER){
-            Controller.getInstance().getBall().applyImpulse(1000000);
+            Controller.getInstance().getBall().setVelX_to_zero();
+            //   Controller.getInstance().getBall().applyImpulse(1000000);
             System.out.println("\n\n\n\n ZAAAS\n\n");
         }
         currVel =Controller.getInstance().getBall().getVelocity().y;
         System.out.println("\n"+currVel+"\n");
+
+    }*/
+
+    private void velocityChecker(){
+    double intendedVel = Math.sqrt( 2*Math.abs( GRAVITY ) *(DISTANCE_BETWEEN_PLATFORMS*0.8f)) ; //formula da conservaçao da Emecanica.
+//        System.out.println("intended "+intendedVel);
+        if(Controller.getInstance().getBall().getVelocity().y>0 && currVel<0  && Controller.getInstance().getBall().getVelocity().y > intendedVel){
+                Controller.getInstance().getBall().setVelocity(intendedVel);
+        }
+        currVel =Controller.getInstance().getBall().getVelocity().y;
+//        System.out.println("\n"+currVel+"\n");
 
     }
 }

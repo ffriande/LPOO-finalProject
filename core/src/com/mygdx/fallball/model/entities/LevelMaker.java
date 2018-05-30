@@ -5,8 +5,13 @@ import java.util.List;
 import java.util.Random;
 
 import static com.mygdx.fallball.view.View.PIXEL_TO_METER;
+import static com.mygdx.fallball.view.View.VIEWPORT_WIDTH;
 
 public class LevelMaker {
+    public final static float DISTANCE_BETWEEN_PLATFORMS = 20;
+    public final static float FIRST_PLATFORM_Y = 25;
+    public final static float LOWEST_PLATFORM_X = 0;
+    public final static float HIGHEST_PLATFORM_X = VIEWPORT_WIDTH;
 
 
 
@@ -49,15 +54,20 @@ public class LevelMaker {
                     x=10/PIXEL_TO_METER;
                 else*//*
                 x+=randomX();*/
-        float y=30, x=20;
+        float y=FIRST_PLATFORM_Y, x=LOWEST_PLATFORM_X;
         for (int i = 0; i < 100; i++){
-            PlatformModel platform = new NormalPlatformModel(x,y,5,1);
-            this.platforms.add(platform);
-            y-=10;
-            if(x>=40)
-                x=20;
+            PlatformModel platform;
+            if(y==5)
+                 platform = new RedPlatformModel(x,y,5,1,false);
             else
-                x+=10;
+                 platform = new NormalPlatformModel(x,y,5,1);
+            this.platforms.add(platform);
+            y-=DISTANCE_BETWEEN_PLATFORMS;
+            if(x>=HIGHEST_PLATFORM_X)
+                x=LOWEST_PLATFORM_X;
+            else
+                x+=VIEWPORT_WIDTH/5;
+
         }
     }
 

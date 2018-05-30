@@ -9,6 +9,8 @@ import com.mygdx.fallball.model.entities.PlatformModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mygdx.fallball.model.entities.LevelMaker.DISTANCE_BETWEEN_PLATFORMS;
+import static com.mygdx.fallball.model.entities.LevelMaker.FIRST_PLATFORM_Y;
 import static com.mygdx.fallball.view.View.PIXEL_TO_METER;
 import static com.mygdx.fallball.view.View.VIEWPORT_WIDTH;
 
@@ -27,7 +29,7 @@ public class Model {
     }
 
     Model(){
-        ball= new BallModel(VIEWPORT_WIDTH/2f,(VIEWPORT_WIDTH),1);
+        ball= new BallModel(VIEWPORT_WIDTH/2f,FIRST_PLATFORM_Y+DISTANCE_BETWEEN_PLATFORMS,1);
 
         platforms =new LevelMaker(1).getPlatforms();
     }

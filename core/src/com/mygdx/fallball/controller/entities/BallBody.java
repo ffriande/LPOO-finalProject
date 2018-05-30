@@ -7,6 +7,8 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.fallball.model.entities.BallModel;
 
+import static com.mygdx.fallball.model.entities.LevelMaker.DISTANCE_BETWEEN_PLATFORMS;
+
 public class BallBody extends EntityBody {
     public BallBody(World world, BallModel model, boolean isDynamic) {
             super(world, model, true);
@@ -14,6 +16,7 @@ public class BallBody extends EntityBody {
                 density = 1f,
                 friction = 0f,
                 restitution = 1f;
+
 
         createBallFixture(body, radius, density, friction, restitution);
 
@@ -49,8 +52,14 @@ public class BallBody extends EntityBody {
     }
 
 
-    public Vector2 getVelocity(){
+    public void setVelX_to_zero(){
         body.setLinearVelocity(0,body.getLinearVelocity().y );
+    }
+
+    public void setVelocity(double y){
+        body.setLinearVelocity( 0, (float)y );
+    }
+    public Vector2 getVelocity(){
         return body.getLinearVelocity();
     }
 }

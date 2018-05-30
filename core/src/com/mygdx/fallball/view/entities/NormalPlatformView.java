@@ -6,10 +6,10 @@ import com.mygdx.fallball.FallBall;
 import com.mygdx.fallball.model.Model;
 import com.mygdx.fallball.model.entities.EntityBaseModel;
 
-public class PlatformView extends EntityBaseView {
+public class NormalPlatformView extends EntityBaseView {
 
 
-    public PlatformView(FallBall game) {
+    public NormalPlatformView(FallBall game)     {
         super(game);
     }
 

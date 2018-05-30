@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.fallball.controller.entities.BallBody;
 import com.mygdx.fallball.controller.entities.PlatformBody;
 import com.mygdx.fallball.model.Model;
+import com.mygdx.fallball.model.entities.NormalPlatformModel;
 import com.mygdx.fallball.model.entities.PlatformModel;
 import com.mygdx.fallball.model.entities.RedPlatformModel;
 
@@ -19,6 +20,7 @@ import java.util.List;
 import static com.mygdx.fallball.view.View.PIXEL_TO_METER;
 
 public class Controller implements ContactListener{
+    public final static float GRAVITY = -18;
 
     private static Controller instance;
 
@@ -31,16 +33,24 @@ public class Controller implements ContactListener{
     private /*final*/ BallBody ball;
     private List<PlatformModel> platforms;
     private float accumulator;
+    private List<PlatformBody>  redPlats;
 
 
     /*private*/Controller(){
-        world = new World(new Vector2(0, -5), true);
+        world = new World(new Vector2(0, GRAVITY), true);
         ball = new BallBody( world, Model.getInstance().getBall(),  true);
-
+        world.setContactListener( this );
         platforms=new ArrayList<PlatformModel>();
         platforms=Model.getInstance().getPlatforms();
-        for(PlatformModel plat: platforms)
-            new PlatformBody(world, plat,false);
+        redPlats = new ArrayList<PlatformBody>(  );
+        for(PlatformModel plat: platforms){
+            if(plat instanceof NormalPlatformModel)
+             new PlatformBody(world, plat,false);
+            else {
+             PlatformBody b =new PlatformBody( world, plat, false);
+             redPlats.add( b );
+            }
+        }
     }
 
     public void moveBall(float deltaX){
@@ -49,22 +59,20 @@ public class Controller implements ContactListener{
     }
 
     public static Controller getInstance() {
-        if (instance == null){
+        if (instance == null)
             instance = new Controller();
-        System.out.println("New instance of Controller");}
         return instance;
 
     }
 
     public void update(float delta) {
-
         float frameTime = Math.min(delta, 0.25f);
         accumulator += frameTime;
         while (accumulator >= 1 / 60f) {
             world.step(1 / 60f, 6, 2);
             accumulator -= 1 / 60f;
         }
-
+        Model.getInstance().update(Controller.getInstance().getBall().getX(),Controller.getInstance().getBall().getY()); //actualiza posiçao da bola
     }
       //TODO: modo infinito
 
@@ -82,8 +90,11 @@ public class Controller implements ContactListener{
         Body bodyA = contact.getFixtureA().getBody();
         Body bodyB = contact.getFixtureB().getBody();
 
-        if (bodyA.getUserData() instanceof BallBody && bodyB.getUserData() instanceof RedPlatformModel)
-            System.out.println("LOOSE GAME!!!");            //TODO:função perder nivel
+        System.out.println("CONTACT.\n "+bodyA.getUserData()+" "+bodyB.getUserData());
+
+        for(PlatformBody it: redPlats)
+         if (bodyB.getUserData() == ball.getUserData() && bodyA.getUserData() == it.getUserData())
+            System.out.println("LOOSE GAME!!!\n\n\n\n\n\n");                 //TODO:função perder nivel
 
     }
 
