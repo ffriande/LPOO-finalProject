@@ -22,8 +22,8 @@ public class FallBall extends Game {
 	}
 
 	private void startGame() {
-		//setScreen(new MainMenu(this));
-		setScreen(new View(this));
+		setScreen(new MainMenu(this));
+		//setScreen(new View(this));
 	}
 
 	@Override
