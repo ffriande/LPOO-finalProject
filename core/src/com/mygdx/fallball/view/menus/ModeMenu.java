@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -17,36 +16,20 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.fallball.FallBall;
-import com.mygdx.fallball.view.Buttons.ButtonView;
-import com.mygdx.fallball.view.Buttons.ExitButtonView;
-import com.mygdx.fallball.view.Buttons.OptionsButtonView;
-import com.mygdx.fallball.view.Buttons.StartButtonView;
 import com.mygdx.fallball.view.View;
 
-import java.awt.Button;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.soap.Text;
-
-public class MainMenu extends ScreenAdapter {
-    //TODO:Options menu
-    //TODO:Select mode menu
-    //TODO:Select level menu
-    public final static int ButtonsWidth = 500;
-
-
+public class ModeMenu extends ScreenAdapter {
     private FallBall game;
     private Stage stage;
-    private Sprite start;
-    private Sprite options;
-    private Sprite exit;
+    private Sprite levelSprite;
+    private Sprite infiniteSprite;
+    private Sprite returnSprite;
     private Texture background;
     private OrthographicCamera cam;
     private Viewport viewport;
 
 
-    public MainMenu(FallBall game){
+    public ModeMenu(FallBall game){
         this.game=game;
         background=new Texture("background.png");
         loadButtons();
@@ -67,15 +50,15 @@ public class MainMenu extends ScreenAdapter {
 
 
     public void loadButtons(){
-        Texture startTex=new Texture("start.png");
-        start=new Sprite(startTex,startTex.getWidth(),startTex.getHeight());
-        start.setSize(ButtonsWidth,ButtonsWidth*start.getHeight()/start.getWidth());
-        Texture optionsTex=new Texture("options.png");
-        options=new Sprite(optionsTex,optionsTex.getWidth(),optionsTex.getHeight());
-        options.setSize(ButtonsWidth,ButtonsWidth*options.getHeight()/options.getWidth());
-        Texture exitTex=new Texture("exit.png");
-        exit=new Sprite(exitTex,exitTex.getWidth(),exitTex.getHeight());
-        exit.setSize(ButtonsWidth,ButtonsWidth*exit.getHeight()/exit.getWidth());
+        Texture levelTex=new Texture("LevelMode.png");
+        levelSprite =new Sprite(levelTex,levelTex.getWidth(),levelTex.getHeight());
+        levelSprite.setSize(MainMenu.ButtonsWidth,MainMenu.ButtonsWidth*levelSprite.getHeight()/levelSprite.getWidth());
+        Texture infiniteTex=new Texture("infinite.png");
+        infiniteSprite =new Sprite(infiniteTex,infiniteTex.getWidth(),infiniteTex.getHeight());
+        infiniteSprite.setSize(MainMenu.ButtonsWidth,MainMenu.ButtonsWidth*infiniteSprite.getHeight()/infiniteSprite.getWidth());
+        Texture returnTex=new Texture("return.png");
+        returnSprite =new Sprite(returnTex,returnTex.getWidth(),returnTex.getHeight());
+        returnSprite.setSize(MainMenu.ButtonsWidth,MainMenu.ButtonsWidth*returnSprite.getHeight()/returnSprite.getWidth());
 
     }
 
@@ -85,36 +68,36 @@ public class MainMenu extends ScreenAdapter {
         table.setFillParent(true);
         table.setDebug(true);
 
-        Drawable startDrawable = new SpriteDrawable(start);
-        ImageButton startButton = new ImageButton(startDrawable);
-        Drawable optionsDrawable = new SpriteDrawable(options);
-        ImageButton optionsButton = new ImageButton(optionsDrawable);
-        Drawable exitDrawable = new SpriteDrawable(exit);
-        ImageButton exitButton = new ImageButton(exitDrawable);
-        startButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new ModeMenu(game));
-            }
-        });
-        optionsButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                //game.setScreen(new ModeMenu(game)); TODO:Meter options
-            }
-        });
-        exitButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit();
-            }
-        });
+        Drawable levelDrawable = new SpriteDrawable(levelSprite);
+        ImageButton levelButton = new ImageButton(levelDrawable);
+        Drawable infiniteDrawable = new SpriteDrawable(infiniteSprite);
+        ImageButton infiniteButton = new ImageButton(infiniteDrawable);
+        Drawable returnDrawable = new SpriteDrawable(returnSprite);
+        ImageButton returnButton = new ImageButton(returnDrawable);
 
-        table.add(startButton).spaceBottom(100);
+        levelButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new View(game));
+            }
+        });
+        infiniteButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                //game.setScreen(new MainMenu(game));TODO:meter o screen no modo infinito
+            }
+        });
+        returnButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new MainMenu(game));
+            }
+        });
+        table.add(levelButton).spaceBottom(100);
         table.row();
-        table.add(optionsButton).spaceBottom(100);
+        table.add(infiniteButton).spaceBottom(100);
         table.row();
-        table.add(exitButton).spaceBottom(100);
+        table.add(returnButton);
         stage.addActor(table);
     }
 
@@ -131,9 +114,9 @@ public class MainMenu extends ScreenAdapter {
         //setScreen(new View(this));
 
     }
+
     @Override
     public void dispose() {
         stage.dispose();
-        background.dispose();
     }
 }

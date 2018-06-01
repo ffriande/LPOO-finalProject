@@ -20,7 +20,7 @@ import com.mygdx.fallball.model.entities.RedPlatformModel;
 import com.mygdx.fallball.view.entities.BallView;
 import com.mygdx.fallball.view.entities.EntityBaseView;
 import com.mygdx.fallball.view.entities.NormalPlatformView;
-import com.mygdx.fallball.view.entities.RedPlatformView;
+//import com.mygdx.fallball.view.entities.RedPlatformView;
 
 import java.util.List;
 
@@ -79,7 +79,7 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
     private void loadAssets() {
 
-        this.game.getAssetManager().load( "redplatform.jpg" , Texture.class);
+        //this.game.getAssetManager().load( "redplatform.jpg" , Texture.class);
         this.game.getAssetManager().load( "platform.jpg" , Texture.class);
         this.game.getAssetManager().load( "ball.png" , Texture.class);
 
@@ -143,14 +143,14 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
         List<PlatformModel> p= Model.getInstance().getPlatforms();
         for(PlatformModel it: p){
             EntityBaseView b;
-            if(it instanceof NormalPlatformModel){
+            //if(it instanceof NormalPlatformModel){
                 b= new NormalPlatformView(game);  //TODO: aplicar factory
                 b.update(it);
-            }
+            /*}
             else {
                 b= new RedPlatformView(game);
                 b.update(it);
-            }
+            }*/
             b.draw(game.getBatch(),it);
 
            //TODO: mudar isto e fazer outra imagem de plataforma red
