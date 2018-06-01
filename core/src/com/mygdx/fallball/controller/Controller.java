@@ -18,45 +18,50 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.mygdx.fallball.view.View.PIXEL_TO_METER;
+import static com.mygdx.fallball.view.View.VIEWPORT_WIDTH;
 
-public class Controller implements ContactListener{
+public class Controller implements ContactListener {
     public final static float GRAVITY = -18;
+    public final static float SENSIBILITY = 0.025f;
 
     private static Controller instance;
-
 
 
     private /*final*/ World world;
 
 
-
     private /*final*/ BallBody ball;
     private List<PlatformModel> platforms;
     private float accumulator;
-    private List<PlatformBody>  redPlats;
+    private List<PlatformBody> redPlats;
+    private PlatformBody finalPlat;
 
 
-    /*private*/Controller(){
-        world = new World(new Vector2(0, GRAVITY), true);
-        ball = new BallBody( world, Model.getInstance().getBall(),  true);
+    /*private*/Controller() {
+        world = new World( new Vector2( 0, GRAVITY ), true );
+        ball = new BallBody( world, Model.getInstance().getBall());
         world.setContactListener( this );
-        platforms=new ArrayList<PlatformModel>();
-        platforms=Model.getInstance().getPlatforms();
-        redPlats = new ArrayList<PlatformBody>(  );
-        for(PlatformModel plat: platforms){
-            if(plat instanceof NormalPlatformModel)
-             new PlatformBody(world, plat,false);
-            else {
-             PlatformBody b =new PlatformBody( world, plat, false);
-             redPlats.add( b );
+        platforms = new ArrayList<PlatformModel>();
+        platforms = Model.getInstance().getPlatforms();
+        redPlats = new ArrayList<PlatformBody>();
+        for (PlatformModel plat : platforms) {
+            if (plat instanceof NormalPlatformModel)
+                new PlatformBody( world, plat, false );
+            else if (plat instanceof RedPlatformModel) {
+                PlatformBody b = new PlatformBody( world, plat, ((RedPlatformModel) plat).getMoving() );
+                redPlats.add( b );
+            } else {
+                finalPlat = new PlatformBody( world, plat, false );
             }
         }
     }
 
-    public void moveBall(float deltaX){
+    public void moveBall(float deltaX) {
 
-        ball.setTransform(ball.getX()+deltaX/40f,ball.getY());
+        ball.setTransform( ball.getX() + deltaX * SENSIBILITY, ball.getY() );
     }
+
+
 
     public static Controller getInstance() {
         if (instance == null)
@@ -66,15 +71,38 @@ public class Controller implements ContactListener{
     }
 
     public void update(float delta) {
-        float frameTime = Math.min(delta, 0.25f);
+        float frameTime = Math.min( delta, 0.25f );
         accumulator += frameTime;
         while (accumulator >= 1 / 60f) {
-            world.step(1 / 60f, 6, 2);
+            world.step( 1 / 60f, 6, 2 );
             accumulator -= 1 / 60f;
         }
-        Model.getInstance().update(Controller.getInstance().getBall().getX(),Controller.getInstance().getBall().getY()); //actualiza posiçao da bola
+        //Desaparece de um lado, aparece no outro
+        if (ball.getX() < -Model.getInstance().getBall().getRadius())
+            ball.setTransform( VIEWPORT_WIDTH - Model.getInstance().getBall().getRadius(), ball.getY() );
+        else if (ball.getX() > VIEWPORT_WIDTH + Model.getInstance().getBall().getRadius())
+            ball.setTransform( Model.getInstance().getBall().getRadius(), ball.getY() );
+
+        Model.getInstance().update( Controller.getInstance().getBall().getX(), Controller.getInstance().getBall().getY() ); //actualiza posiçao da bola
+        int i = 0;
+        for (PlatformModel plat : Model.getInstance().getPlatforms()) {
+            if (plat instanceof RedPlatformModel && ((RedPlatformModel) plat).getMoving()) {
+                int j = i;
+                for (PlatformBody it : redPlats) {
+                    if (it.isMoving()) {
+                        it.moveRedPlat();
+                        if (j == 0) {
+                            plat.setPos( it.getX(), it.getY() );
+                            i++;
+                            break;
+                        } else j--;
+                    }
+                }
+            }
+        }
+
     }
-      //TODO: modo infinito
+    //TODO: modo infinito
 
     public World getWorld() {
         return world;
@@ -90,11 +118,12 @@ public class Controller implements ContactListener{
         Body bodyA = contact.getFixtureA().getBody();
         Body bodyB = contact.getFixtureB().getBody();
 
-        System.out.println("CONTACT.\n "+bodyA.getUserData()+" "+bodyB.getUserData());
-
-        for(PlatformBody it: redPlats)
-         if (bodyB.getUserData() == ball.getUserData() && bodyA.getUserData() == it.getUserData())
-            System.out.println("LOOSE GAME!!!\n\n\n\n\n\n");                 //TODO:função perder nivel
+        if (finalPlat != null)
+            if (bodyB.getUserData() == ball.getUserData() && bodyA.getUserData() == finalPlat.getUserData())
+                System.out.println( "WIN GAME!!!\n\n\n\n\n\n" );                 //TODO:função ganhar jogo
+        for (PlatformBody it : redPlats)
+            if (bodyB.getUserData() == ball.getUserData() && bodyA.getUserData() == it.getUserData())
+                System.out.println( "LOOSE GAME!!!\n\n\n\n\n\n" );                 //TODO:função perder nivel
 
     }
 

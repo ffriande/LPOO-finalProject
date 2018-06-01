@@ -2,6 +2,7 @@ package com.mygdx.fallball.controller.entities;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
@@ -10,8 +11,8 @@ import com.mygdx.fallball.model.entities.BallModel;
 import static com.mygdx.fallball.model.entities.LevelMaker.DISTANCE_BETWEEN_PLATFORMS;
 
 public class BallBody extends EntityBody {
-    public BallBody(World world, BallModel model, boolean isDynamic) {
-            super(world, model, true);
+    public BallBody(World world, BallModel model) {
+            super(world, model, false);
         float   radius = model.getRadius(),
                 density = 1f,
                 friction = 0f,
@@ -19,6 +20,7 @@ public class BallBody extends EntityBody {
 
 
         createBallFixture(body, radius, density, friction, restitution);
+       body.setType(BodyDef.BodyType.DynamicBody);
 
     }
     public void applyImpulse(float impulseY){

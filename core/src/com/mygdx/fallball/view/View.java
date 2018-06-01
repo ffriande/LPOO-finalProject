@@ -13,14 +13,16 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.mygdx.fallball.FallBall;
 import com.mygdx.fallball.controller.Controller;
 import com.mygdx.fallball.model.Model;
+import com.mygdx.fallball.model.entities.BallModel;
 import com.mygdx.fallball.model.entities.EntityBaseModel;
 import com.mygdx.fallball.model.entities.NormalPlatformModel;
 import com.mygdx.fallball.model.entities.PlatformModel;
 import com.mygdx.fallball.model.entities.RedPlatformModel;
 import com.mygdx.fallball.view.entities.BallView;
 import com.mygdx.fallball.view.entities.EntityBaseView;
+import com.mygdx.fallball.view.entities.FinalPlatformView;
 import com.mygdx.fallball.view.entities.NormalPlatformView;
-//import com.mygdx.fallball.view.entities.RedPlatformView;
+import com.mygdx.fallball.view.entities.RedPlatformView;
 
 import java.util.List;
 
@@ -63,9 +65,9 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
         w = Gdx.graphics.getWidth();
         h = Gdx.graphics.getHeight();
-        camera = new OrthographicCamera(VIEWPORT_WIDTH/PIXEL_TO_METER, VIEWPORT_WIDTH/PIXEL_TO_METER * (h / w));
+        camera = new OrthographicCamera(VIEWPORT_WIDTH*3/PIXEL_TO_METER, VIEWPORT_WIDTH/PIXEL_TO_METER * (h / w));
 
-        camera.position.set(camera.viewportWidth / 2f, lowestPoint, 0);
+        camera.position.set(camera.viewportWidth / 2f  -VIEWPORT_WIDTH/PIXEL_TO_METER, lowestPoint, 0);
         camera.update();
 
         if (DEBUG_PHYSICS) {
@@ -79,10 +81,11 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
     private void loadAssets() {
 
-        //this.game.getAssetManager().load( "redplatform.jpg" , Texture.class);
+        this.game.getAssetManager().load( "redplatform.jpg" , Texture.class);
         this.game.getAssetManager().load( "platform.jpg" , Texture.class);
         this.game.getAssetManager().load( "ball.png" , Texture.class);
 
+        this.game.getAssetManager().load( "finalplatform.jpg" , Texture.class);
         this.game.getAssetManager().load( "background.png" , Texture.class);
 
         this.game.getAssetManager().finishLoading();
@@ -142,26 +145,46 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
     private void drawPlats(){
         List<PlatformModel> p= Model.getInstance().getPlatforms();
         for(PlatformModel it: p){
-            EntityBaseView b;
-            //if(it instanceof NormalPlatformModel){
-                b= new NormalPlatformView(game);  //TODO: aplicar factory
-                b.update(it);
-            /*}
-            else {
-                b= new RedPlatformView(game);
-                b.update(it);
-            }*/
-            b.draw(game.getBatch(),it);
-
-           //TODO: mudar isto e fazer outra imagem de plataforma red
+            if(it.getX()-it.getWidth()/2f>=0 && it.getX()+it.getWidth()/2f<=VIEWPORT_WIDTH) {
+                EntityBaseView b;
+                if (it instanceof NormalPlatformModel) {
+                    b = new NormalPlatformView( game );  //TODO: aplicar factory
+                    b.update( it );
+                }
+                else  if (it instanceof RedPlatformModel){
+                    b = new RedPlatformView( game );
+                    b.update( it );
+                }
+                else{
+                    b = new FinalPlatformView( game );
+                    b.update( it );
+                }
+                b.draw( game.getBatch(), it );
+            }
 
         }
     }
     private void drawBall(){
-        EntityBaseModel mod=Model.getInstance().getBall();
+        BallModel mod=Model.getInstance().getBall();
+        float limitLeft=mod.getRadius(), limitRight = VIEWPORT_WIDTH-mod.getRadius();
+
         EntityBaseView b= new BallView(game);
         b.update(mod);
         b.draw(game.getBatch());
+        if(mod.getX()<limitLeft ){
+            BallModel mod2=Model.getInstance().getBall();
+            mod2.setPos(VIEWPORT_WIDTH+mod2.getX(),mod2.getY());
+            EntityBaseView b2= new BallView(game);
+            b2.update(mod2);
+            b2.draw(game.getBatch());
+        }
+        else if(mod.getX()>limitRight){
+            BallModel mod2=Model.getInstance().getBall();
+            mod2.setPos(mod2.getX()-VIEWPORT_WIDTH,mod2.getY());
+            EntityBaseView b2= new BallView(game);
+            b2.update(mod2);
+            b2.draw(game.getBatch());
+        }
 
     }
 
@@ -235,7 +258,7 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
     private void velocityChecker(){
     double intendedVel = Math.sqrt( 2*Math.abs( GRAVITY ) *(DISTANCE_BETWEEN_PLATFORMS*0.8f)) ; //formula da conservaçao da Emecanica.
 //        System.out.println("intended "+intendedVel);
-        if(Controller.getInstance().getBall().getVelocity().y>0 && currVel<0  && Controller.getInstance().getBall().getVelocity().y > intendedVel){
+        if(Controller.getInstance().getBall().getVelocity().y>0 && currVel<0  /*&& Controller.getInstance().getBall().getVelocity().y > intendedVel*/){
                 Controller.getInstance().getBall().setVelocity(intendedVel);
         }
         currVel =Controller.getInstance().getBall().getVelocity().y;
@@ -244,7 +267,5 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
     }
 }
 
-//TODO:Meter a bola a desaparecer de um lado e a aparecer no outro
 //TODO: Plataformas vermelhas a mexer
 //TODO: Condição de Win, aplicar maquina de estados
-//TODO: Menu

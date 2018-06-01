@@ -19,7 +19,7 @@ public abstract class EntityBody {
     EntityBody(World world, EntityBaseModel model, boolean isDynamic) {
         BodyDef bodyDef = new BodyDef();
         if (isDynamic)
-            bodyDef.type = BodyDef.BodyType.DynamicBody;
+            bodyDef.type = BodyDef.BodyType.KinematicBody;
         bodyDef.position.set(model.getX(), model.getY());
 
         body = world.createBody(bodyDef);

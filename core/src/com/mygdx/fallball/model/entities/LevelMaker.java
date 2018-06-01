@@ -10,8 +10,6 @@ import static com.mygdx.fallball.view.View.VIEWPORT_WIDTH;
 public class LevelMaker {
     public final static float DISTANCE_BETWEEN_PLATFORMS = 20;
     public final static float FIRST_PLATFORM_Y = 25;
-    public final static float LOWEST_PLATFORM_X = 0;
-    public final static float HIGHEST_PLATFORM_X = VIEWPORT_WIDTH;
 
 
 
@@ -54,20 +52,42 @@ public class LevelMaker {
                     x=10/PIXEL_TO_METER;
                 else*//*
                 x+=randomX();*/
-        float y=FIRST_PLATFORM_Y, x=LOWEST_PLATFORM_X;
-        for (int i = 0; i < 100; i++){
+        float width=5;
+        float y=FIRST_PLATFORM_Y, x=width/2f;//ter a certeza que nao fica de fora
+//        for (int j = 0; j < 3; j++){//3 mundos
+//            x=-VIEWPORT_WIDTH+width/2f+VIEWPORT_WIDTH*j;
+//            y=FIRST_PLATFORM_Y;
+        for (int i = 0; i < 5; i++){
+                       //3 mundos
             PlatformModel platform;
-            if(y==5)
-                 platform = new RedPlatformModel(x,y,5,1,false);
-            else
-                 platform = new NormalPlatformModel(x,y,5,1);
-            this.platforms.add(platform);
-            y-=DISTANCE_BETWEEN_PLATFORMS;
-            if(x>=HIGHEST_PLATFORM_X)
-                x=LOWEST_PLATFORM_X;
-            else
-                x+=VIEWPORT_WIDTH/5;
 
+          if(y==5 || y==-15)
+                platform = new RedPlatformModel(x,y,width,1,4f);
+            else if(i==4)
+                 platform=new FinalPlatformModel(VIEWPORT_WIDTH/2,y,3  );
+            else
+                platform = new NormalPlatformModel(x,y,width,1);
+
+            this.platforms.add(platform);
+            x+=width; //step do x
+            y-=DISTANCE_BETWEEN_PLATFORMS;
+//                if(j==0)
+//                    if(x+width/2f>=0){
+//                        System.out.println("\n\n\nPROXIMA LINHA j=0");
+//                    x=-VIEWPORT_WIDTH+width/2f+VIEWPORT_WIDTH*j;
+//                        continue;}
+//                else if(j==1)
+                    if(x+width/2f>=VIEWPORT_WIDTH){
+                    System.out.println("\n\n\nPROXIMA LINHA j=1");
+                        x=width/2f;
+                        }
+//                else{
+//                    if(x+width/2f>=VIEWPORT_WIDTH*2){
+//                        System.out.println("\n\n\nPROXIMA LINHA j=2");
+//                        x=-VIEWPORT_WIDTH+width/2f+VIEWPORT_WIDTH*j;
+//                continue;}}
+//        }
+        //3 mundos
         }
     }
 
