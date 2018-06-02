@@ -13,6 +13,7 @@ import com.mygdx.fallball.model.Model;
 import com.mygdx.fallball.model.entities.NormalPlatformModel;
 import com.mygdx.fallball.model.entities.PlatformModel;
 import com.mygdx.fallball.model.entities.RedPlatformModel;
+import com.mygdx.fallball.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,10 +121,12 @@ public class Controller implements ContactListener {
 
         if (finalPlat != null)
             if (bodyB.getUserData() == ball.getUserData() && bodyA.getUserData() == finalPlat.getUserData())
-                System.out.println( "WIN GAME!!!\n\n\n\n\n\n" );                 //TODO:função ganhar jogo
+                View.win=true;
+                //System.out.println( "WIN GAME!!!\n\n\n\n\n\n" );                 //TODO:função ganhar jogo
         for (PlatformBody it : redPlats)
             if (bodyB.getUserData() == ball.getUserData() && bodyA.getUserData() == it.getUserData())
-                System.out.println( "LOOSE GAME!!!\n\n\n\n\n\n" );                 //TODO:função perder nivel
+                View.lose=true;
+                //System.out.println( "LOOSE GAME!!!\n\n\n\n\n\n" );                 //TODO:função perder nivel
 
     }
 

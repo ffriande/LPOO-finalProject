@@ -1,6 +1,6 @@
 package com.mygdx.fallball.model.entities;
 
-public abstract class PlatformModel extends EntityBaseModel {
+public abstract class PlatformModel extends EntityBaseModel implements java.io.Serializable{
     private float width;
     private float height;
 

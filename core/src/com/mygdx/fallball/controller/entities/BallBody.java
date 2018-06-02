@@ -8,8 +8,6 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.fallball.model.entities.BallModel;
 
-import static com.mygdx.fallball.model.entities.LevelMaker.DISTANCE_BETWEEN_PLATFORMS;
-
 public class BallBody extends EntityBody {
     public BallBody(World world, BallModel model) {
             super(world, model, false);

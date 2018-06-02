@@ -16,21 +16,20 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.fallball.FallBall;
-import com.mygdx.fallball.model.Model;
-import com.mygdx.fallball.view.View;
 
-public class ModeMenu extends ScreenAdapter {
+public class LoseMenu extends ScreenAdapter {
+    public final static int ButtonsWidth = 500;
+
+
     private FallBall game;
     private Stage stage;
-    private Sprite levelSprite;
-    private Sprite infiniteSprite;
-    private Sprite returnSprite;
+    private Sprite continueS;
     private Texture background;
     private OrthographicCamera cam;
     private Viewport viewport;
 
 
-    public ModeMenu(FallBall game){
+    public LoseMenu(FallBall game){
         this.game=game;
         background=new Texture("background.png");
         loadButtons();
@@ -51,15 +50,10 @@ public class ModeMenu extends ScreenAdapter {
 
 
     public void loadButtons(){
-        Texture levelTex=new Texture("LevelMode.png");
-        levelSprite =new Sprite(levelTex,levelTex.getWidth(),levelTex.getHeight());
-        levelSprite.setSize(MainMenu.ButtonsWidth,MainMenu.ButtonsWidth*levelSprite.getHeight()/levelSprite.getWidth());
-        Texture infiniteTex=new Texture("infinite.png");
-        infiniteSprite =new Sprite(infiniteTex,infiniteTex.getWidth(),infiniteTex.getHeight());
-        infiniteSprite.setSize(MainMenu.ButtonsWidth,MainMenu.ButtonsWidth*infiniteSprite.getHeight()/infiniteSprite.getWidth());
-        Texture returnTex=new Texture("return.png");
-        returnSprite =new Sprite(returnTex,returnTex.getWidth(),returnTex.getHeight());
-        returnSprite.setSize(MainMenu.ButtonsWidth,MainMenu.ButtonsWidth*returnSprite.getHeight()/returnSprite.getWidth());
+        Texture continueTex=new Texture("start.png");
+        continueS=new Sprite(continueTex,continueTex.getWidth(),continueTex.getHeight());
+        continueS.setSize(ButtonsWidth,ButtonsWidth*continueS.getHeight()/continueS.getWidth());
+
 
     }
 
@@ -69,37 +63,18 @@ public class ModeMenu extends ScreenAdapter {
         table.setFillParent(true);
         table.setDebug(true);
 
-        Drawable levelDrawable = new SpriteDrawable(levelSprite);
-        ImageButton levelButton = new ImageButton(levelDrawable);
-        Drawable infiniteDrawable = new SpriteDrawable(infiniteSprite);
-        ImageButton infiniteButton = new ImageButton(infiniteDrawable);
-        Drawable returnDrawable = new SpriteDrawable(returnSprite);
-        ImageButton returnButton = new ImageButton(returnDrawable);
+        Drawable continueDrawable = new SpriteDrawable(continueS);
+        ImageButton continueButton = new ImageButton(continueDrawable);
 
-        levelButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Model.getInstance().setLevel(1);
-                game.setScreen(new View(game));
-            }
-        });
-        infiniteButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                //game.setScreen(new MainMenu(game));TODO:meter o screen no modo infinito
-            }
-        });
-        returnButton.addListener(new ClickListener() {
+        continueButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new MainMenu(game));
             }
         });
-        table.add(levelButton).spaceBottom(100);
-        table.row();
-        table.add(infiniteButton).spaceBottom(100);
-        table.row();
-        table.add(returnButton);
+
+        table.add(continueButton);
+
         stage.addActor(table);
     }
 
@@ -116,9 +91,9 @@ public class ModeMenu extends ScreenAdapter {
         //setScreen(new View(this));
 
     }
-
     @Override
     public void dispose() {
         stage.dispose();
+        background.dispose();
     }
 }
