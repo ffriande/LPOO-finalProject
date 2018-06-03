@@ -17,7 +17,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.fallball.FallBall;
 
-import sun.applet.Main;
 
 public class LoseMenu extends ScreenAdapter {
 

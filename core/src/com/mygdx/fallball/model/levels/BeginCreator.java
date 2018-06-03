@@ -1,9 +1,11 @@
 package com.mygdx.fallball.model.levels;
 
+import com.mygdx.fallball.model.entities.FinalPlatformModel;
 import com.mygdx.fallball.model.entities.NormalPlatformModel;
 import com.mygdx.fallball.model.entities.PlatformModel;
 import com.mygdx.fallball.model.levels.PlatformTemplate;
 import com.mygdx.fallball.model.levels.TemplateContainer;
+import com.mygdx.fallball.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,5 +51,11 @@ public class BeginCreator extends TemplateContainer {
         plat.add(n10);
         p.setPlatforms(plat);
         templates.add(p);
+        List<PlatformModel> finalPlat=new ArrayList<PlatformModel>();
+        PlatformTemplate pf=new PlatformTemplate();
+        FinalPlatformModel n11=new FinalPlatformModel(View.VIEWPORT_WIDTH/2f,0f,PLATFORM_HEIGHT);
+        finalPlat.add(n11);
+        pf.setPlatforms(finalPlat);
+        templates.add(pf);
     }
 }

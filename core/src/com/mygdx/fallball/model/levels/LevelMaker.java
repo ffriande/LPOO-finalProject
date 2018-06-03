@@ -30,14 +30,11 @@ public class LevelMaker {
     //TODO:acabar de meter musica
     //TODO:meter highscore
 
-
+    private final static Random rand=new Random();
     private List<TemplateContainer> definied = new ArrayList<TemplateContainer>();
     private List<PlatformModel> platforms=new ArrayList<PlatformModel>();
 
     public LevelMaker(int difficulty){
-        //readSer(difficulty);
-        //createTemplateCont();
-        //saveSer();
         switch(difficulty){
             case 1:
                 level1();
@@ -51,80 +48,34 @@ public class LevelMaker {
             case 5:
                 break;
         }
-        /*
-        for(TemplateContainer t:
-        saveSer(fileName);
-         */
     }
     public List<PlatformModel> getPlatforms() {
         return platforms;
     }
 
-    private void readSer(int difficulty){
-        for(int u=0;u<difficulty;u++) {
-            String fileName="level" + String.valueOf(difficulty) + ".ser";
-            TemplateContainer t = null;
-            try {
-                FileInputStream fileIn = new FileInputStream(fileName);
-                ObjectInputStream in = new ObjectInputStream(fileIn);
-                t = (TemplateContainer) in.readObject();
-                in.close();
-                fileIn.close();
-            } catch (IOException i) {
-                i.printStackTrace();
-                return;
-            } catch (ClassNotFoundException c) {
-                System.out.println("PlatformTemplate class not found");
-                c.printStackTrace();
-                return;
-            }
-            definied.add(t);
-        }
-    }
-
-  /* private void createTemplateCont(){
-        List<PlatformTemplate> templates=new ArrayList<PlatformTemplate>();
-        List<PlatformModel> plat=new ArrayList<PlatformModel>();
-        PlatformTemplate p=new PlatformTemplate();
-        NormalPlatformModel n=new NormalPlatformModel(2.5f,0,5,3);
-        plat.add(n);
-        NormalPlatformModel n1=new NormalPlatformModel(29.5f,0,41,3);
-        plat.add(n1);
-        p.setPlatforms(plat);
-        templates.add(p);
-        TemplateContainer t=new TemplateContainer();
-        t.setAll(1,templates);
-        definied.add(t);
-
-    }*/
-
-    private void saveSer(){
-        Json json=new Json();
-        for(TemplateContainer it:definied) {
-            String name="level"+String.valueOf(it.getDifficulty())+".txt";
-
-            /*try {
-                FileOutputStream fileOut =new FileOutputStream("level1.txt");
-                ObjectOutputStream out = new ObjectOutputStream(fileOut);
-                out.writeObject(it);
-                out.close();
-                fileOut.close();
-                System.out.printf("Serialized data is saved in " + name);
-            } catch (IOException i) {
-                i.printStackTrace();
-            }*/
-
-        }
-    }
-
     private void level1(){
-        TemplateContainer t=new BeginCreator(0);
-        definied.add(t);
-        platforms=t.getTemplates().get(0).getPlatforms();
-        TemplateContainer g=new Level1Creator(1);
-        definied.add(g);
-        g.getTemplates().get(0).setY(t.getTemplates().get(0).getLastY()-DISTANCE_BETWEEN_PLATFORMS);
-        platforms.addAll(g.getTemplates().get(0).getPlatforms());
+        TemplateContainer start=new BeginCreator(0);
+        TemplateContainer t1=new Level1Creator(1);
+        definied.add(t1);
+        //platforms.addAll(start.getTemplates().get(0).getPlatforms());
+        float lastY=0;
+        int i=0;
+        List<PlatformTemplate> aux=definied.get(i).getTemplates();
+        for(int y=0;y<4;y++){
+            PlatformTemplate t=new PlatformTemplate();
+            int rand_index=rand.nextInt(aux.size());
+            t.setPlatforms(aux.get(rand_index).getPlatforms());
+            t.setY(lastY-DISTANCE_BETWEEN_PLATFORMS);
+            platforms.addAll(t.getPlatforms());
+            lastY=t.getLastY();
+        }
+        start.getTemplates().get(1).setY(lastY-DISTANCE_BETWEEN_PLATFORMS);
+        platforms.addAll(start.getTemplates().get(1).getPlatforms());
+
+
+
+
+
         /*PlatformTemplate help=definied.get(0).getTemplates().get(0);
         help.setY(FIRST_PLATFORM_Y);
         for(PlatformModel it:help.getPlatforms())
