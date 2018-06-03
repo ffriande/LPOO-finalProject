@@ -14,7 +14,7 @@ public class NormalPlatformView extends EntityBaseView {
     }
 
     public Sprite createSprite(FallBall game) {
-        Texture texture = game.getAssetManager().get("platform.jpg");
+        Texture texture = game.getAssetManager().get("platform.png");
         Sprite s= new Sprite(texture,texture.getWidth(), texture.getHeight());
         return s;
     }

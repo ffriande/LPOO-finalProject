@@ -55,7 +55,7 @@ public class OptionsMenu extends ScreenAdapter {
 
 
     public void loadButtons(){
-        Texture MuteTex=new Texture("LevelMode.png");
+        Texture MuteTex=new Texture("sound.png");
         MuteSprite =new Sprite(MuteTex,MuteTex.getWidth(),MuteTex.getHeight());
         MuteSprite.setSize(MainMenu.ButtonsWidth,MainMenu.ButtonsWidth*MuteSprite.getHeight()/MuteSprite.getWidth());
         Texture returnTex=new Texture("return.png");

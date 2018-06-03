@@ -10,7 +10,7 @@ public class RedPlatformView extends EntityBaseView {
     }
 
     public Sprite createSprite(FallBall game) {
-        Texture texture = game.getAssetManager().get("redplatform.jpg");
+        Texture texture = game.getAssetManager().get("redplatform.png");
         Sprite s= new Sprite(texture,texture.getWidth(), texture.getHeight());
         return s;
     }
