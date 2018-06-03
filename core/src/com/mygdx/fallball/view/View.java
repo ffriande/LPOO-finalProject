@@ -33,7 +33,7 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
     public final static float PIXEL_TO_METER = 0.08f;
     public final static float VIEWPORT_WIDTH = 50;
-    public static float VOLUME=1.0f;
+    public static float VOLUME = 0.0f;
     private static final boolean DEBUG_PHYSICS = true;
     public static boolean lose;
     public static boolean win;
@@ -57,7 +57,7 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
         loadAssets();
         createCamera();
 
-        lowestPoint = (h / w) / 2 + DISTANCE_BETWEEN_PLATFORMS / 0.08f;
+        lowestPoint = (h / w) /*/ 2 + DISTANCE_BETWEEN_PLATFORMS / 0.08f*/;
         gestureDetector = new GestureDetector(this);
         Gdx.input.setInputProcessor(gestureDetector);
 
@@ -68,7 +68,7 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
         w = Gdx.graphics.getWidth();
         h = Gdx.graphics.getHeight();
-        System.out.println(w +" "+h);
+        System.out.println(w + " " + h);
         camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * (h / w));
 
         camera.position.set(camera.viewportWidth / 2f  /*-VIEWPORT_WIDTH/PIXEL_TO_METER*/, lowestPoint, 0);
@@ -99,21 +99,18 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
     @Override
     public void render(float delta) {
         //if (win)
-            //TODO:meter ecra de win
+        //TODO:meter ecra de win
         if (lose)
             game.setScreen(new LoseMenu(game));
-            //TODO:meter ecra de lose
+        //TODO:meter ecra de lose
+        velocityChecker();
 
-
-                velocityChecker();
-        //hitEdge();
         Controller.getInstance().update(delta);
 
-        if (Controller.getInstance().getBall().getY() / PIXEL_TO_METER < lowestPoint && Controller.getInstance().getBall().getY() / PIXEL_TO_METER < lowestPoint) {
+        if (Controller.getInstance().getBall().getY() / PIXEL_TO_METER < lowestPoint) {
             camera.translate(0, Controller.getInstance().getBall().getY() / PIXEL_TO_METER - lowestPoint);
             camera.update();
             lowestPoint = Controller.getInstance().getBall().getY() / PIXEL_TO_METER;
-            // System.out.println("YOOO  " +lowestPoint+ "  Camerapos: " + camera.position.y);
         }
 
 
@@ -122,20 +119,12 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.getBatch().setProjectionMatrix(camera.combined);
-
         game.getBatch().begin();
 
 
-//        System.out.println("CAmera pos after: "+camera.position.x +" " +camera.position.y );
         drawBackground();
-
         drawPlats();
         drawBall();
-
-        //drawBackground();
-//        System.out.println(Model.getInstance().getBall().getX()+" - x;    "+Model.getInstance().getBall().getY()+" - y");
-//
-//        System.out.println("Ball body"+Controller.getInstance().getBall().getX()+" - x;    "+Controller.getInstance().getBall().getY()+" - y");
         game.getBatch().end();
 
 
@@ -148,13 +137,9 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
     }
 
     @Override
-    public void dispose(){
+    public void dispose() {
         debugRenderer.dispose();
     }
-
-    private void handleInputs(float delta) {
-    }
-
 
     private void drawPlats() {
         List<PlatformModel> p = Model.getInstance().getPlatforms();
@@ -206,12 +191,12 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
         game.getBatch().draw(background, camera.position.x - camera.viewportWidth / 2f, camera.position.y - camera.viewportHeight / 2f, 0, 0, (int) camera.viewportWidth, (int) camera.viewportHeight + 200);
     }
 
-    public static void muteFX(){
-        VOLUME=0.0f;
+    public static void muteFX() {
+        VOLUME = 0.0f;
     }
 
-    public static void normalizeFX(){
-        VOLUME=1.0f;
+    public static void normalizeFX() {
+        VOLUME = 1.0f;
     }
 
     @Override
@@ -261,26 +246,11 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
     }
 
-   /* private void hitEdge(){
-
-        if(Controller.getInstance().getBall().getVelocity().y>0 && currVel<0  && Controller.getInstance().getBall().getVelocity().y< 10/PIXEL_TO_METER){
-            Controller.getInstance().getBall().setVelX_to_zero();
-            //   Controller.getInstance().getBall().applyImpulse(1000000);
-            System.out.println("\n\n\n\n ZAAAS\n\n");
-        }
-        currVel =Controller.getInstance().getBall().getVelocity().y;
-        System.out.println("\n"+currVel+"\n");
-
-    }*/
-
     private void velocityChecker() {
-        double intendedVel = Math.sqrt(2 * Math.abs(GRAVITY) * (DISTANCE_BETWEEN_PLATFORMS * 0.8f)); //formula da conservaçao da Emecanica.
-//        System.out.println("intended "+intendedVel);
+        double intendedVel = Math.sqrt(2 * Math.abs(GRAVITY) * (DISTANCE_BETWEEN_PLATFORMS * 0.65f)); //formula da conservaçao da Emecanica.
         if (Controller.getInstance().getBall().getVelocity().y > 0 && currVel < 0  /*&& Controller.getInstance().getBall().getVelocity().y > intendedVel*/) {
             Controller.getInstance().getBall().setVelocity(intendedVel);
         }
         currVel = Controller.getInstance().getBall().getVelocity().y;
-//        System.out.println("\n"+currVel+"\n");
-
     }
 }
