@@ -12,9 +12,7 @@ import com.mygdx.fallball.model.entities.EntityBaseModel;
 
 public abstract class EntityBody {
 
-
     final Body body;
-
 
     EntityBody(World world, EntityBaseModel model, boolean isDynamic) {
         BodyDef bodyDef = new BodyDef();
@@ -27,7 +25,7 @@ public abstract class EntityBody {
     }
 
     public float getX() {
-        return body.getWorldCenter().x;  //pode ter de ser mudado para getWorldCenter
+        return body.getWorldCenter().x;
     }
 
     /**
@@ -39,21 +37,8 @@ public abstract class EntityBody {
         return body.getWorldCenter().y; //pode ter de ser mudado para getWorldCenter
     }
 
-
     public void setTransform(float x, float y) {
         body.setTransform(x, y, 0);
-    }
-
-
-    /**
-     * Wraps the applyForceToCenter method from the Box2D body class.
-     *
-     * @param forceX the x-component of the force to be applied
-     * @param forceY the y-component of the force to be applied
-     * @param awake  should the body be awaken
-     */
-    public void applyForceToCenter(float forceX, float forceY, boolean awake) {
-        body.applyForceToCenter(forceX, forceY, awake);
     }
 
     /**

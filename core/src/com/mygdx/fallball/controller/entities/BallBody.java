@@ -10,26 +10,17 @@ import com.mygdx.fallball.model.entities.BallModel;
 
 public class BallBody extends EntityBody {
     public BallBody(World world, BallModel model) {
-            super(world, model, false);
-        float   radius = model.getRadius(),
+        super(world, model, false);
+        float radius = model.getRadius(),
                 density = 1f,
                 friction = 0f,
                 restitution = 1f;
 
-
         createBallFixture(body, radius, density, friction, restitution);
-       body.setType(BodyDef.BodyType.DynamicBody);
-
-    }
-    public void applyImpulse(float impulseY){
-        body.applyLinearImpulse(0,impulseY,this.getX(),this.getY(), true);
+        body.setType(BodyDef.BodyType.DynamicBody);
     }
 
-
-
-    final void createBallFixture(Body body, float radius, float density, float friction, float restitution/*,short category, short mask */ ) {
-
-
+    final private void createBallFixture(Body body, float radius, float density, float friction, float restitution) {
         CircleShape circle = new CircleShape();
         circle.setRadius(radius);
 
@@ -37,29 +28,25 @@ public class BallBody extends EntityBody {
         fixtureDef.shape = circle;
         fixtureDef.density = density;
         fixtureDef.friction = friction;
-        fixtureDef.restitution = restitution; // Make it bounce a little bit
-
-
-
-     /*   fixtureDef.filter.categoryBits = category; //filter is for not to happen collision acho eu
-        fixtureDef.filter.maskBits = mask;
-        */
-
+        fixtureDef.restitution = restitution;
 
         body.createFixture(fixtureDef);
-
         circle.dispose();
     }
 
-
-    public void setVelX_to_zero(){
-        body.setLinearVelocity(0,body.getLinearVelocity().y );
+    public void setVelX_to_zero() {
+        body.setLinearVelocity(0, body.getLinearVelocity().y);
     }
 
-    public void setVelocity(double y){
-        body.setLinearVelocity( 0, (float)y );
+    public void setVelocity(double y) {
+        body.setLinearVelocity(0, (float) y);
     }
-    public Vector2 getVelocity(){
+
+    public Vector2 getVelocity() {
         return body.getLinearVelocity();
+    }
+
+    public void applyImpulse(float impulseY) {
+        body.applyLinearImpulse(0, impulseY, this.getX(), this.getY(), true);
     }
 }

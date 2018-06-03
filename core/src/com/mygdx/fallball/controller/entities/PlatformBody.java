@@ -23,40 +23,15 @@ public class PlatformBody extends EntityBody {
         isMoving = isKinematic;
         this.width = model.getWidth();
 
-
-        if (!isKinematic)
-            createInertPlatformFixture(body, model.getWidth(), model.getHeight());
-        else {
-            createMovingPlatformFixture(body, model.getWidth(), model.getHeight());
-
-        }
-
+        createPlatformFixture(body, model.getWidth(), model.getHeight());
     }
 
 
-    final void createInertPlatformFixture(Body body, float width, float height) {
+     private final void createPlatformFixture(Body body, float width, float height) {
         PolygonShape plat = new PolygonShape();
         plat.setAsBox(width / 2f, height / 2f);
         body.createFixture(plat, 0.0f);
         plat.dispose();
-    }
-
-
-    final void createMovingPlatformFixture(Body body, float width, float height) { //TODO:MUDAR ISTO
-        PolygonShape plat = new PolygonShape();
-        plat.setAsBox(width / 2f, height / 2f);
-        body.createFixture(plat, 0.0f);
-        plat.dispose();
-
-    }
-
-    /*
-        public float getVelocity(){
-            return body.getLinearVelocity( ).x;
-        }
-    */
-    public void setVelocity(float vel) {
-        this.velocity = vel;
     }
 
     public void moveRedPlat() {
@@ -70,12 +45,6 @@ public class PlatformBody extends EntityBody {
         } else {
             movePlats_aux(rightEdgePos, leftEdgePos, 2);
         }
-
-
-    }
-
-    public boolean isMoving() {
-        return isMoving;
     }
 
     private void movePlats_aux(float rightEdgePos, float leftEdgePos, int world) {
@@ -87,7 +56,7 @@ public class PlatformBody extends EntityBody {
                 body.setLinearVelocity(this.velocity, 0);
             } else if (Math.abs(body.getLinearVelocity().x) != Math.abs(this.velocity)) //testa se ja tem vel
                 body.setLinearVelocity(this.velocity, 0);
-        } else if(this.getX() < midScreen){
+        } else if (this.getX() < midScreen) {
             if (leftEdgePos <= -VIEWPORT_WIDTH + VIEWPORT_WIDTH * (world - 1)) {
                 body.setLinearVelocity(this.velocity, 0);
             } else if (rightEdgePos >= midScreen) {
@@ -96,4 +65,9 @@ public class PlatformBody extends EntityBody {
                 body.setLinearVelocity(this.velocity, 0);
         }
     }
+
+    public boolean isMoving() {
+        return isMoving;
+    }
+
 }

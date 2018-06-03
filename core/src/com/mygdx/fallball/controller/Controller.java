@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.mygdx.fallball.model.levels.LevelMaker.DISTANCE_BETWEEN_PLATFORMS;
+import static com.mygdx.fallball.model.levels.LevelMaker.PLATFORM_HEIGHT;
 import static com.mygdx.fallball.view.View.PIXEL_TO_METER;
 import static com.mygdx.fallball.view.View.VIEWPORT_WIDTH;
 
@@ -122,7 +123,7 @@ public class Controller implements ContactListener {
         Body bodyA = contact.getFixtureA().getBody();
         Body bodyB = contact.getFixtureB().getBody();
 
-        float destroyerVelocity = (float)Math.sqrt(2*Math.abs(GRAVITY)*(3*3/*TODO: este 3 é a largura da plataforma, fazer macro*/+3* DISTANCE_BETWEEN_PLATFORMS));
+        float destroyerVelocity = (float)Math.sqrt(2*Math.abs(GRAVITY)*(3*PLATFORM_HEIGHT+3* DISTANCE_BETWEEN_PLATFORMS));
         if(bodyB.getUserData()  == ball.getUserData())
         if(ball.getVelocity().y<=(-destroyerVelocity)){
             bodyA.setActive(false);
