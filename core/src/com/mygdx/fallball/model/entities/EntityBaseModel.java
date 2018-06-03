@@ -1,6 +1,6 @@
 package com.mygdx.fallball.model.entities;
 
-public abstract class EntityBaseModel implements java.io.Serializable{
+public abstract class EntityBaseModel{
 
     private float x;
     private float y;

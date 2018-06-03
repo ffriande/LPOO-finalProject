@@ -33,6 +33,7 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
     public final static float PIXEL_TO_METER = 0.08f;
     public final static float VIEWPORT_WIDTH = 50;
+    public static float VOLUME=1.0f;
     private static final boolean DEBUG_PHYSICS = true;
     public static boolean lose;
     public static boolean win;
@@ -204,6 +205,13 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
         game.getBatch().draw(background, camera.position.x - camera.viewportWidth / 2f, camera.position.y - camera.viewportHeight / 2f, 0, 0, (int) camera.viewportWidth, (int) camera.viewportHeight + 200);
     }
 
+    public static void muteFX(){
+        VOLUME=0.0f;
+    }
+
+    public static void normalizeFX(){
+        VOLUME=1.0f;
+    }
 
     @Override
     public boolean touchDown(float x, float y, int pointer, int button) {

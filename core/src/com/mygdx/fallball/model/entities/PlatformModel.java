@@ -1,6 +1,8 @@
 package com.mygdx.fallball.model.entities;
 
-public abstract class PlatformModel extends EntityBaseModel implements java.io.Serializable{
+import com.badlogic.gdx.utils.Json;
+
+public abstract class PlatformModel extends EntityBaseModel{
     private float width;
     private float height;
 

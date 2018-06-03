@@ -13,26 +13,25 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.fallball.FallBall;
 
-import sun.applet.Main;
+public class LevelMenu extends ScreenAdapter{
 
-public class LoseMenu extends ScreenAdapter {
-
-
-    private FallBall game;
+    /*private FallBall game;
     private Stage stage;
-    private Sprite continueS;
+    private Sprite levelS[];
     private Texture background;
     private OrthographicCamera cam;
     private Viewport viewport;
 
-
-    public LoseMenu(FallBall game){
+    public LevelMenu(FallBall game){
         this.game=game;
         background=new Texture("background.png");
+        levelS=new Sprite[Levels.getInstance().nrLevels];
         loadButtons();
         cam=new OrthographicCamera();
         viewport=new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam);
@@ -48,12 +47,19 @@ public class LoseMenu extends ScreenAdapter {
 
     }
 
-
-
     public void loadButtons(){
-        Texture continueTex=new Texture("start.png");
-        continueS=new Sprite(continueTex,continueTex.getWidth(),continueTex.getHeight());
-        continueS.setSize(MainMenu.ButtonsWidth,MainMenu.ButtonsWidth*continueS.getHeight()/continueS.getWidth());
+        for(int i=0;i<Levels.getInstance().getNrUnlocked();i++) {
+            String name="level"+(i+1)+".png";
+            Texture Leveltex = new Texture(name);
+            levelS[i] = new Sprite(Leveltex, Leveltex.getWidth(), Leveltex.getHeight());
+            levelS[i].setSize(MainMenu.ButtonsWidth, MainMenu.ButtonsWidth * levelS[i].getHeight() / levelS[i].getWidth());
+        }
+
+        for(int i=Levels.getInstance().getNrUnlocked();i<Levels.getInstance().getNrLevels();i++){
+            Texture lockedtex=new Texture("locked.png");
+            levelS[i]=new Sprite(lockedtex,lockedtex.getWidth(),lockedtex.getHeight());
+            levelS[i].setSize(MainMenu.ButtonsWidth, MainMenu.ButtonsWidth * levelS[i].getHeight() / levelS[i].getWidth());
+        }
 
 
     }
@@ -63,11 +69,12 @@ public class LoseMenu extends ScreenAdapter {
         Table table = new Table();
         table.setFillParent(true);
         table.setDebug(true);
+        for(int i=0;i<Levels.getInstance().getNrUnlocked();i++) {
+            Drawable LevelDrawable = new SpriteDrawable(levelS[i]);
+            ImageButton Levelbutton = new ImageButton(LevelDrawable);
+        }
 
-        Drawable continueDrawable = new SpriteDrawable(continueS);
-        ImageButton continueButton = new ImageButton(continueDrawable);
-
-        continueButton.addListener(new ClickListener() {
+        Level1tex.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new MainMenu(game));
@@ -96,5 +103,5 @@ public class LoseMenu extends ScreenAdapter {
     public void dispose() {
         stage.dispose();
         background.dispose();
-    }
+    }*/
 }

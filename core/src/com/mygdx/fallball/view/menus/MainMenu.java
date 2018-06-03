@@ -2,6 +2,8 @@ package com.mygdx.fallball.view.menus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -24,6 +26,7 @@ import com.mygdx.fallball.view.Buttons.StartButtonView;
 import com.mygdx.fallball.view.View;
 
 import java.awt.Button;
+import java.awt.Menu;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,11 +47,15 @@ public class MainMenu extends ScreenAdapter {
     private Texture background;
     private OrthographicCamera cam;
     private Viewport viewport;
+    private final static Sound MenuMusic=Gdx.audio.newSound(Gdx.files.internal("music.wav"));
 
 
     public MainMenu(FallBall game){
         this.game=game;
         background=new Texture("background.png");
+        MenuMusic.stop();
+        long id=MenuMusic.play(View.VOLUME/2);
+        MenuMusic.setLooping(id,true);
         loadButtons();
         cam=new OrthographicCamera();
         viewport=new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam);
@@ -57,6 +64,7 @@ public class MainMenu extends ScreenAdapter {
         cam.update();
         stage=new Stage(viewport,game.getBatch());
         Gdx.input.setInputProcessor(stage);
+
 
 
 
@@ -86,11 +94,18 @@ public class MainMenu extends ScreenAdapter {
         table.setDebug(true);
 
         Drawable startDrawable = new SpriteDrawable(start);
-        ImageButton startButton = new ImageButton(startDrawable);
+        final ImageButton startButton = new ImageButton(startDrawable);
         Drawable optionsDrawable = new SpriteDrawable(options);
-        ImageButton optionsButton = new ImageButton(optionsDrawable);
+        final ImageButton optionsButton = new ImageButton(optionsDrawable);
         Drawable exitDrawable = new SpriteDrawable(exit);
-        ImageButton exitButton = new ImageButton(exitDrawable);
+        final ImageButton exitButton = new ImageButton(exitDrawable);
+
+
+        table.add(startButton).spaceBottom(100);
+        table.row();
+        table.add(optionsButton).spaceBottom(100);
+        table.row();
+        table.add(exitButton).spaceBottom(100);
         startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -109,13 +124,8 @@ public class MainMenu extends ScreenAdapter {
                 Gdx.app.exit();
             }
         });
-
-        table.add(startButton).spaceBottom(100);
-        table.row();
-        table.add(optionsButton).spaceBottom(100);
-        table.row();
-        table.add(exitButton).spaceBottom(100);
         stage.addActor(table);
+
     }
 
     @Override
@@ -135,5 +145,6 @@ public class MainMenu extends ScreenAdapter {
     public void dispose() {
         stage.dispose();
         background.dispose();
+        MenuMusic.dispose();
     }
 }

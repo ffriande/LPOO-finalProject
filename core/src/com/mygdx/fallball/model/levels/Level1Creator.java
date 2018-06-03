@@ -1,31 +1,23 @@
 package com.mygdx.fallball.model.levels;
 
-
 import com.mygdx.fallball.model.entities.NormalPlatformModel;
 import com.mygdx.fallball.model.entities.PlatformModel;
+import com.mygdx.fallball.model.entities.RedPlatformModel;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.mygdx.fallball.model.levels.LevelMaker.DISTANCE_BETWEEN_PLATFORMS;
 import static com.mygdx.fallball.model.levels.LevelMaker.PLATFORM_HEIGHT;
 
-public class TemplateContainer{
-    int difficulty;
-    List<PlatformTemplate> templates=new ArrayList<PlatformTemplate>();
+public class Level1Creator extends TemplateContainer {
 
-    public TemplateContainer(int difficulty){
-        this.difficulty=difficulty;
+    public Level1Creator(int difficulty){
+        super(difficulty);
+        createType1();
     }
 
-    public List<PlatformTemplate> getTemplates(){
-        return templates;
-    }
-
-    public int getDifficulty(){
-        return difficulty;
-    }
-
-    public void createStartType(){
+    public void createType1(){
         List<PlatformModel> plat=new ArrayList<PlatformModel>();
         PlatformTemplate p=new PlatformTemplate();
         float y=0;
@@ -53,12 +45,11 @@ public class TemplateContainer{
         y-= DISTANCE_BETWEEN_PLATFORMS;
         NormalPlatformModel n9=new NormalPlatformModel(2.5f,y,5, PLATFORM_HEIGHT);
         plat.add(n9);
-        NormalPlatformModel n10=new NormalPlatformModel(29.5f,y,41, PLATFORM_HEIGHT);
+        RedPlatformModel n10=new RedPlatformModel(29.5f,y,41, PLATFORM_HEIGHT);
         plat.add(n10);
         p.setPlatforms(plat);
         templates.add(p);
     }
-
 
 
 }

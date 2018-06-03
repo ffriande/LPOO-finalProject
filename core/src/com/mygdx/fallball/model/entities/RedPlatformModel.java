@@ -1,6 +1,6 @@
 package com.mygdx.fallball.model.entities;
 
-public class RedPlatformModel extends PlatformModel implements java.io.Serializable{
+public class RedPlatformModel extends PlatformModel{
 
 
 
