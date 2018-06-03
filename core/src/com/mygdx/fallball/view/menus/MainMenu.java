@@ -33,8 +33,6 @@ import java.util.List;
 import javax.xml.soap.Text;
 
 public class MainMenu extends ScreenAdapter {
-    //TODO:Options menu
-    //TODO:Select mode menu
     //TODO:Select level menu
     public final static int ButtonsWidth = 500;
 
@@ -47,7 +45,7 @@ public class MainMenu extends ScreenAdapter {
     private Texture background;
     private OrthographicCamera cam;
     private Viewport viewport;
-    private final static Sound MenuMusic=Gdx.audio.newSound(Gdx.files.internal("music.wav"));
+    public final static Sound MenuMusic=Gdx.audio.newSound(Gdx.files.internal("music.wav"));
 
 
     public MainMenu(FallBall game){
@@ -115,7 +113,7 @@ public class MainMenu extends ScreenAdapter {
         optionsButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //game.setScreen(new ModeMenu(game)); TODO:Meter options
+                game.setScreen(new OptionsMenu(game));
             }
         });
         exitButton.addListener(new ClickListener() {

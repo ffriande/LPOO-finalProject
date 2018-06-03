@@ -1,17 +1,24 @@
 package com.mygdx.fallball.view.menus;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.fallball.model.Model;
 
-public class Levels /*implements Json.Serializable*/ {
-   /* private static Levels instance;
+import java.util.logging.FileHandler;
+
+public class Levels implements Json.Serializable {
+    private static Levels instance;
     int nrUnlocked;
     int nrLevels;
-    Json json;
     private Levels(){
+        nrUnlocked=1;
+        nrLevels=4;
         Json json=new Json();
-        read(json,);
+        if(Gdx.files.local("levels.json").exists())
+            readJson(json.fromJson(String.class,Gdx.files.local("levels.json")));
+        write(json);
     }
 
     public int getNrUnlocked(){
@@ -28,13 +35,22 @@ public class Levels /*implements Json.Serializable*/ {
             instance = new Levels();
         return instance;
     }
+
+    public void readJson(String s){
+        nrLevels=Integer.parseInt(s.substring(0,s.indexOf(";")));
+        nrUnlocked=Integer.parseInt(s.substring(s.indexOf(";")+1,s.indexOf(";",2)));
+    }
     @Override
     public void write(Json json) {
-        json.writeValue(name,number);
+        String s;
+        s=nrLevels + ";" + nrUnlocked+";";
+        String levels =json.toJson(s,String.class);
+        FileHandle file=Gdx.files.local("levels.json");
+        file.writeString(levels,false);
     }
 
     @Override
     public void read(Json json, JsonValue jsonData) {
 
-    }*/
+    }
 }

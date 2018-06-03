@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.fallball.FallBall;
+import com.mygdx.fallball.controller.Controller;
 import com.mygdx.fallball.model.Model;
 import com.mygdx.fallball.view.View;
 
@@ -79,8 +80,7 @@ public class ModeMenu extends ScreenAdapter {
         levelButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Model.getInstance().setLevel(1);
-                game.setScreen(new View(game));
+                game.setScreen(new LevelMenu(game));
             }
         });
         infiniteButton.addListener(new ClickListener() {

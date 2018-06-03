@@ -24,12 +24,11 @@ import static com.mygdx.fallball.view.View.VIEWPORT_WIDTH;
 public class LevelMaker {
     public final static float DISTANCE_BETWEEN_PLATFORMS = 30;
     public final static float FIRST_PLATFORM_Y = 25;
-    public final static float PLATFORM_HEIGHT=2;
+    public final static float PLATFORM_HEIGHT=3;
     //TODO:fazer mais alguns levels
     //TODO:pensar no algoritmo para o infinite mode
     //TODO:acabar de meter musica
     //TODO:meter highscore
-    //TODO:criar funcao para no controller para reeniciar
 
 
     private List<TemplateContainer> definied = new ArrayList<TemplateContainer>();
