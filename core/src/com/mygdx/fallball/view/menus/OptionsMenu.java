@@ -36,7 +36,6 @@ public class OptionsMenu extends ScreenAdapter {
     public OptionsMenu(FallBall game){
         this.game=game;
         background=new Texture("background.png");
-        MainMenu.MenuMusic.stop();
         loadButtons();
         cam=new OrthographicCamera();
         viewport=new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam);
@@ -80,7 +79,9 @@ public class OptionsMenu extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 if(View.VOLUME==0f){
                     View.VOLUME=1f;
+                    MainMenu.MenuMusic.loop(View.VOLUME);
                 }else {
+                    MainMenu.MenuMusic.stop();
                     View.VOLUME = 0f;
                 }
             }
@@ -88,6 +89,7 @@ public class OptionsMenu extends ScreenAdapter {
         returnButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                MainMenu.MenuMusic.stop();
                 game.setScreen(new MainMenu(game));
             }
         });

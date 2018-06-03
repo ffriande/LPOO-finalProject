@@ -51,9 +51,7 @@ public class MainMenu extends ScreenAdapter {
     public MainMenu(FallBall game){
         this.game=game;
         background=new Texture("background.png");
-        MenuMusic.stop();
-        long id=MenuMusic.play(View.VOLUME/2);
-        MenuMusic.setLooping(id,true);
+        MenuMusic.loop(View.VOLUME);
         loadButtons();
         cam=new OrthographicCamera();
         viewport=new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam);

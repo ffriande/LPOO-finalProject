@@ -70,6 +70,7 @@ public class LoseMenu extends ScreenAdapter {
         continueButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                MainMenu.MenuMusic.stop();
                 game.setScreen(new MainMenu(game));
             }
         });

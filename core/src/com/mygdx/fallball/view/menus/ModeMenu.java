@@ -92,6 +92,7 @@ public class ModeMenu extends ScreenAdapter {
         returnButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                MainMenu.MenuMusic.stop();
                 game.setScreen(new MainMenu(game));
             }
         });

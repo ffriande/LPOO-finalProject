@@ -123,17 +123,19 @@ public class Controller implements ContactListener {
         Body bodyB = contact.getFixtureB().getBody();
 
         float destroyerVelocity = (float)Math.sqrt(2*Math.abs(GRAVITY)*(3*PLATFORM_HEIGHT+3* DISTANCE_BETWEEN_PLATFORMS));
-        if(bodyB.getUserData()  == ball.getUserData())
-        if(ball.getVelocity().y<=(-destroyerVelocity)){
-            bodyA.setActive(false);
-            Model.getInstance().destroyPlatform(ball.getX(),ball.getY(),Model.getInstance().getBall().getRadius());
-        }
-
         if (finalPlat != null)
             if (bodyB.getUserData() == ball.getUserData() && bodyA.getUserData() == finalPlat.getUserData()) {
                 View.win = true;
+                return;
                 //System.out.println( "WIN GAME!!!\n\n\n\n\n\n" );                 //TODO:função ganhar jogo
             }
+        if(bodyB.getUserData()  == ball.getUserData())
+        if(ball.getVelocity().y<=(-destroyerVelocity)){
+            bodyA.setActive(false);
+            world.destroyBody(bodyA);
+            Model.getInstance().destroyPlatform(ball.getX(),ball.getY(),Model.getInstance().getBall().getRadius());
+            return;
+        }
         for (PlatformBody it : redPlats)
             if (bodyB.getUserData() == ball.getUserData() && bodyA.getUserData() == it.getUserData())
                 View.lose=true;
