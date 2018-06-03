@@ -68,6 +68,7 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
         w = Gdx.graphics.getWidth();
         h = Gdx.graphics.getHeight();
+        System.out.println(w +" "+h);
         camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * (h / w));
 
         camera.position.set(camera.viewportWidth / 2f  /*-VIEWPORT_WIDTH/PIXEL_TO_METER*/, lowestPoint, 0);
@@ -84,11 +85,11 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
     private void loadAssets() {
 
-        this.game.getAssetManager().load("redplatform.jpg", Texture.class);
-        this.game.getAssetManager().load("platform.jpg", Texture.class);
+        this.game.getAssetManager().load("redplatform.png", Texture.class);
+        this.game.getAssetManager().load("platform.png", Texture.class);
         this.game.getAssetManager().load("ball.png", Texture.class);
 
-        this.game.getAssetManager().load("finalplatform.jpg", Texture.class);
+        this.game.getAssetManager().load("finalplatform.png", Texture.class);
         this.game.getAssetManager().load("background.png", Texture.class);
 
         this.game.getAssetManager().finishLoading();
@@ -161,7 +162,7 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
             if (it.getX() - it.getWidth() / 2f >= 0 && it.getX() + it.getWidth() / 2f <= VIEWPORT_WIDTH) {
                 EntityBaseView b;
                 if (it instanceof NormalPlatformModel) {
-                    b = new NormalPlatformView(game);  //TODO: aplicar factory
+                    b = new NormalPlatformView(game);
                     b.update(it);
                 } else if (it instanceof RedPlatformModel) {
                     b = new RedPlatformView(game);
@@ -283,6 +284,3 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
     }
 }
-
-//TODO: Plataformas vermelhas a mexer
-//TODO: Condição de Win, aplicar maquina de estados

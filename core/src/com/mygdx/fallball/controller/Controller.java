@@ -107,7 +107,6 @@ public class Controller implements ContactListener {
         }
 
     }
-    //TODO: modo infinito
 
     public World getWorld() {
         return world;
