@@ -21,20 +21,49 @@ import java.util.List;
 import static com.mygdx.fallball.model.levels.LevelMaker.DISTANCE_BETWEEN_PLATFORMS;
 import static com.mygdx.fallball.model.levels.LevelMaker.PLATFORM_HEIGHT;
 import static com.mygdx.fallball.view.View.VIEWPORT_WIDTH;
-
+/**
+ * Controls the physics of the game.
+ *
+ * @see ContactListener
+ */
 public class Controller implements ContactListener {
+    /**
+     *Gravity force of the simulation
+     */
     public final static float GRAVITY = -18;
+
+    /**
+     * Sensibility of the user's movement of the ball
+     */
     public final static float SENSIBILITY = 0.025f;
-
+    /**
+     * singleton instance of Controller itself
+     */
     private static Controller instance;
+    /**
+     * Physics simulator of the controller
+      */
     private /*final*/ World world;
-
-
+    /**
+     * Bouncing ball's body
+     */
     private BallBody ball;
+    /**
+     * Accumulator used to calculate the simulation step.
+     */
     private float accumulator;
+    /**
+     * Red platforms' bodies
+     */
     private List<PlatformBody> redPlats;
+    /**
+     * The final platform of a level
+     */
     private PlatformBody finalPlat;
 
+    /**
+     * Creates a new Controller, with all the game elements' bodies.
+     */
     private Controller() {
         List<PlatformModel> platforms;
         world = new World(new Vector2(0, GRAVITY), true);
@@ -63,7 +92,10 @@ public class Controller implements ContactListener {
         ball.setTransform(ball.getX() + deltaX * SENSIBILITY, ball.getY());
     }
 
-
+    /**
+     * Returns a singleton instance of game controller
+     * @return the singleton instance
+     */
     public static Controller getInstance() {
         if (instance == null)
             instance = new Controller();
@@ -71,10 +103,17 @@ public class Controller implements ContactListener {
 
     }
 
+    /**
+     * Singleton instance gets updated
+     */
     public static void newInstance() {
         instance = new Controller();
     }
 
+    /**
+     * Calculates the next physics step of duration delta.
+     * @param delta The size of this physics step in seconds.
+     */
     public void update(float delta) {
         float frameTime = Math.min(delta, 0.25f);
         accumulator += frameTime;
@@ -107,16 +146,27 @@ public class Controller implements ContactListener {
         }
 
     }
-
+    /**
+     * Returns the world controlled by this controller.
+     *
+     * @return The world controlled by this controller.
+     */
     public World getWorld() {
         return world;
     }
 
+    /**
+     * Returns the body of the ball in Controller's world.
+     * @return Ball  body
+     */
     public BallBody getBall() {
         return ball;
     }
 
-
+    /**
+     * Handles a contact between two objects
+     * @param contact the detected contact
+     */
     @Override
     public void beginContact(Contact contact) {
         Body bodyA = contact.getFixtureA().getBody();
