@@ -81,7 +81,6 @@ public class MainMenu extends ScreenAdapter {
     public void show(){
         Table table = new Table();
         table.setFillParent(true);
-        table.setDebug(true);
 
         Drawable startDrawable = new SpriteDrawable(start);
         final ImageButton startButton = new ImageButton(startDrawable);

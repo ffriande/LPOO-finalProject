@@ -52,6 +52,7 @@ public class Controller implements ContactListener {
                 PlatformBody b = new PlatformBody(world, plat, ((RedPlatformModel) plat).getMoving());
                 redPlats.add(b);
             } else {
+                System.out.println("Fianl");
                 finalPlat = new PlatformBody(world, plat, false);
             }
         }
@@ -124,6 +125,7 @@ public class Controller implements ContactListener {
         float destroyerVelocity = (float) Math.sqrt(2 * Math.abs(GRAVITY) * (3 * PLATFORM_HEIGHT + 3 * DISTANCE_BETWEEN_PLATFORMS));
         if (finalPlat != null)
             if (bodyB.getUserData() == ball.getUserData() && bodyA.getUserData() == finalPlat.getUserData()) {
+                System.out.println("WIN");
                 View.win = true;
                 return;
             }

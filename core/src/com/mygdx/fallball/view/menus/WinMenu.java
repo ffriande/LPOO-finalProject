@@ -71,7 +71,6 @@ public class WinMenu extends ScreenAdapter {
     public void show(){
         Table table = new Table();
         table.setFillParent(true);
-        table.setDebug(true);
 
         Drawable levelDrawable = new SpriteDrawable(levelS);
         ImageButton levelButton = new ImageButton(levelDrawable);

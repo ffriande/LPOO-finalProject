@@ -73,7 +73,6 @@ public class ModeMenu extends ScreenAdapter {
     public void show(){
         Table table = new Table();
         table.setFillParent(true);
-        table.setDebug(true);
 
         Drawable levelDrawable = new SpriteDrawable(levelSprite);
         ImageButton levelButton = new ImageButton(levelDrawable);

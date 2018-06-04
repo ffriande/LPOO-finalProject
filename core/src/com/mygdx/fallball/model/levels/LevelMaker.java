@@ -53,12 +53,8 @@ public class LevelMaker {
     }
 
     private void addFinal(float y){
-        start0.getTemplates().get(1).setY(y - DISTANCE_BETWEEN_PLATFORMS);
         start1.getTemplates().get(1).setY(y - DISTANCE_BETWEEN_PLATFORMS);
-        start2.getTemplates().get(1).setY(y - DISTANCE_BETWEEN_PLATFORMS);
-        platforms.addAll(start0.getTemplates().get(1).getPlatforms());
         platforms.addAll(start1.getTemplates().get(1).getPlatforms());
-        platforms.addAll(start2.getTemplates().get(1).getPlatforms());
     }
 
     private void level1() {

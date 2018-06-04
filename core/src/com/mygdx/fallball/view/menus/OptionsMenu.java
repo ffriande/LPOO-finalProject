@@ -76,7 +76,6 @@ public class OptionsMenu extends ScreenAdapter {
     public void show(){
         Table table = new Table();
         table.setFillParent(true);
-        table.setDebug(true);
 
         final Drawable muteDrawable = new SpriteDrawable(MuteSprite);
         ImageButton muteButton = new ImageButton(muteDrawable);

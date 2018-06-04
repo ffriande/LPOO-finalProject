@@ -87,7 +87,6 @@ public class LevelMenu extends ScreenAdapter{
     public void show(){
         Table table = new Table();
         table.setFillParent(true);
-        table.setDebug(true);
         for(int i=0;i<Levels.getInstance().getNrLevels();i++) {
             Drawable LevelDrawable = new SpriteDrawable(levelS[i]);
             ImageButton Levelbutton = new ImageButton(LevelDrawable);

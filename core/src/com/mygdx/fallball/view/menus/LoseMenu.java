@@ -76,7 +76,6 @@ public class LoseMenu extends ScreenAdapter {
     public void show(){
         Table table = new Table();
         table.setFillParent(true);
-        table.setDebug(true);
 
 
         Drawable tryDrawable = new SpriteDrawable(tryS);
