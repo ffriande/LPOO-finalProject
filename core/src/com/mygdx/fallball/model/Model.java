@@ -14,6 +14,7 @@ import static com.mygdx.fallball.view.View.VIEWPORT_WIDTH;
 
 public class Model {
     private static Model instance;
+    private int level;
 
     private BallModel ball;
 
@@ -29,7 +30,7 @@ public class Model {
 
     Model() {
         ball = new BallModel(VIEWPORT_WIDTH / 2f, FIRST_PLATFORM_Y + DISTANCE_BETWEEN_PLATFORMS, 1.5f);
-
+        this.level=1;
         platforms = new LevelMaker(1).getPlatforms();
     }
 
@@ -37,6 +38,11 @@ public class Model {
         ball = new BallModel(VIEWPORT_WIDTH / 2f, FIRST_PLATFORM_Y + DISTANCE_BETWEEN_PLATFORMS, 1.5f);
         platforms.clear();
         platforms = new LevelMaker(i).getPlatforms();
+        this.level=i;
+    }
+
+    public int getLevel(){
+        return this.level;
     }
 
     public BallModel getBall() {

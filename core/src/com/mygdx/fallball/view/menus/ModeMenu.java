@@ -33,7 +33,7 @@ public class ModeMenu extends ScreenAdapter {
 
     public ModeMenu(FallBall game){
         this.game=game;
-        background=new Texture("background.png");
+        background=new Texture("1stbackground.png");
         loadButtons();
         cam=new OrthographicCamera();
         viewport=new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam);

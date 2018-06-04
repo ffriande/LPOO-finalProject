@@ -35,9 +35,8 @@ public class LevelMenu extends ScreenAdapter{
     public LevelMenu(FallBall game){
         this.game=game;
         background=new Texture("background.png");
-        levelS=new Sprite[Levels.getInstance().nrLevels];
-        buttons=new ImageButton[Levels.getInstance().nrLevels];
-        System.out.println(Levels.getInstance().nrLevels);
+        levelS=new Sprite[Levels.getInstance().getNrLevels()];
+        buttons=new ImageButton[Levels.getInstance().getNrLevels()];
         loadButtons();
         cam=new OrthographicCamera();
         viewport=new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam);
@@ -58,13 +57,13 @@ public class LevelMenu extends ScreenAdapter{
             String name="level"+(i+1)+".png";
             Texture Leveltex = new Texture(name);
             levelS[i] = new Sprite(Leveltex, Leveltex.getWidth(), Leveltex.getHeight());
-            levelS[i].setSize(MainMenu.ButtonsWidth, MainMenu.ButtonsWidth * levelS[i].getHeight() / levelS[i].getWidth());
+            levelS[i].setSize(MainMenu.ButtonsWidth/2, MainMenu.ButtonsWidth/2 * levelS[i].getHeight() / levelS[i].getWidth());
         }
 
         for(int i=Levels.getInstance().getNrUnlocked();i<Levels.getInstance().getNrLevels();i++){
             Texture lockedtex=new Texture("locked.png");
             levelS[i]=new Sprite(lockedtex,lockedtex.getWidth(),lockedtex.getHeight());
-            levelS[i].setSize(MainMenu.ButtonsWidth, MainMenu.ButtonsWidth * levelS[i].getHeight() / levelS[i].getWidth());
+            levelS[i].setSize(MainMenu.ButtonsWidth/2, MainMenu.ButtonsWidth/2 * levelS[i].getHeight() / levelS[i].getWidth());
         }
 
 

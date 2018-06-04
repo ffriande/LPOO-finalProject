@@ -16,29 +16,21 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.fallball.FallBall;
-import com.mygdx.fallball.controller.Controller;
-import com.mygdx.fallball.model.Model;
-import com.mygdx.fallball.view.View;
 
-
-public class LoseMenu extends ScreenAdapter {
-
-
+public class WinMenu extends ScreenAdapter {
     private FallBall game;
     private Stage stage;
     private Sprite continueS;
-    private Sprite tryS;
+    private Sprite levelS;
     private Texture background;
-    private OrthographicCamera cam;
-    private Viewport viewport;
 
 
-    public LoseMenu(FallBall game){
+    public WinMenu(FallBall game){
         this.game=game;
         background=new Texture("background.png");
         loadButtons();
-        cam=new OrthographicCamera();
-        viewport=new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam);
+        OrthographicCamera cam=new OrthographicCamera();
+        Viewport viewport=new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam);
         viewport.apply();
         cam.position.set(cam.viewportWidth/2,cam.viewportHeight/2,0);
         cam.update();
@@ -53,10 +45,10 @@ public class LoseMenu extends ScreenAdapter {
 
 
 
-    public void loadButtons(){
-        Texture tryTex=new Texture("tryagain.png");
-        tryS=new Sprite(tryTex,tryTex.getWidth(),tryTex.getHeight());
-        tryS.setSize(MainMenu.ButtonsWidth,MainMenu.ButtonsWidth*tryS.getHeight()/tryS.getWidth());
+    private void loadButtons(){
+        Texture levelTex=new Texture("LevelMode.png");
+        levelS=new Sprite(levelTex,levelTex.getWidth(),levelTex.getHeight());
+        levelS.setSize(MainMenu.ButtonsWidth,MainMenu.ButtonsWidth*levelS.getHeight()/levelS.getWidth());
         Texture continueTex=new Texture("continue.png");
         continueS=new Sprite(continueTex,continueTex.getWidth(),continueTex.getHeight());
         continueS.setSize(MainMenu.ButtonsWidth,MainMenu.ButtonsWidth*continueS.getHeight()/continueS.getWidth());
@@ -70,19 +62,15 @@ public class LoseMenu extends ScreenAdapter {
         table.setFillParent(true);
         table.setDebug(true);
 
-
-        Drawable tryDrawable = new SpriteDrawable(tryS);
-        ImageButton tryButton = new ImageButton(tryDrawable);
+        Drawable levelDrawable = new SpriteDrawable(levelS);
+        ImageButton levelButton = new ImageButton(levelDrawable);
         Drawable continueDrawable = new SpriteDrawable(continueS);
         ImageButton continueButton = new ImageButton(continueDrawable);
 
-        tryButton.addListener(new ClickListener() {
+        levelButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                int i=Model.getInstance().getLevel();
-                Model.getInstance().setLevel(i);
-                Controller.newInstance();
-                game.setScreen(new View(game));
+                game.setScreen(new LevelMenu(game));
             }
         });
         continueButton.addListener(new ClickListener() {
@@ -92,7 +80,8 @@ public class LoseMenu extends ScreenAdapter {
                 game.setScreen(new MainMenu(game));
             }
         });
-        table.add(tryButton).spaceBottom(100);
+
+        table.add(levelButton).spaceBottom(100);
         table.row();
         table.add(continueButton);
 
@@ -108,6 +97,9 @@ public class LoseMenu extends ScreenAdapter {
         game.getBatch().end();
         stage.act();
         stage.draw();
+
+        //setScreen(new View(this));
+
     }
     @Override
     public void dispose() {

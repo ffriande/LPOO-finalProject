@@ -22,7 +22,9 @@ import com.mygdx.fallball.view.entities.EntityBaseView;
 import com.mygdx.fallball.view.entities.FinalPlatformView;
 import com.mygdx.fallball.view.entities.NormalPlatformView;
 import com.mygdx.fallball.view.entities.RedPlatformView;
+import com.mygdx.fallball.view.menus.Levels;
 import com.mygdx.fallball.view.menus.LoseMenu;
+import com.mygdx.fallball.view.menus.WinMenu;
 
 import java.util.List;
 
@@ -98,11 +100,17 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
     @Override
     public void render(float delta) {
-        //if (win)
-        //TODO:meter ecra de win
+        if (win) {
+            if (Model.getInstance().getLevel() == Levels.getInstance().getNrUnlocked() &&
+                    Model.getInstance().getLevel() < Levels.getInstance().getNrLevels()) {
+                Levels.getInstance().increaseNrUnlocked();
+                Levels.getInstance().write(Levels.getInstance().getJson());
+            }
+                game.setScreen(new WinMenu(game));
+        }
         if (lose)
             game.setScreen(new LoseMenu(game));
-        //TODO:meter ecra de lose
+
         velocityChecker();
 
         Controller.getInstance().update(delta);

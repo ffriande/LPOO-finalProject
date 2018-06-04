@@ -20,7 +20,6 @@ import java.util.List;
 
 import static com.mygdx.fallball.model.levels.LevelMaker.DISTANCE_BETWEEN_PLATFORMS;
 import static com.mygdx.fallball.model.levels.LevelMaker.PLATFORM_HEIGHT;
-import static com.mygdx.fallball.view.View.PIXEL_TO_METER;
 import static com.mygdx.fallball.view.View.VIEWPORT_WIDTH;
 
 public class Controller implements ContactListener {
@@ -127,7 +126,6 @@ public class Controller implements ContactListener {
             if (bodyB.getUserData() == ball.getUserData() && bodyA.getUserData() == finalPlat.getUserData()) {
                 View.win = true;
                 return;
-                //System.out.println( "WIN GAME!!!\n\n\n\n\n\n" );                 //TODO:função ganhar jogo
             }
         if(bodyB.getUserData()  == ball.getUserData())
         if(ball.getVelocity().y<=(-destroyerVelocity)){
@@ -139,7 +137,6 @@ public class Controller implements ContactListener {
         for (PlatformBody it : redPlats)
             if (bodyB.getUserData() == ball.getUserData() && bodyA.getUserData() == it.getUserData())
                 View.lose=true;
-                //System.out.println( "LOOSE GAME!!!\n\n\n\n\n\n" );                 //TODO:função perder nivel
 
     }
 

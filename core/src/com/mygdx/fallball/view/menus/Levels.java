@@ -10,15 +10,16 @@ import java.util.logging.FileHandler;
 
 public class Levels implements Json.Serializable {
     private static Levels instance;
-    int nrUnlocked;
-    int nrLevels;
+    private int nrUnlocked;
+    private int nrLevels;
+    private Json json;
+
     private Levels(){
+        json=new Json();
         nrUnlocked=1;
         nrLevels=4;
-        Json json=new Json();
         if(Gdx.files.local("levels.json").exists())
             readJson(json.fromJson(String.class,Gdx.files.local("levels.json")));
-        write(json);
     }
 
     public int getNrUnlocked(){
@@ -29,12 +30,21 @@ public class Levels implements Json.Serializable {
         return nrLevels;
     }
 
+    public Json getJson(){
+        return this.json;
+    }
+
+    public void increaseNrUnlocked(){
+        this.nrUnlocked++;
+    }
+
 
     public static Levels getInstance(){
         if (instance == null)
             instance = new Levels();
         return instance;
     }
+
 
     public void readJson(String s){
         nrLevels=Integer.parseInt(s.substring(0,s.indexOf(";")));

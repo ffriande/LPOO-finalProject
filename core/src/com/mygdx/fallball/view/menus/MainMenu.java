@@ -50,7 +50,7 @@ public class MainMenu extends ScreenAdapter {
 
     public MainMenu(FallBall game){
         this.game=game;
-        background=new Texture("background.png");
+        background=new Texture("1stbackground.png");
         MenuMusic.loop(View.VOLUME);
         loadButtons();
         cam=new OrthographicCamera();
