@@ -42,7 +42,7 @@ public class Level2Creator extends TemplateContainer {
         y-= DISTANCE_BETWEEN_PLATFORMS;
         NormalPlatformModel n4=new NormalPlatformModel(x+15,y,30, PLATFORM_HEIGHT);
         plat.add(n4);
-        RedPlatformModel n5=new RedPlatformModel(x+38,y,10, PLATFORM_HEIGHT);
+        RedPlatformModel n5=new RedPlatformModel(x+40,y,8, PLATFORM_HEIGHT);
         plat.add(n5);
         y-= DISTANCE_BETWEEN_PLATFORMS;
         NormalPlatformModel n9=new NormalPlatformModel(x+2.5f,y,5, PLATFORM_HEIGHT);
@@ -80,7 +80,7 @@ public class Level2Creator extends TemplateContainer {
         y-= DISTANCE_BETWEEN_PLATFORMS;
         NormalPlatformModel n4=new NormalPlatformModel(x+15,y,30, PLATFORM_HEIGHT);
         plat.add(n4);
-        RedPlatformModel n5=new RedPlatformModel(x+40,y,20, PLATFORM_HEIGHT);
+        RedPlatformModel n5=new RedPlatformModel(x+43,y,14, PLATFORM_HEIGHT);
         plat.add(n5);
         y-= DISTANCE_BETWEEN_PLATFORMS;
         NormalPlatformModel n9=new NormalPlatformModel(x+2.5f,y,5, PLATFORM_HEIGHT);

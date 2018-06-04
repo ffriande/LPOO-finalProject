@@ -120,20 +120,6 @@ public class LevelMaker {
     private void level4(){
         addStart();
         float lastY = start1.getTemplates().get(0).getLastY();
-        for (int y = 0; y < 1; y++) {
-            TemplateContainer t0 = new Level1Creator(-View.VIEWPORT_WIDTH);
-            TemplateContainer t1 = new Level1Creator(0f);
-            TemplateContainer t2 = new Level1Creator(View.VIEWPORT_WIDTH);
-            PlatformTemplate t=RandTemplate(t0,t1,t2,lastY);
-            lastY = t.getLastY();
-        }
-        for (int y = 0; y < 1; y++) {
-            TemplateContainer t0 = new Level2Creator(-View.VIEWPORT_WIDTH);
-            TemplateContainer t1 = new Level2Creator(0f);
-            TemplateContainer t2 = new Level2Creator(View.VIEWPORT_WIDTH);
-            PlatformTemplate t=RandTemplate(t0,t1,t2,lastY);
-            lastY = t.getLastY();
-        }
         for (int y = 0; y < 3; y++) {
             TemplateContainer t0 = new Level3Creator(-View.VIEWPORT_WIDTH);
             TemplateContainer t1 = new Level3Creator(0f);

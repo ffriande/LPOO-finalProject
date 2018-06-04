@@ -27,22 +27,19 @@ public class Controller implements ContactListener {
     public final static float SENSIBILITY = 0.025f;
 
     private static Controller instance;
-
-
     private /*final*/ World world;
 
 
     private BallBody ball;
-    private List<PlatformModel> platforms;
     private float accumulator;
     private List<PlatformBody> redPlats;
     private PlatformBody finalPlat;
 
     private Controller() {
+        List<PlatformModel> platforms;
         world = new World(new Vector2(0, GRAVITY), true);
         ball = new BallBody(world, Model.getInstance().getBall());
         world.setContactListener(this);
-        platforms = new ArrayList<PlatformModel>();
         platforms = Model.getInstance().getPlatforms();
         redPlats = new ArrayList<PlatformBody>();
         for (PlatformModel plat : platforms) {
@@ -52,12 +49,15 @@ public class Controller implements ContactListener {
                 PlatformBody b = new PlatformBody(world, plat, ((RedPlatformModel) plat).getMoving());
                 redPlats.add(b);
             } else {
-                System.out.println("Fianl");
                 finalPlat = new PlatformBody(world, plat, false);
             }
         }
     }
 
+    /**
+     * Moves ball is x axis
+     * @param deltaX ammount of moving in ball
+     */
     public void moveBall(float deltaX) {
 
         ball.setTransform(ball.getX() + deltaX * SENSIBILITY, ball.getY());

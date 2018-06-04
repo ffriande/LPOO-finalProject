@@ -61,8 +61,10 @@ public class Model {
         float renderErrorMargin = 0.3f;
         for (PlatformModel it : platforms) {
             if ((it.getY() + it.getHeight() / 2 - renderErrorMargin <= y - radius && it.getY() + it.getHeight() / 2 + renderErrorMargin >= y - radius)
-                    && x + radius >= it.getX() - it.getWidth() / 2f && x - radius <= it.getX() + it.getWidth() / 2f) {
+                    && (x + radius + renderErrorMargin >= it.getX() - it.getWidth() / 2f || x + radius -renderErrorMargin >= it.getX() - it.getWidth() / 2f)&&
+                    (x - radius -renderErrorMargin <= it.getX() + it.getWidth() / 2f || x - radius + renderErrorMargin<= it.getX() + it.getWidth() / 2f)) {
                 platforms.remove(it);
+                System.out.println("Destroyed moving red");
                 break;
             }
         }
