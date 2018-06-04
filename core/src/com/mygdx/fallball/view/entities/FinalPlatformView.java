@@ -11,7 +11,6 @@ public class FinalPlatformView extends EntityBaseView {
 
     public Sprite createSprite(FallBall game) {
         Texture texture = game.getAssetManager().get("finalplatform.png");
-        Sprite s= new Sprite(texture,texture.getWidth(), texture.getHeight());
-        return s;
+        return new Sprite(texture,texture.getWidth(), texture.getHeight());
     }
 }

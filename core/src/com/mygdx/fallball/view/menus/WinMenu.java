@@ -17,6 +17,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.fallball.FallBall;
 
+/**
+ * WinMenu.java-Menu that appears when a level is completed.
+ * @see ScreenAdapter
+ */
 public class WinMenu extends ScreenAdapter {
     private FallBall game;
     private Stage stage;
@@ -25,9 +29,16 @@ public class WinMenu extends ScreenAdapter {
     private Texture background;
 
 
+    /**
+     * Class constructor.
+     * Inicializes all the class variables.
+     * Creates camara and viewport.
+     * Loads all the spites needed.
+     * @param game-FallBall object to store it in a variable.
+     */
     public WinMenu(FallBall game){
         this.game=game;
-        background=new Texture("background.png");
+        background=game.getAssetManager().get("winback.png");
         loadButtons();
         OrthographicCamera cam=new OrthographicCamera();
         Viewport viewport=new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam);
@@ -36,26 +47,26 @@ public class WinMenu extends ScreenAdapter {
         cam.update();
         stage=new Stage(viewport,game.getBatch());
         Gdx.input.setInputProcessor(stage);
-
-
-
-
-
     }
 
-
-
+    /**
+     * Function that gets all the textures needed to load the sprites.
+     */
     private void loadButtons(){
-        Texture levelTex=new Texture("LevelMode.png");
+        Texture levelTex=game.getAssetManager().get("LevelMode.png");
         levelS=new Sprite(levelTex,levelTex.getWidth(),levelTex.getHeight());
         levelS.setSize(MainMenu.ButtonsWidth,MainMenu.ButtonsWidth*levelS.getHeight()/levelS.getWidth());
-        Texture continueTex=new Texture("continue.png");
+        Texture continueTex=game.getAssetManager().get("MainMenu.png");
         continueS=new Sprite(continueTex,continueTex.getWidth(),continueTex.getHeight());
         continueS.setSize(MainMenu.ButtonsWidth,MainMenu.ButtonsWidth*continueS.getHeight()/continueS.getWidth());
 
 
     }
 
+    /**
+     * Creates all the buttons needed to this menu.
+     * Creates all the Listeners for those buttons.
+     */
     @Override
     public void show(){
         Table table = new Table();
@@ -97,13 +108,12 @@ public class WinMenu extends ScreenAdapter {
         game.getBatch().end();
         stage.act();
         stage.draw();
-
-        //setScreen(new View(this));
-
     }
     @Override
     public void dispose() {
         stage.dispose();
+        continueS.getTexture().dispose();
+        levelS.getTexture().dispose();
         background.dispose();
     }
 }

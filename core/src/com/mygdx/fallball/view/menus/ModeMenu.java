@@ -16,10 +16,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.fallball.FallBall;
-import com.mygdx.fallball.controller.Controller;
-import com.mygdx.fallball.model.Model;
-import com.mygdx.fallball.view.View;
 
+/**
+ * ModeMenu.java-Menu to selected the mode to play.
+ * @see ScreenAdapter
+ */
 public class ModeMenu extends ScreenAdapter {
     private FallBall game;
     private Stage stage;
@@ -27,43 +28,47 @@ public class ModeMenu extends ScreenAdapter {
     private Sprite infiniteSprite;
     private Sprite returnSprite;
     private Texture background;
-    private OrthographicCamera cam;
-    private Viewport viewport;
 
-
+    /**
+     * Class constructor.
+     * Inicializes all the class variables.
+     * Creates camara and viewport.
+     * Loads all the spites needed.
+     * @param game-FallBall object to store it in a variable.
+     */
     public ModeMenu(FallBall game){
         this.game=game;
         background=new Texture("1stbackground.png");
         loadButtons();
-        cam=new OrthographicCamera();
-        viewport=new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam);
+        OrthographicCamera cam=new OrthographicCamera();
+        Viewport viewport=new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam);
         viewport.apply();
         cam.position.set(cam.viewportWidth/2,cam.viewportHeight/2,0);
         cam.update();
         stage=new Stage(viewport,game.getBatch());
         Gdx.input.setInputProcessor(stage);
-
-
-
-
-
     }
 
-
-
-    public void loadButtons(){
-        Texture levelTex=new Texture("LevelMode.png");
+    /**
+     * Function that gets all the textures needed to load the sprites.
+     */
+    private void loadButtons(){
+        Texture levelTex=game.getAssetManager().get("LevelMode.png");
         levelSprite =new Sprite(levelTex,levelTex.getWidth(),levelTex.getHeight());
         levelSprite.setSize(MainMenu.ButtonsWidth,MainMenu.ButtonsWidth*levelSprite.getHeight()/levelSprite.getWidth());
-        Texture infiniteTex=new Texture("infinite.png");
+        Texture infiniteTex=game.getAssetManager().get("infinite.png");
         infiniteSprite =new Sprite(infiniteTex,infiniteTex.getWidth(),infiniteTex.getHeight());
         infiniteSprite.setSize(MainMenu.ButtonsWidth,MainMenu.ButtonsWidth*infiniteSprite.getHeight()/infiniteSprite.getWidth());
-        Texture returnTex=new Texture("return.png");
+        Texture returnTex=game.getAssetManager().get("return.png");
         returnSprite =new Sprite(returnTex,returnTex.getWidth(),returnTex.getHeight());
         returnSprite.setSize(MainMenu.ButtonsWidth,MainMenu.ButtonsWidth*returnSprite.getHeight()/returnSprite.getWidth());
 
     }
 
+    /**
+     * Creates all the buttons needed to this menu.
+     * Creates all the Listeners for those buttons.
+     */
     @Override
     public void show(){
         Table table = new Table();
@@ -86,7 +91,6 @@ public class ModeMenu extends ScreenAdapter {
         infiniteButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //game.setScreen(new MainMenu(game));TODO:meter o screen no modo infinito
             }
         });
         returnButton.addListener(new ClickListener() {
@@ -113,13 +117,14 @@ public class ModeMenu extends ScreenAdapter {
         game.getBatch().end();
         stage.act();
         stage.draw();
-
-        //setScreen(new View(this));
-
     }
 
     @Override
     public void dispose() {
         stage.dispose();
+        levelSprite.getTexture().dispose();
+        infiniteSprite.getTexture().dispose();
+        returnSprite.getTexture().dispose();
+        background.dispose();
     }
 }

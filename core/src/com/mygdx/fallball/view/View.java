@@ -2,6 +2,7 @@ package com.mygdx.fallball.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -24,6 +25,7 @@ import com.mygdx.fallball.view.entities.NormalPlatformView;
 import com.mygdx.fallball.view.entities.RedPlatformView;
 import com.mygdx.fallball.view.menus.Levels;
 import com.mygdx.fallball.view.menus.LoseMenu;
+import com.mygdx.fallball.view.menus.MainMenu;
 import com.mygdx.fallball.view.menus.WinMenu;
 
 import java.util.List;
@@ -31,46 +33,59 @@ import java.util.List;
 import static com.mygdx.fallball.controller.Controller.GRAVITY;
 import static com.mygdx.fallball.model.levels.LevelMaker.DISTANCE_BETWEEN_PLATFORMS;
 
+/**
+ * View.java-All the textures and graphical of game
+ * @see GestureDetector.GestureListener
+ * @see ScreenAdapter
+ */
 public class View extends ScreenAdapter implements GestureDetector.GestureListener {
 
     public final static float PIXEL_TO_METER = 0.08f;
     public final static float VIEWPORT_WIDTH = 50;
-    public static float VOLUME = 0.0f;
-    private static final boolean DEBUG_PHYSICS = true;
+    public static float VOLUME =0.0f;
+    private static final boolean DEBUG_PHYSICS = false;
     public static boolean lose;
     public static boolean win;
+    public static Sound bounce=Gdx.audio.newSound(Gdx.files.internal("jump.wav"));
 
 
     private FallBall game;
     private OrthographicCamera camera;
     private Box2DDebugRenderer debugRenderer;
     private float lowestPoint;
-    GestureDetector gestureDetector;
     private float w;
     private float h;
     private float currVel = 1;
     private Matrix4 debugCamera;
 
-
+    /**
+     * Constructor of View.
+     * Sets the lowestPoint variable to control camera position.
+     *
+     * @param g-FallBall object to store it in a variable.
+     */
     public View(FallBall g) {
         this.game = g;
+        MainMenu.MenuMusic.stop();
         win = false;
         lose = false;
-        loadAssets();
         createCamera();
 
         lowestPoint = (h / w) /*/ 2 + DISTANCE_BETWEEN_PLATFORMS / 0.08f*/;
-        gestureDetector = new GestureDetector(this);
+        GestureDetector gestureDetector = new GestureDetector(this);
         Gdx.input.setInputProcessor(gestureDetector);
 
 
     }
 
+    /**
+     * Creates the camera and all its components.
+     * Enables/Disables the DEBUG PHYSICS
+     */
     private void createCamera() {
 
         w = Gdx.graphics.getWidth();
         h = Gdx.graphics.getHeight();
-        System.out.println(w + " " + h);
         camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * (h / w));
 
         camera.position.set(camera.viewportWidth / 2f  /*-VIEWPORT_WIDTH/PIXEL_TO_METER*/, lowestPoint, 0);
@@ -85,19 +100,11 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
     }
 
-    private void loadAssets() {
-
-        this.game.getAssetManager().load("redplatform.png", Texture.class);
-        this.game.getAssetManager().load("platform.png", Texture.class);
-        this.game.getAssetManager().load("ball.png", Texture.class);
-
-        this.game.getAssetManager().load("finalplatform.png", Texture.class);
-        this.game.getAssetManager().load("background.png", Texture.class);
-
-        this.game.getAssetManager().finishLoading();
-    }
-
-
+    /**
+     * Handles all the frames render.
+     * Draws every graphical object in the screen.
+     * @param delta A variable of type float.
+     */
     @Override
     public void render(float delta) {
         if (win) {
@@ -140,7 +147,6 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
             debugCamera = camera.combined.cpy();
             debugCamera.scl(1 / PIXEL_TO_METER);
             debugRenderer.render(Controller.getInstance().getWorld(), debugCamera);
-            // camera.update();
         }
     }
 
@@ -149,6 +155,9 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
         debugRenderer.dispose();
     }
 
+    /**
+     * Draws all the platforms, no specific type, in the screen,using their Model's.
+     */
     private void drawPlats() {
         List<PlatformModel> p = Model.getInstance().getPlatforms();
         for (PlatformModel it : p) {
@@ -170,6 +179,9 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
         }
     }
 
+    /**
+     * Draws the ball in the screen,using BallModel.
+     */
     private void drawBall() {
         BallModel mod = Model.getInstance().getBall();
         float limitLeft = mod.getRadius(), limitRight = VIEWPORT_WIDTH - mod.getRadius();
@@ -193,18 +205,14 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
     }
 
+    /**
+     * Draws background in the screen .
+     * Called every update to always have background.
+     */
     private void drawBackground() {
         Texture background = game.getAssetManager().get("background.png", Texture.class);
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         game.getBatch().draw(background, camera.position.x - camera.viewportWidth / 2f, camera.position.y - camera.viewportHeight / 2f, 0, 0, (int) camera.viewportWidth, (int) camera.viewportHeight + 200);
-    }
-
-    public static void muteFX() {
-        VOLUME = 0.0f;
-    }
-
-    public static void normalizeFX() {
-        VOLUME = 1.0f;
     }
 
     @Override
@@ -227,6 +235,14 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
         return false;
     }
 
+    /**
+     * Used to control the ball.
+     * @param x A variable of type float.
+     * @param y A variable of type float.
+     * @param deltaX A variable of type float.
+     * @param deltaY A variable of type float.
+     * @return false A boolean data type.
+     */
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
         Controller.getInstance().getBall().setVelX_to_zero();
@@ -254,8 +270,12 @@ public class View extends ScreenAdapter implements GestureDetector.GestureListen
 
     }
 
+    /**
+     * Checks the ball's velocity and changes the value.
+     * To make tha ball jump always the same height.
+     */
     private void velocityChecker() {
-        double intendedVel = Math.sqrt(2 * Math.abs(GRAVITY) * (DISTANCE_BETWEEN_PLATFORMS * 0.65f)); //formula da conservaçao da Emecanica.
+        double intendedVel = Math.sqrt(2 * Math.abs(GRAVITY) * (DISTANCE_BETWEEN_PLATFORMS * 0.50f)); //formula da conservaçao da Emecanica.
         if (Controller.getInstance().getBall().getVelocity().y > 0 && currVel < 0  /*&& Controller.getInstance().getBall().getVelocity().y > intendedVel*/) {
             Controller.getInstance().getBall().setVelocity(intendedVel);
         }

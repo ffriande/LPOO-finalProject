@@ -1,25 +1,10 @@
 package com.mygdx.fallball.model.levels;
 
-import com.badlogic.gdx.utils.Json;
-import com.mygdx.fallball.model.entities.FinalPlatformModel;
-import com.mygdx.fallball.model.entities.NormalPlatformModel;
 import com.mygdx.fallball.model.entities.PlatformModel;
-import com.mygdx.fallball.model.entities.RedPlatformModel;
-
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import com.mygdx.fallball.view.View;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import javax.naming.Context;
-
-import static com.mygdx.fallball.view.View.PIXEL_TO_METER;
-import static com.mygdx.fallball.view.View.VIEWPORT_WIDTH;
 
 public class LevelMaker {
     public final static float DISTANCE_BETWEEN_PLATFORMS = 30;
@@ -32,6 +17,9 @@ public class LevelMaker {
 
     private final static Random rand = new Random();
     private List<PlatformModel> platforms = new ArrayList<PlatformModel>();
+    private TemplateContainer start0 = new BeginCreator(-View.VIEWPORT_WIDTH);
+    private TemplateContainer start1 = new BeginCreator(0);
+    private TemplateContainer start2 = new BeginCreator(View.VIEWPORT_WIDTH);
 
     public LevelMaker(int difficulty) {
         switch (difficulty) {
@@ -45,7 +33,7 @@ public class LevelMaker {
                 level3();
                 break;
             case 4:
-                //level4();
+                level4();
                 break;
         }
     }
@@ -54,70 +42,131 @@ public class LevelMaker {
         return platforms;
     }
 
+
+    private void addStart(){
+        start0.getTemplates().get(0).setY(FIRST_PLATFORM_Y);
+        start1.getTemplates().get(0).setY(FIRST_PLATFORM_Y);
+        start2.getTemplates().get(0).setY(FIRST_PLATFORM_Y);
+        platforms.addAll(start0.getTemplates().get(0).getPlatforms());
+        platforms.addAll(start1.getTemplates().get(0).getPlatforms());
+        platforms.addAll(start2.getTemplates().get(0).getPlatforms());
+    }
+
+    private void addFinal(float y){
+        start0.getTemplates().get(1).setY(y - DISTANCE_BETWEEN_PLATFORMS);
+        start1.getTemplates().get(1).setY(y - DISTANCE_BETWEEN_PLATFORMS);
+        start2.getTemplates().get(1).setY(y - DISTANCE_BETWEEN_PLATFORMS);
+        platforms.addAll(start0.getTemplates().get(1).getPlatforms());
+        platforms.addAll(start1.getTemplates().get(1).getPlatforms());
+        platforms.addAll(start2.getTemplates().get(1).getPlatforms());
+    }
+
     private void level1() {
-        TemplateContainer start = new BeginCreator();
-        start.getTemplates().get(0).setY(FIRST_PLATFORM_Y);
-        platforms.addAll(start.getTemplates().get(0).getPlatforms());
-        float lastY = start.getTemplates().get(0).getLastY();
-        int i = 1;
+        addStart();
+        float lastY = start1.getTemplates().get(0).getLastY();
         for (int y = 0; y < 4; y++) {
-            TemplateContainer t1 = new Level1Creator();
-            PlatformTemplate t=RandTemplate(t1,lastY);
-            lastY = t.getLastY();;
+            TemplateContainer t0 = new Level1Creator(-View.VIEWPORT_WIDTH);
+            TemplateContainer t1 = new Level1Creator(0f);
+            TemplateContainer t2 = new Level1Creator(View.VIEWPORT_WIDTH);
+            PlatformTemplate t=RandTemplate(t0,t1,t2,lastY);
+            lastY = t.getLastY();
         }
-        start.getTemplates().get(1).setY(lastY - DISTANCE_BETWEEN_PLATFORMS);
-        platforms.addAll(start.getTemplates().get(1).getPlatforms());
+        addFinal(lastY);
     }
 
     private void level2() {
-        TemplateContainer start = new BeginCreator();
-        start.getTemplates().get(0).setY(FIRST_PLATFORM_Y);
-        platforms.addAll(start.getTemplates().get(0).getPlatforms());
-        float lastY = start.getTemplates().get(0).getLastY();
+        addStart();
+        float lastY = start1.getTemplates().get(0).getLastY();
         for (int y = 0; y < 2; y++) {
-            TemplateContainer t1 = new Level1Creator();
-            PlatformTemplate t=RandTemplate(t1,lastY);
+            TemplateContainer t0 = new Level1Creator(-View.VIEWPORT_WIDTH);
+            TemplateContainer t1 = new Level1Creator(0f);
+            TemplateContainer t2 = new Level1Creator(View.VIEWPORT_WIDTH);
+            PlatformTemplate t=RandTemplate(t0,t1,t2,lastY);
             lastY = t.getLastY();
         }
         for (int y = 0; y < 5; y++) {
-            TemplateContainer t1 = new Level2Creator();
-            PlatformTemplate t=RandTemplate(t1,lastY);
+            TemplateContainer t0 = new Level2Creator(-View.VIEWPORT_WIDTH);
+            TemplateContainer t1 = new Level2Creator(0f);
+            TemplateContainer t2 = new Level2Creator(View.VIEWPORT_WIDTH);
+            PlatformTemplate t=RandTemplate(t0,t1,t2,lastY);
             lastY = t.getLastY();
         }
-        start.getTemplates().get(1).setY(lastY - DISTANCE_BETWEEN_PLATFORMS);
-        platforms.addAll(start.getTemplates().get(1).getPlatforms());
+        addFinal(lastY);
     }
 
     private void level3(){
-        TemplateContainer start = new BeginCreator();
-        start.getTemplates().get(0).setY(FIRST_PLATFORM_Y);
-        platforms.addAll(start.getTemplates().get(0).getPlatforms());
-        float lastY = start.getTemplates().get(0).getLastY();
+        addStart();
+        float lastY = start1.getTemplates().get(0).getLastY();
         for (int y = 0; y < 1; y++) {
-            TemplateContainer t1 = new Level1Creator();
-            PlatformTemplate t=RandTemplate(t1,lastY);
+            TemplateContainer t0 = new Level1Creator(-View.VIEWPORT_WIDTH);
+            TemplateContainer t1 = new Level1Creator(0f);
+            TemplateContainer t2 = new Level1Creator(View.VIEWPORT_WIDTH);
+            PlatformTemplate t=RandTemplate(t0,t1,t2,lastY);
             lastY = t.getLastY();
         }
         for (int y = 0; y < 3; y++) {
-            TemplateContainer t1 = new Level2Creator();
-            PlatformTemplate t=RandTemplate(t1,lastY);
+            TemplateContainer t0 = new Level2Creator(-View.VIEWPORT_WIDTH);
+            TemplateContainer t1 = new Level2Creator(0f);
+            TemplateContainer t2 = new Level2Creator(View.VIEWPORT_WIDTH);
+            PlatformTemplate t=RandTemplate(t0,t1,t2,lastY);
             lastY = t.getLastY();
         }
         for (int y = 0; y < 4; y++) {
-            TemplateContainer t1 = new Level3Creator();
-            PlatformTemplate t=RandTemplate(t1,lastY);
+            TemplateContainer t0 = new Level3Creator(-View.VIEWPORT_WIDTH);
+            TemplateContainer t1 = new Level3Creator(0f);
+            TemplateContainer t2 = new Level3Creator(View.VIEWPORT_WIDTH);
+            PlatformTemplate t=RandTemplate(t0,t1,t2,lastY);
             lastY = t.getLastY();
         }
-        start.getTemplates().get(1).setY(lastY - DISTANCE_BETWEEN_PLATFORMS);
-        platforms.addAll(start.getTemplates().get(1).getPlatforms());
+        addFinal(lastY);
     }
 
-    private PlatformTemplate RandTemplate(TemplateContainer t1,float y){
+    private void level4(){
+        addStart();
+        float lastY = start1.getTemplates().get(0).getLastY();
+        for (int y = 0; y < 1; y++) {
+            TemplateContainer t0 = new Level1Creator(-View.VIEWPORT_WIDTH);
+            TemplateContainer t1 = new Level1Creator(0f);
+            TemplateContainer t2 = new Level1Creator(View.VIEWPORT_WIDTH);
+            PlatformTemplate t=RandTemplate(t0,t1,t2,lastY);
+            lastY = t.getLastY();
+        }
+        for (int y = 0; y < 1; y++) {
+            TemplateContainer t0 = new Level2Creator(-View.VIEWPORT_WIDTH);
+            TemplateContainer t1 = new Level2Creator(0f);
+            TemplateContainer t2 = new Level2Creator(View.VIEWPORT_WIDTH);
+            PlatformTemplate t=RandTemplate(t0,t1,t2,lastY);
+            lastY = t.getLastY();
+        }
+        for (int y = 0; y < 3; y++) {
+            TemplateContainer t0 = new Level3Creator(-View.VIEWPORT_WIDTH);
+            TemplateContainer t1 = new Level3Creator(0f);
+            TemplateContainer t2 = new Level3Creator(View.VIEWPORT_WIDTH);
+            PlatformTemplate t=RandTemplate(t0,t1,t2,lastY);
+            lastY = t.getLastY();
+        }
+        for (int y = 0; y < 4; y++) {
+            TemplateContainer t0 = new Level4Creator(-View.VIEWPORT_WIDTH);
+            TemplateContainer t1 = new Level4Creator(0f);
+            TemplateContainer t2 = new Level4Creator(View.VIEWPORT_WIDTH);
+            PlatformTemplate t=RandTemplate(t0,t1,t2,lastY);
+            lastY = t.getLastY();
+        }
+        addFinal(lastY);
+    }
+
+    private PlatformTemplate RandTemplate(TemplateContainer t0,TemplateContainer t1,TemplateContainer t2,float y){
         int rand_index = rand.nextInt(t1.getTemplates().size());
-        PlatformTemplate t = t1.getTemplates().get(rand_index);
-        t.setY(y - DISTANCE_BETWEEN_PLATFORMS);
-        platforms.addAll(t.getPlatforms());
-        return t;
+        PlatformTemplate t0p = t0.getTemplates().get(rand_index);
+        PlatformTemplate t1p = t1.getTemplates().get(rand_index);
+        PlatformTemplate t2p = t2.getTemplates().get(rand_index);
+        t0p.setY(y-DISTANCE_BETWEEN_PLATFORMS);
+        t1p.setY(y - DISTANCE_BETWEEN_PLATFORMS);
+        t2p.setY(y - DISTANCE_BETWEEN_PLATFORMS);
+        platforms.addAll(t0p.getPlatforms());
+        platforms.addAll(t1p.getPlatforms());
+        platforms.addAll(t2p.getPlatforms());
+        return t1p;
     }
 
 

@@ -32,35 +32,34 @@ public class Controller implements ContactListener {
     private /*final*/ World world;
 
 
-    private /*final*/ BallBody ball;
+    private BallBody ball;
     private List<PlatformModel> platforms;
     private float accumulator;
     private List<PlatformBody> redPlats;
     private PlatformBody finalPlat;
 
-
-    /*private*/Controller() {
-        world = new World( new Vector2( 0, GRAVITY ), true );
-        ball = new BallBody( world, Model.getInstance().getBall());
-        world.setContactListener( this );
+    private Controller() {
+        world = new World(new Vector2(0, GRAVITY), true);
+        ball = new BallBody(world, Model.getInstance().getBall());
+        world.setContactListener(this);
         platforms = new ArrayList<PlatformModel>();
         platforms = Model.getInstance().getPlatforms();
         redPlats = new ArrayList<PlatformBody>();
         for (PlatformModel plat : platforms) {
             if (plat instanceof NormalPlatformModel)
-                new PlatformBody( world, plat, false );
+                new PlatformBody(world, plat, false);
             else if (plat instanceof RedPlatformModel) {
-                PlatformBody b = new PlatformBody( world, plat, ((RedPlatformModel) plat).getMoving() );
-                redPlats.add( b );
+                PlatformBody b = new PlatformBody(world, plat, ((RedPlatformModel) plat).getMoving());
+                redPlats.add(b);
             } else {
-                finalPlat = new PlatformBody( world, plat, false );
+                finalPlat = new PlatformBody(world, plat, false);
             }
         }
     }
 
     public void moveBall(float deltaX) {
 
-        ball.setTransform( ball.getX() + deltaX * SENSIBILITY, ball.getY() );
+        ball.setTransform(ball.getX() + deltaX * SENSIBILITY, ball.getY());
     }
 
 
@@ -70,24 +69,25 @@ public class Controller implements ContactListener {
         return instance;
 
     }
+
     public static void newInstance() {
         instance = new Controller();
     }
 
     public void update(float delta) {
-        float frameTime = Math.min( delta, 0.25f );
+        float frameTime = Math.min(delta, 0.25f);
         accumulator += frameTime;
         while (accumulator >= 1 / 60f) {
-            world.step( 1 / 60f, 6, 2 );
+            world.step(1 / 60f, 6, 2);
             accumulator -= 1 / 60f;
         }
         //Desaparece de um lado, aparece no outro
         if (ball.getX() < -Model.getInstance().getBall().getRadius())
-            ball.setTransform( VIEWPORT_WIDTH - Model.getInstance().getBall().getRadius(), ball.getY() );
+            ball.setTransform(VIEWPORT_WIDTH - Model.getInstance().getBall().getRadius(), ball.getY());
         else if (ball.getX() > VIEWPORT_WIDTH + Model.getInstance().getBall().getRadius())
-            ball.setTransform( Model.getInstance().getBall().getRadius(), ball.getY() );
+            ball.setTransform(Model.getInstance().getBall().getRadius(), ball.getY());
 
-        Model.getInstance().update( Controller.getInstance().getBall().getX(), Controller.getInstance().getBall().getY() ); //actualiza posiçao da bola
+        Model.getInstance().update(Controller.getInstance().getBall().getX(), Controller.getInstance().getBall().getY()); //actualiza posiçao da bola
         int i = 0;
         for (PlatformModel plat : Model.getInstance().getPlatforms()) {
             if (plat instanceof RedPlatformModel && ((RedPlatformModel) plat).getMoving()) {
@@ -96,7 +96,7 @@ public class Controller implements ContactListener {
                     if (it.isMoving()) {
                         it.moveRedPlat();
                         if (j == 0) {
-                            plat.setPos( it.getX(), it.getY() );
+                            plat.setPos(it.getX(), it.getY());
                             i++;
                             break;
                         } else j--;
@@ -121,22 +121,27 @@ public class Controller implements ContactListener {
         Body bodyA = contact.getFixtureA().getBody();
         Body bodyB = contact.getFixtureB().getBody();
 
-        float destroyerVelocity = (float)Math.sqrt(2*Math.abs(GRAVITY)*(3*PLATFORM_HEIGHT+3* DISTANCE_BETWEEN_PLATFORMS));
+        float destroyerVelocity = (float) Math.sqrt(2 * Math.abs(GRAVITY) * (3 * PLATFORM_HEIGHT + 3 * DISTANCE_BETWEEN_PLATFORMS));
         if (finalPlat != null)
             if (bodyB.getUserData() == ball.getUserData() && bodyA.getUserData() == finalPlat.getUserData()) {
                 View.win = true;
                 return;
             }
-        if(bodyB.getUserData()  == ball.getUserData())
-        if(ball.getVelocity().y<=(-destroyerVelocity)){
-            bodyA.setActive(false);
-            world.destroyBody(bodyA);
-            Model.getInstance().destroyPlatform(ball.getX(),ball.getY(),Model.getInstance().getBall().getRadius());
-            return;
+        if (bodyB.getUserData() == ball.getUserData())
+            if (ball.getVelocity().y <= (-destroyerVelocity)) {
+                bodyA.setActive(false);
+                world.destroyBody(bodyA);
+                Model.getInstance().destroyPlatform(ball.getX(), ball.getY(), Model.getInstance().getBall().getRadius());
+                return;
+            }
+        for (PlatformBody it : redPlats) {
+            if (bodyB.getUserData() == ball.getUserData() && bodyA.getUserData() == it.getUserData()) {
+                View.lose = true;
+                return;
+            }
         }
-        for (PlatformBody it : redPlats)
-            if (bodyB.getUserData() == ball.getUserData() && bodyA.getUserData() == it.getUserData())
-                View.lose=true;
+        View.bounce.play(View.VOLUME);
+
 
     }
 

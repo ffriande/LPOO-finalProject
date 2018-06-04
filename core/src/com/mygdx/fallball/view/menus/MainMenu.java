@@ -2,13 +2,11 @@ package com.mygdx.fallball.view.menus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -19,21 +17,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.fallball.FallBall;
-import com.mygdx.fallball.view.Buttons.ButtonView;
-import com.mygdx.fallball.view.Buttons.ExitButtonView;
-import com.mygdx.fallball.view.Buttons.OptionsButtonView;
-import com.mygdx.fallball.view.Buttons.StartButtonView;
 import com.mygdx.fallball.view.View;
 
-import java.awt.Button;
-import java.awt.Menu;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.soap.Text;
-
+/**
+ * MainMenu.java-First screen to appear , Main menu screen.
+ * Has the music to be played in the menu screens.
+ * @see ScreenAdapter
+ */
 public class MainMenu extends ScreenAdapter {
-    //TODO:Select level menu
     public final static int ButtonsWidth = 500;
 
 
@@ -43,46 +34,49 @@ public class MainMenu extends ScreenAdapter {
     private Sprite options;
     private Sprite exit;
     private Texture background;
-    private OrthographicCamera cam;
-    private Viewport viewport;
-    public final static Sound MenuMusic=Gdx.audio.newSound(Gdx.files.internal("music.wav"));
+    public static Sound MenuMusic=Gdx.audio.newSound(Gdx.files.internal("music.wav"));
 
-
+    /**
+     * Class constructor.
+     * Inicializes all the class variables.
+     * Creates camara and viewport.
+     * Loads all the spites needed.
+     * @param game-FallBall object to store it in a variable.
+     */
     public MainMenu(FallBall game){
         this.game=game;
         background=new Texture("1stbackground.png");
-        MenuMusic.loop(View.VOLUME);
+        MenuMusic.loop(View.VOLUME/2f);
         loadButtons();
-        cam=new OrthographicCamera();
-        viewport=new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam);
+        OrthographicCamera cam=new OrthographicCamera();
+        Viewport viewport=new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam);
         viewport.apply();
         cam.position.set(cam.viewportWidth/2,cam.viewportHeight/2,0);
         cam.update();
         stage=new Stage(viewport,game.getBatch());
         Gdx.input.setInputProcessor(stage);
-
-
-
-
-
-
     }
 
-
-
-    public void loadButtons(){
-        Texture startTex=new Texture("start.png");
+    /**
+     * Function that gets all the textures needed to load the sprites.
+     */
+    private void loadButtons(){
+        Texture startTex=game.getAssetManager().get("start.png");
         start=new Sprite(startTex,startTex.getWidth(),startTex.getHeight());
         start.setSize(ButtonsWidth,ButtonsWidth*start.getHeight()/start.getWidth());
-        Texture optionsTex=new Texture("options.png");
+        Texture optionsTex=game.getAssetManager().get("options.png");
         options=new Sprite(optionsTex,optionsTex.getWidth(),optionsTex.getHeight());
         options.setSize(ButtonsWidth,ButtonsWidth*options.getHeight()/options.getWidth());
-        Texture exitTex=new Texture("exit.png");
+        Texture exitTex=game.getAssetManager().get("exit.png");
         exit=new Sprite(exitTex,exitTex.getWidth(),exitTex.getHeight());
         exit.setSize(ButtonsWidth,ButtonsWidth*exit.getHeight()/exit.getWidth());
 
     }
 
+    /**
+     * Creates all the buttons needed to this menu.
+     * Creates all the Listeners for those buttons.
+     */
     @Override
     public void show(){
         Table table = new Table();
@@ -133,14 +127,14 @@ public class MainMenu extends ScreenAdapter {
         game.getBatch().end();
         stage.act();
         stage.draw();
-
-        //setScreen(new View(this));
-
     }
+
     @Override
     public void dispose() {
         stage.dispose();
         background.dispose();
-        MenuMusic.dispose();
+        start.getTexture().dispose();
+        options.getTexture().dispose();
+        exit.getTexture().dispose();
     }
 }

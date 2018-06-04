@@ -1,6 +1,5 @@
 package com.mygdx.fallball.model.entities;
 
-import com.badlogic.gdx.utils.Json;
 
 public abstract class PlatformModel extends EntityBaseModel{
     private float width;
@@ -12,12 +11,6 @@ public abstract class PlatformModel extends EntityBaseModel{
         this.height=height;
     }
 
-    public void setWidth(float w){
-        this.width=w;
-    }
-    public void setHeight(float h){
-        this.height=h;
-    }
     public float getWidth(){
         return this.width;
     }

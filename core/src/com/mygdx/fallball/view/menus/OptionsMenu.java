@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -18,51 +16,62 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.fallball.FallBall;
-import com.mygdx.fallball.controller.Controller;
-import com.mygdx.fallball.model.Model;
 import com.mygdx.fallball.view.View;
 
+/**
+ * OptionsMenu.java-Menu to change some game options.
+ * You can change sound(mute/unmute).
+ * You can reset the levels to standard.
+ * @see ScreenAdapter
+ */
 public class OptionsMenu extends ScreenAdapter {
     private FallBall game;
     private Stage stage;
     private Sprite MuteSprite;
     private Sprite returnSprite;
+    private Sprite ResetSprite;
     private Texture background;
-    private OrthographicCamera cam;
-    private Viewport viewport;
-    private ImageButton muteButton;
 
-
+    /**
+     * Class constructor.
+     * Inicializes all the class variables.
+     * Creates camara and viewport.
+     * Loads all the spites needed.
+     * @param game-FallBall object to store it in a variable.
+     */
     public OptionsMenu(FallBall game){
         this.game=game;
         background=new Texture("1stbackground.png");
         loadButtons();
-        cam=new OrthographicCamera();
-        viewport=new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam);
+        OrthographicCamera cam=new OrthographicCamera();
+        Viewport viewport=new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam);
         viewport.apply();
         cam.position.set(cam.viewportWidth/2,cam.viewportHeight/2,0);
         cam.update();
         stage=new Stage(viewport,game.getBatch());
         Gdx.input.setInputProcessor(stage);
-
-
-
-
-
     }
 
-
-
-    public void loadButtons(){
-        Texture MuteTex=new Texture("sound.png");
+    /**
+     * Function that gets all the textures needed to load the sprites.
+     */
+    private void loadButtons(){
+        Texture MuteTex=game.getAssetManager().get("sound.png");
         MuteSprite =new Sprite(MuteTex,MuteTex.getWidth(),MuteTex.getHeight());
         MuteSprite.setSize(MainMenu.ButtonsWidth,MainMenu.ButtonsWidth*MuteSprite.getHeight()/MuteSprite.getWidth());
-        Texture returnTex=new Texture("return.png");
+        Texture returnTex=game.getAssetManager().get("return.png");
         returnSprite =new Sprite(returnTex,returnTex.getWidth(),returnTex.getHeight());
         returnSprite.setSize(MainMenu.ButtonsWidth,MainMenu.ButtonsWidth*returnSprite.getHeight()/returnSprite.getWidth());
+        Texture resetTex=game.getAssetManager().get("reset.png");
+        ResetSprite =new Sprite(resetTex,resetTex.getWidth(),resetTex.getHeight());
+        ResetSprite.setSize(MainMenu.ButtonsWidth,MainMenu.ButtonsWidth*ResetSprite.getHeight()/ResetSprite.getWidth());
 
     }
 
+    /**
+     * Creates all the buttons needed to this menu.
+     * Creates all the Listeners for those buttons.
+     */
     @Override
     public void show(){
         Table table = new Table();
@@ -70,16 +79,26 @@ public class OptionsMenu extends ScreenAdapter {
         table.setDebug(true);
 
         final Drawable muteDrawable = new SpriteDrawable(MuteSprite);
-        muteButton = new ImageButton(muteDrawable);
+        ImageButton muteButton = new ImageButton(muteDrawable);
         Drawable returnDrawable = new SpriteDrawable(returnSprite);
         ImageButton returnButton = new ImageButton(returnDrawable);
+        Drawable resetDrawable = new SpriteDrawable(ResetSprite);
+        ImageButton resetButton = new ImageButton(resetDrawable);
 
+        resetButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Levels.getInstance().resetLevels();
+                MainMenu.MenuMusic.stop();
+                game.setScreen(new MainMenu(game));
+            }
+        });
         muteButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if(View.VOLUME==0f){
                     View.VOLUME=1f;
-                    MainMenu.MenuMusic.loop(View.VOLUME);
+                    MainMenu.MenuMusic.loop(View.VOLUME/2f);
                 }else {
                     MainMenu.MenuMusic.stop();
                     View.VOLUME = 0f;
@@ -95,6 +114,8 @@ public class OptionsMenu extends ScreenAdapter {
         });
         table.add(muteButton).spaceBottom(100);
         table.row();
+        table.add(resetButton).spaceBottom(100);
+        table.row();
         table.add(returnButton);
         stage.addActor(table);
     }
@@ -108,13 +129,15 @@ public class OptionsMenu extends ScreenAdapter {
         game.getBatch().end();
         stage.act();
         stage.draw();
-
-        //setScreen(new View(this));
-
     }
 
     @Override
     public void dispose() {
         stage.dispose();
+        background.dispose();
+        MuteSprite.getTexture().dispose();
+        returnSprite.getTexture().dispose();
+        ResetSprite.getTexture().dispose();
+
     }
 }

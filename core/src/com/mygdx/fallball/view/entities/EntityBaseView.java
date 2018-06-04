@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.fallball.FallBall;
 import com.mygdx.fallball.model.Model;
-import com.mygdx.fallball.model.entities.BallModel;
 import com.mygdx.fallball.model.entities.EntityBaseModel;
 import com.mygdx.fallball.model.entities.PlatformModel;
 

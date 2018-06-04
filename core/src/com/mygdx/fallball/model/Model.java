@@ -28,7 +28,7 @@ public class Model {
         return instance;
     }
 
-    Model() {
+    private Model() {
         ball = new BallModel(VIEWPORT_WIDTH / 2f, FIRST_PLATFORM_Y + DISTANCE_BETWEEN_PLATFORMS, 1.5f);
         this.level=1;
         platforms = new LevelMaker(1).getPlatforms();

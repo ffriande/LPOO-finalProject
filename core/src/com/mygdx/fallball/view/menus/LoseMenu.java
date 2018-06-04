@@ -20,7 +20,10 @@ import com.mygdx.fallball.controller.Controller;
 import com.mygdx.fallball.model.Model;
 import com.mygdx.fallball.view.View;
 
-
+/**
+ * LoseMenu.java-Menu that appears when you lose.
+ * @see ScreenAdapter
+ */
 public class LoseMenu extends ScreenAdapter {
 
 
@@ -29,41 +32,46 @@ public class LoseMenu extends ScreenAdapter {
     private Sprite continueS;
     private Sprite tryS;
     private Texture background;
-    private OrthographicCamera cam;
-    private Viewport viewport;
 
-
+    /**
+     * Class constructor.
+     * Inicializes all the class variables.
+     * Creates camara and viewport.
+     * Loads all the spites needed.
+     * @param game-FallBall object to store it in a variable.
+     */
     public LoseMenu(FallBall game){
         this.game=game;
-        background=new Texture("background.png");
+        background=game.getAssetManager().get("loseback.png");
         loadButtons();
-        cam=new OrthographicCamera();
-        viewport=new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam);
+        OrthographicCamera cam=new OrthographicCamera();
+        Viewport viewport=new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam);
         viewport.apply();
         cam.position.set(cam.viewportWidth/2,cam.viewportHeight/2,0);
         cam.update();
         stage=new Stage(viewport,game.getBatch());
         Gdx.input.setInputProcessor(stage);
-
-
-
-
-
     }
 
 
-
-    public void loadButtons(){
-        Texture tryTex=new Texture("tryagain.png");
+    /**
+     * Function that gets all the textures needed to load the sprites.
+     */
+    private void loadButtons(){
+        Texture tryTex=game.getAssetManager().get("tryagain.png");
         tryS=new Sprite(tryTex,tryTex.getWidth(),tryTex.getHeight());
         tryS.setSize(MainMenu.ButtonsWidth,MainMenu.ButtonsWidth*tryS.getHeight()/tryS.getWidth());
-        Texture continueTex=new Texture("continue.png");
+        Texture continueTex=game.getAssetManager().get("MainMenu.png");
         continueS=new Sprite(continueTex,continueTex.getWidth(),continueTex.getHeight());
         continueS.setSize(MainMenu.ButtonsWidth,MainMenu.ButtonsWidth*continueS.getHeight()/continueS.getWidth());
 
 
     }
 
+    /**
+     * Creates all the buttons needed to this menu.
+     * Creates all the Listeners for those buttons.
+     */
     @Override
     public void show(){
         Table table = new Table();
@@ -109,9 +117,12 @@ public class LoseMenu extends ScreenAdapter {
         stage.act();
         stage.draw();
     }
+
     @Override
     public void dispose() {
         stage.dispose();
         background.dispose();
+        continueS.getTexture().dispose();
+        tryS.getTexture().dispose();
     }
 }

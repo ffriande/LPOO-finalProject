@@ -11,81 +11,83 @@ import static com.mygdx.fallball.model.levels.LevelMaker.DISTANCE_BETWEEN_PLATFO
 import static com.mygdx.fallball.model.levels.LevelMaker.PLATFORM_HEIGHT;
 
 public class Level3Creator extends TemplateContainer {
-    public Level3Creator(){
+    public Level3Creator(float x){
         super();
-        createType1();
-        createType2();
+        createType1(x);
+        createType2(x);
     }
 
-    private void createType1(){
+    private void createType1(float x){
         List<PlatformModel> plat=new ArrayList<PlatformModel>();
         PlatformTemplate p=new PlatformTemplate();
         float y=0;
-        RedPlatformModel n=new RedPlatformModel(7,y,5, PLATFORM_HEIGHT,8);
+        RedPlatformModel n=new RedPlatformModel(x+7,y,5, PLATFORM_HEIGHT,8);
         plat.add(n);
-        NormalPlatformModel n1=new NormalPlatformModel(29.5f,y,14, PLATFORM_HEIGHT);
+        NormalPlatformModel n1=new NormalPlatformModel(x+29.5f,y,14, PLATFORM_HEIGHT);
         plat.add(n1);
-        RedPlatformModel n12=new RedPlatformModel(45,y,8,PLATFORM_HEIGHT);
+        RedPlatformModel n12=new RedPlatformModel(x+45,y,8,PLATFORM_HEIGHT);
         plat.add(n12);
         y-= DISTANCE_BETWEEN_PLATFORMS;
-        RedPlatformModel n2=new RedPlatformModel(15,y,6, PLATFORM_HEIGHT);
+        RedPlatformModel n2=new RedPlatformModel(x+15,y,6, PLATFORM_HEIGHT);
         plat.add(n2);
-        NormalPlatformModel n3=new NormalPlatformModel(42,y,16, PLATFORM_HEIGHT);
+        NormalPlatformModel n3=new NormalPlatformModel(x+42,y,16, PLATFORM_HEIGHT);
         plat.add(n3);
         y-= DISTANCE_BETWEEN_PLATFORMS;
-        NormalPlatformModel n6=new NormalPlatformModel(10,y,4, PLATFORM_HEIGHT);
+        NormalPlatformModel n6=new NormalPlatformModel(x+10,y,4, PLATFORM_HEIGHT);
         plat.add(n6);
-        RedPlatformModel n7=new RedPlatformModel(20,y,8, PLATFORM_HEIGHT,5);
+        RedPlatformModel n7=new RedPlatformModel(x+20,y,8, PLATFORM_HEIGHT,5);
         plat.add(n7);
-        RedPlatformModel n8=new RedPlatformModel(36f,y,18, PLATFORM_HEIGHT,2);
+        RedPlatformModel n8=new RedPlatformModel(x+36f,y,18, PLATFORM_HEIGHT,2);
         plat.add(n8);
         y-= DISTANCE_BETWEEN_PLATFORMS;
-        NormalPlatformModel n4=new NormalPlatformModel(15,y,30, PLATFORM_HEIGHT);
+        NormalPlatformModel n4=new NormalPlatformModel(x+15,y,30, PLATFORM_HEIGHT);
         plat.add(n4);
-        RedPlatformModel n5=new RedPlatformModel(42,y,14, PLATFORM_HEIGHT);
+        RedPlatformModel n5=new RedPlatformModel(x+42,y,14, PLATFORM_HEIGHT);
         plat.add(n5);
         y-= DISTANCE_BETWEEN_PLATFORMS;
-        NormalPlatformModel n9=new NormalPlatformModel(2.5f,y,5, PLATFORM_HEIGHT);
+        NormalPlatformModel n9=new NormalPlatformModel(x+2.5f,y,5, PLATFORM_HEIGHT);
         plat.add(n9);
-        RedPlatformModel n10=new RedPlatformModel(18f,y,16, PLATFORM_HEIGHT,10);
+        RedPlatformModel n10=new RedPlatformModel(x+18f,y,16, PLATFORM_HEIGHT,10);
         plat.add(n10);
+        NormalPlatformModel n20=new NormalPlatformModel(x+40f,y,10, PLATFORM_HEIGHT);
+        plat.add(n20);
         p.setPlatforms(plat);
         templates.add(p);
     }
 
-    private void createType2(){
+    private void createType2(float x){
         List<PlatformModel> plat=new ArrayList<PlatformModel>();
         PlatformTemplate p=new PlatformTemplate();
         float y=0;
-        NormalPlatformModel n=new NormalPlatformModel(13,y,10, PLATFORM_HEIGHT);
+        NormalPlatformModel n=new NormalPlatformModel(x+13,y,10, PLATFORM_HEIGHT);
         plat.add(n);
-        RedPlatformModel n1=new RedPlatformModel(32f,y,14, PLATFORM_HEIGHT);
+        RedPlatformModel n1=new RedPlatformModel(x+32f,y,14, PLATFORM_HEIGHT);
         plat.add(n1);
-        NormalPlatformModel n11=new NormalPlatformModel(47f,y,6, PLATFORM_HEIGHT);
+        NormalPlatformModel n11=new NormalPlatformModel(x+47f,y,6, PLATFORM_HEIGHT);
         plat.add(n11);
         y-= DISTANCE_BETWEEN_PLATFORMS;
-        RedPlatformModel n2=new RedPlatformModel(15,y,6, PLATFORM_HEIGHT);
+        RedPlatformModel n2=new RedPlatformModel(x+15,y,6, PLATFORM_HEIGHT);
         plat.add(n2);
-        NormalPlatformModel n3=new NormalPlatformModel(42,y,16, PLATFORM_HEIGHT);
+        NormalPlatformModel n3=new NormalPlatformModel(x+42,y,16, PLATFORM_HEIGHT);
         plat.add(n3);
         y-= DISTANCE_BETWEEN_PLATFORMS;
-        RedPlatformModel n4=new RedPlatformModel(15,y,30, PLATFORM_HEIGHT,5);
+        RedPlatformModel n4=new RedPlatformModel(x+15,y,30, PLATFORM_HEIGHT,5);
         plat.add(n4);
-        NormalPlatformModel n5=new NormalPlatformModel(42,y,14, PLATFORM_HEIGHT);
+        NormalPlatformModel n5=new NormalPlatformModel(x+42,y,14, PLATFORM_HEIGHT);
         plat.add(n5);
         y-= DISTANCE_BETWEEN_PLATFORMS;
-        NormalPlatformModel n6=new NormalPlatformModel(10,y,4, PLATFORM_HEIGHT);
+        NormalPlatformModel n6=new NormalPlatformModel(x+10,y,4, PLATFORM_HEIGHT);
         plat.add(n6);
-        RedPlatformModel n7=new RedPlatformModel(24,y,8, PLATFORM_HEIGHT,10);
+        RedPlatformModel n7=new RedPlatformModel(x+24,y,8, PLATFORM_HEIGHT,10);
         plat.add(n7);
-        RedPlatformModel n8=new RedPlatformModel(39.5f,y,18, PLATFORM_HEIGHT);
+        RedPlatformModel n8=new RedPlatformModel(x+39.5f,y,18, PLATFORM_HEIGHT);
         plat.add(n8);
         y-= DISTANCE_BETWEEN_PLATFORMS;
-        NormalPlatformModel n9=new NormalPlatformModel(2.5f,y,5, PLATFORM_HEIGHT);
+        NormalPlatformModel n9=new NormalPlatformModel(x+2.5f,y,5, PLATFORM_HEIGHT);
         plat.add(n9);
-        RedPlatformModel n10=new RedPlatformModel(20f,y,16, PLATFORM_HEIGHT);
+        RedPlatformModel n10=new RedPlatformModel(x+20f,y,16, PLATFORM_HEIGHT);
         plat.add(n10);
-        NormalPlatformModel n12=new NormalPlatformModel(40f,y,16, PLATFORM_HEIGHT);
+        NormalPlatformModel n12=new NormalPlatformModel(x+40f,y,16, PLATFORM_HEIGHT);
         plat.add(n12);
         p.setPlatforms(plat);
         templates.add(p);

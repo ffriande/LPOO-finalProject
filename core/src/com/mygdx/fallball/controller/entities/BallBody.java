@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.fallball.model.entities.BallModel;
 
+
 public class BallBody extends EntityBody {
     public BallBody(World world, BallModel model) {
         super(world, model, false);
@@ -20,7 +21,7 @@ public class BallBody extends EntityBody {
         body.setType(BodyDef.BodyType.DynamicBody);
     }
 
-    final private void createBallFixture(Body body, float radius, float density, float friction, float restitution) {
+    private void createBallFixture(Body body, float radius, float density, float friction, float restitution) {
         CircleShape circle = new CircleShape();
         circle.setRadius(radius);
 
@@ -44,9 +45,5 @@ public class BallBody extends EntityBody {
 
     public Vector2 getVelocity() {
         return body.getLinearVelocity();
-    }
-
-    public void applyImpulse(float impulseY) {
-        body.applyLinearImpulse(0, impulseY, this.getX(), this.getY(), true);
     }
 }
