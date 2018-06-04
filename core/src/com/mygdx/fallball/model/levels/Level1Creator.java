@@ -10,14 +10,27 @@ import java.util.List;
 import static com.mygdx.fallball.model.levels.LevelMaker.DISTANCE_BETWEEN_PLATFORMS;
 import static com.mygdx.fallball.model.levels.LevelMaker.PLATFORM_HEIGHT;
 
+/**
+ * Level1Creator.java-Creates all the templates of difficulty 1.
+ * @see TemplateContainer
+ */
 public class Level1Creator extends TemplateContainer {
 
+    /**
+     * Class constructor.
+     * Calls the functions to create the templates
+     * @param x Used for the 3 worlds creation.
+     */
     public Level1Creator(float x){
         super();
         createType1(x);
         createType2(x);
     }
 
+    /**
+     * Creates the type1 template off this difficulty.
+     * @param x Used for the 3 worlds creation.
+     */
     private void createType1(float x){
         List<PlatformModel> plat=new ArrayList<PlatformModel>();
         PlatformTemplate p=new PlatformTemplate();
@@ -54,6 +67,10 @@ public class Level1Creator extends TemplateContainer {
         templates.add(p);
     }
 
+    /**
+     * Creates the type2 template off this difficulty.
+     * @param x Used for the 3 worlds creation.
+     */
     private void createType2(float x){
         List<PlatformModel> plat=new ArrayList<PlatformModel>();
         PlatformTemplate p=new PlatformTemplate();

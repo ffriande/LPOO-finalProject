@@ -12,9 +12,21 @@ import com.badlogic.gdx.utils.JsonValue;
  * @see Json.Serializable
  */
 public class Levels implements Json.Serializable {
+    /**
+     * Class instance.
+     */
     private static Levels instance;
+    /**
+     * Number of unlocked levels.
+     */
     private int nrUnlocked;
+    /**
+     * Number of levels available.
+     */
     private int nrLevels;
+    /**
+     * Json to write json in files.
+     */
     private Json json;
 
     /**
@@ -90,6 +102,10 @@ public class Levels implements Json.Serializable {
         nrUnlocked=Integer.parseInt(s.substring(s.indexOf(";")+1,s.indexOf(";",2)));
     }
 
+    /**
+     * Writes with a specific pattern.
+     * @param json used to conver toJson.
+     */
     @Override
     public void write(Json json) {
         String s;

@@ -11,12 +11,25 @@ import java.util.List;
 import static com.mygdx.fallball.model.levels.LevelMaker.DISTANCE_BETWEEN_PLATFORMS;
 import static com.mygdx.fallball.model.levels.LevelMaker.PLATFORM_HEIGHT;
 
+/**
+ * BeginCreator.java-Creates all the templates for the start of all levels and final.
+ * @see TemplateContainer
+ */
 public class BeginCreator extends TemplateContainer {
+    /**
+     * Class constructor.
+     * Calls the function to create the templates
+     * @param x Used for the 3 worlds creation.
+     */
     public BeginCreator(float x){
         super();
         createBeginType(x);
     }
 
+    /**
+     * Creates the beginning template and the final plat template.
+     * @param x Used for the 3 worlds creation.
+     */
     private void createBeginType(float x){
         List<PlatformModel> plat=new ArrayList<PlatformModel>();
         PlatformTemplate p=new PlatformTemplate();

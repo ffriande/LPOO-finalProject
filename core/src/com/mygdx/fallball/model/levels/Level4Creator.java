@@ -9,20 +9,32 @@ import java.util.List;
 
 import static com.mygdx.fallball.model.levels.LevelMaker.DISTANCE_BETWEEN_PLATFORMS;
 import static com.mygdx.fallball.model.levels.LevelMaker.PLATFORM_HEIGHT;
-
+/**
+ * Level4Creator.java-Creates all the templates of difficulty 4.
+ * @see TemplateContainer
+ */
 public class Level4Creator extends TemplateContainer {
+
+    /**
+     * Class constructor.
+     * Calls the functions to create the templates
+     * @param x Used for the 3 worlds creation.
+     */
     public Level4Creator(float x){
         super();
         createType1(x);
     }
-
+    /**
+     * Creates the type1 template off this difficulty.
+     * @param x Used for the 3 worlds creation.
+     */
     private void createType1(float x){
         List<PlatformModel> plat=new ArrayList<PlatformModel>();
         PlatformTemplate p=new PlatformTemplate();
         float y=0;
         RedPlatformModel n=new RedPlatformModel(x+10,y,7.5f, PLATFORM_HEIGHT,5);
         plat.add(n);
-        RedPlatformModel n1=new RedPlatformModel(x+21.25f,y,2.5f, DISTANCE_BETWEEN_PLATFORMS-PLATFORM_HEIGHT/2);
+        RedPlatformModel n1=new RedPlatformModel(x+21.25f,y+DISTANCE_BETWEEN_PLATFORMS/2f,2.5f, DISTANCE_BETWEEN_PLATFORMS-PLATFORM_HEIGHT);
         plat.add(n1);
         NormalPlatformModel n12=new NormalPlatformModel(x+26.25f,y,7.5f,PLATFORM_HEIGHT);
         plat.add(n12);
@@ -51,7 +63,7 @@ public class Level4Creator extends TemplateContainer {
         y-= DISTANCE_BETWEEN_PLATFORMS;
         NormalPlatformModel n4=new NormalPlatformModel(x+5f,y,5f, PLATFORM_HEIGHT);
         plat.add(n4);
-        RedPlatformModel n5=new RedPlatformModel(x+16.25f,y,2.5f, DISTANCE_BETWEEN_PLATFORMS-PLATFORM_HEIGHT/2);
+        RedPlatformModel n5=new RedPlatformModel(x+16.25f,y+DISTANCE_BETWEEN_PLATFORMS/2f,2.5f, DISTANCE_BETWEEN_PLATFORMS-PLATFORM_HEIGHT);
         plat.add(n5);
         RedPlatformModel n18=new RedPlatformModel(x+25f,y,10f, PLATFORM_HEIGHT);
         plat.add(n18);
@@ -69,7 +81,10 @@ public class Level4Creator extends TemplateContainer {
         p.setPlatforms(plat);
         templates.add(p);
     }
-
+    /**
+     * Creates the type2 template off this difficulty.
+     * @param x Used for the 3 worlds creation.
+     */
     private void createType2(float x){
         List<PlatformModel> plat=new ArrayList<PlatformModel>();
         PlatformTemplate p=new PlatformTemplate();
