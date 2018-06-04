@@ -19,7 +19,7 @@ public class BeginCreator extends TemplateContainer {
         createBeginType();
     }
 
-    public void createBeginType(){
+    private void createBeginType(){
         List<PlatformModel> plat=new ArrayList<PlatformModel>();
         PlatformTemplate p=new PlatformTemplate();
         float y=0;

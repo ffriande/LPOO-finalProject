@@ -42,7 +42,7 @@ public class LevelMaker {
                 level2();
                 break;
             case 3:
-                //level3();
+                level3();
                 break;
             case 4:
                 //level4();
@@ -74,13 +74,37 @@ public class LevelMaker {
         start.getTemplates().get(0).setY(FIRST_PLATFORM_Y);
         platforms.addAll(start.getTemplates().get(0).getPlatforms());
         float lastY = start.getTemplates().get(0).getLastY();
+        for (int y = 0; y < 2; y++) {
+            TemplateContainer t1 = new Level1Creator();
+            PlatformTemplate t=RandTemplate(t1,lastY);
+            lastY = t.getLastY();
+        }
+        for (int y = 0; y < 5; y++) {
+            TemplateContainer t1 = new Level2Creator();
+            PlatformTemplate t=RandTemplate(t1,lastY);
+            lastY = t.getLastY();
+        }
+        start.getTemplates().get(1).setY(lastY - DISTANCE_BETWEEN_PLATFORMS);
+        platforms.addAll(start.getTemplates().get(1).getPlatforms());
+    }
+
+    private void level3(){
+        TemplateContainer start = new BeginCreator();
+        start.getTemplates().get(0).setY(FIRST_PLATFORM_Y);
+        platforms.addAll(start.getTemplates().get(0).getPlatforms());
+        float lastY = start.getTemplates().get(0).getLastY();
         for (int y = 0; y < 1; y++) {
             TemplateContainer t1 = new Level1Creator();
             PlatformTemplate t=RandTemplate(t1,lastY);
             lastY = t.getLastY();
         }
-        for (int y = 0; y < 4; y++) {
+        for (int y = 0; y < 3; y++) {
             TemplateContainer t1 = new Level2Creator();
+            PlatformTemplate t=RandTemplate(t1,lastY);
+            lastY = t.getLastY();
+        }
+        for (int y = 0; y < 4; y++) {
+            TemplateContainer t1 = new Level3Creator();
             PlatformTemplate t=RandTemplate(t1,lastY);
             lastY = t.getLastY();
         }
