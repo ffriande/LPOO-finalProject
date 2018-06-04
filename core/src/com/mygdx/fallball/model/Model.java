@@ -58,7 +58,7 @@ public class Model {
     }
 
     public void destroyPlatform(float x, float y, float radius) {
-        float renderErrorMargin = 0.1f;
+        float renderErrorMargin = 0.3f;
         for (PlatformModel it : platforms) {
             if ((it.getY() + it.getHeight() / 2 - renderErrorMargin <= y - radius && it.getY() + it.getHeight() / 2 + renderErrorMargin >= y - radius)
                     && x + radius >= it.getX() - it.getWidth() / 2f && x - radius <= it.getX() + it.getWidth() / 2f) {
