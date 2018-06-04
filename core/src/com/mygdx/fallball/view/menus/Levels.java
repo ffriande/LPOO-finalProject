@@ -18,8 +18,9 @@ public class Levels implements Json.Serializable {
         json=new Json();
         nrUnlocked=1;
         nrLevels=4;
-        if(Gdx.files.local("levels.json").exists())
-            readJson(json.fromJson(String.class,Gdx.files.local("levels.json")));
+        if(!Gdx.files.local("levels.json").exists())
+            write(json);
+        readJson(json.fromJson(String.class,Gdx.files.local("levels.json")));
     }
 
     public int getNrUnlocked(){
