@@ -14,8 +14,8 @@ import static com.mygdx.fallball.model.levels.LevelMaker.DISTANCE_BETWEEN_PLATFO
 import static com.mygdx.fallball.model.levels.LevelMaker.PLATFORM_HEIGHT;
 
 public class BeginCreator extends TemplateContainer {
-    public BeginCreator(int difficulty){
-        super(difficulty);
+    public BeginCreator(){
+        super();
         createBeginType();
     }
 
