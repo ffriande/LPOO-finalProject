@@ -10,10 +10,20 @@ import com.mygdx.fallball.view.menus.MainMenu;
  * FallBall.java-The starting postion of the game.
  * @see Game
  */
-public class FallBall extends Game {	
+public class FallBall extends Game {
+	/**
+	 * Used to set sprites/textures to the screen.
+	 */
 	private SpriteBatch batch;
+
+	/**
+	 * Used to load all images that will be needed for the menus and the in-game view.
+	 */
 	private AssetManager assMan;
 
+	/**
+	 * Starts the game ,creates the batch and the assMan.
+	 */
 	@Override
 	public void create () {
 		batch = new SpriteBatch();

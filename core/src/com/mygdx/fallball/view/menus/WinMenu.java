@@ -22,10 +22,25 @@ import com.mygdx.fallball.FallBall;
  * @see ScreenAdapter
  */
 public class WinMenu extends ScreenAdapter {
+    /**
+     * The game this screen belongs to.
+     */
     private FallBall game;
+    /**
+     * Used to set buttons to the screen.
+     */
     private Stage stage;
-    private Sprite continueS;
+    /**
+     * Sprite of Main menu button.
+     */
+    private Sprite mainMenuS;
+    /**
+     * Sprite of Level Menu button.
+     */
     private Sprite levelS;
+    /**
+     * Background of this view.
+     */
     private Texture background;
 
 
@@ -57,8 +72,8 @@ public class WinMenu extends ScreenAdapter {
         levelS=new Sprite(levelTex,levelTex.getWidth(),levelTex.getHeight());
         levelS.setSize(MainMenu.ButtonsWidth,MainMenu.ButtonsWidth*levelS.getHeight()/levelS.getWidth());
         Texture continueTex=game.getAssetManager().get("MainMenu.png");
-        continueS=new Sprite(continueTex,continueTex.getWidth(),continueTex.getHeight());
-        continueS.setSize(MainMenu.ButtonsWidth,MainMenu.ButtonsWidth*continueS.getHeight()/continueS.getWidth());
+        mainMenuS =new Sprite(continueTex,continueTex.getWidth(),continueTex.getHeight());
+        mainMenuS.setSize(MainMenu.ButtonsWidth,MainMenu.ButtonsWidth* mainMenuS.getHeight()/ mainMenuS.getWidth());
 
 
     }
@@ -74,8 +89,8 @@ public class WinMenu extends ScreenAdapter {
 
         Drawable levelDrawable = new SpriteDrawable(levelS);
         ImageButton levelButton = new ImageButton(levelDrawable);
-        Drawable continueDrawable = new SpriteDrawable(continueS);
-        ImageButton continueButton = new ImageButton(continueDrawable);
+        Drawable mainMenuDrawable = new SpriteDrawable(mainMenuS);
+        ImageButton mainMenuButton = new ImageButton(mainMenuDrawable);
 
         levelButton.addListener(new ClickListener() {
             @Override
@@ -83,7 +98,7 @@ public class WinMenu extends ScreenAdapter {
                 game.setScreen(new LevelMenu(game));
             }
         });
-        continueButton.addListener(new ClickListener() {
+        mainMenuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 MainMenu.MenuMusic.stop();
@@ -93,7 +108,7 @@ public class WinMenu extends ScreenAdapter {
 
         table.add(levelButton).spaceBottom(100);
         table.row();
-        table.add(continueButton);
+        table.add(mainMenuButton);
 
         stage.addActor(table);
     }
@@ -111,7 +126,7 @@ public class WinMenu extends ScreenAdapter {
     @Override
     public void dispose() {
         stage.dispose();
-        continueS.getTexture().dispose();
+        mainMenuS.getTexture().dispose();
         levelS.getTexture().dispose();
         background.dispose();
     }

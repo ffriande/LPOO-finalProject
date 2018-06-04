@@ -39,23 +39,68 @@ import static com.mygdx.fallball.model.levels.LevelMaker.DISTANCE_BETWEEN_PLATFO
  * @see ScreenAdapter
  */
 public class View extends ScreenAdapter implements GestureDetector.GestureListener {
-
+    /**
+     * Used to convert the coordinates to pixel or to metters.
+     */
     public final static float PIXEL_TO_METER = 0.08f;
+    /**
+     * Viewport width in game.
+     */
     public final static float VIEWPORT_WIDTH = 50;
+    /**
+     * Volume of the sounds.
+     */
     public static float VOLUME =0.0f;
+    /**
+     * Used to enable/disable DEBUG PHYSICS
+     */
     private static final boolean DEBUG_PHYSICS = false;
+
+    /**
+     * Boolean representing if the game has been lost.
+     */
     public static boolean lose;
+    /**
+     * Boolean representing if the game has been won.
+     */
     public static boolean win;
+    /**
+     * Sound of the ball bouncing.
+     */
     public static Sound bounce=Gdx.audio.newSound(Gdx.files.internal("jump.wav"));
 
-
+    /**
+     * The game this screen belongs to.
+     */
     private FallBall game;
+
+    /**
+     * Camera to be used in-game.
+     */
     private OrthographicCamera camera;
+    /**
+     * Debug rendered.
+     */
     private Box2DDebugRenderer debugRenderer;
+    /**
+     * Represents the lowest point that the camera should see.
+     */
     private float lowestPoint;
+    /**
+     * Gdx.graphics.getWidth() to be used multiple times.
+     */
     private float w;
+    /**
+     * Gdx.graphics.getHeight() to be used multiple times.
+     */
     private float h;
+    /**
+     * Velocity of the ball.
+     */
     private float currVel = 1;
+    /**
+     * Matrix used to convert from meters to pixels.
+     */
     private Matrix4 debugCamera;
 
     /**

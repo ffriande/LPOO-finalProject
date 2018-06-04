@@ -27,11 +27,25 @@ import com.mygdx.fallball.view.View;
 public class MainMenu extends ScreenAdapter {
     public final static int ButtonsWidth = 500;
 
-
+    /**
+     * The game this screen belongs to.
+     */
     private FallBall game;
+    /**
+     * Used to set buttons to the screen.
+     */
     private Stage stage;
+    /**
+     * Sprite of Start Game button.
+     */
     private Sprite start;
+    /**
+     * Sprite of options button.
+     */
     private Sprite options;
+    /**
+     * Sprite of exit button.
+     */
     private Sprite exit;
     private Texture background;
     public static Sound MenuMusic=Gdx.audio.newSound(Gdx.files.internal("music.wav"));
@@ -98,7 +112,7 @@ public class MainMenu extends ScreenAdapter {
         startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new ModeMenu(game));
+                game.setScreen(new LevelMenu(game));
             }
         });
         optionsButton.addListener(new ClickListener() {

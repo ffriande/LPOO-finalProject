@@ -25,11 +25,29 @@ import com.mygdx.fallball.view.View;
  * @see ScreenAdapter
  */
 public class OptionsMenu extends ScreenAdapter {
+    /**
+     * The game this screen belongs to.
+     */
     private FallBall game;
+    /**
+     * Used to set buttons to the screen.
+     */
     private Stage stage;
+    /**
+     * Sprite of sound button.
+     */
     private Sprite MuteSprite;
+    /**
+     * Sprite of return to Main menu button.
+     */
     private Sprite returnSprite;
+    /**
+     * Sprite of reset button.
+     */
     private Sprite ResetSprite;
+    /**
+     * Background of this view.
+     */
     private Texture background;
 
     /**

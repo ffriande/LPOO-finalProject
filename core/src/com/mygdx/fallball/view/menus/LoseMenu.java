@@ -26,11 +26,25 @@ import com.mygdx.fallball.view.View;
  */
 public class LoseMenu extends ScreenAdapter {
 
-
+    /**
+     * The game this screen belongs to.
+     */
     private FallBall game;
+    /**
+     * Used to set buttons to the screen.
+     */
     private Stage stage;
+    /**
+     * Sprite of continue to Main Menu button.
+     */
     private Sprite continueS;
+    /**
+     * Sprite of try again button.
+     */
     private Sprite tryS;
+    /**
+     * Background of this view.
+     */
     private Texture background;
 
     /**

@@ -25,12 +25,29 @@ import com.mygdx.fallball.view.View;
  * @see ScreenAdapter
  */
 public class LevelMenu extends ScreenAdapter{
-
+    /**
+     * The game this screen belongs to.
+     */
     private FallBall game;
+    /**
+     * Used to set buttons to the screen.
+     */
     private Stage stage;
+    /**
+     * Sprites levels/locked buttons.
+     */
     private Sprite levelS[];
+    /**
+     * Sprite return no Main Menu button.
+     */
     private Sprite returnSprite;
+    /**
+     * Buttons of all levels/locked buttons
+     */
     private ImageButton buttons[];
+    /**
+     * Background of this view.
+     */
     private Texture background;
 
     /**
