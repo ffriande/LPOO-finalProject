@@ -24,19 +24,18 @@ FallBall is a fun, challenging game, in which the goal is to descend through the
 
 Main Menu:
 
-![Alt text](https://raw.githubusercontent.com/ffriande/LPOO-finalProject/finalRelease/sources/main%20menu.png?token=Aa1WXLeW5CJHQG_L2JjztGIg2xoTqkMNks5bHxiFwA%3D%3D)
+https://raw.githubusercontent.com/ffriande/LPOO-finalProject/finalRelease/sources/main%20menu.png?token=Aa1WXLeW5CJHQG_L2JjztGIg2xoTqkMNks5bHxiFwA%3D%3D
 
 Options Menu:
 
-![Alt text](https://raw.githubusercontent.com/ffriande/LPOO-finalProject/finalRelease/sources/options.png?token=Aa1WXHReq5lEolUeiGOQjkC9sgDQhJm0ks5bHxiGwA%3D%3D)
+https://raw.githubusercontent.com/ffriande/LPOO-finalProject/finalRelease/sources/options.png?token=Aa1WXHReq5lEolUeiGOQjkC9sgDQhJm0ks5bHxiGwA%3D%3D
 
 1- Sound mute and unmute.(The sound starts muted).
 
 2-Reset all unlocked levels.
 
 Level Selector:
-
-![Alt text](https://raw.githubusercontent.com/ffriande/LPOO-finalProject/finalRelease/sources/level%20selector.png?token=Aa1WXO3krqhacS3wTMWBaP5FUUICTRPgks5bHxiFwA%3D%3D)
+https://raw.githubusercontent.com/ffriande/LPOO-finalProject/finalRelease/sources/level%20selector.png?token=Aa1WXO3krqhacS3wTMWBaP5FUUICTRPgks5bHxiFwA%3D%3D
 
 The buttons with ? are the levels that still locked.
 
@@ -46,11 +45,11 @@ Drag the finger anywhere on the screen to move the ball to the sides.
 
 You can pass from one side of the screen to the other.
 
-![Alt text](https://raw.githubusercontent.com/ffriande/LPOO-finalProject/finalRelease/sources/bounce.png?token=Aa1WXJBfwKiRQMZvOiSLh5JwjRzDh9aVks5bHxiEwA%3D%3D)
+https://raw.githubusercontent.com/ffriande/LPOO-finalProject/finalRelease/sources/bounce.png?token=Aa1WXJBfwKiRQMZvOiSLh5JwjRzDh9aVks5bHxiEwA%3D%3D
 
 Hit the red platform, you loose.
 
-![Alt text](https://raw.githubusercontent.com/ffriande/LPOO-finalProject/finalRelease/sources/win.png?token=Aa1WXFrUssnZqxMlv1W7lxSoJzANgw-Kks5bHxmmwA%3D%3D)
+https://raw.githubusercontent.com/ffriande/LPOO-finalProject/finalRelease/sources/win.png?token=Aa1WXFrUssnZqxMlv1W7lxSoJzANgw-Kks5bHxmmwA%3D%3D
 
 Hit the green platform, you win.
 
