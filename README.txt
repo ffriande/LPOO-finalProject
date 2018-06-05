@@ -1,11 +1,10 @@
-d. README.md of github branch should have, at least, the following contents:
-
       - Setup/Installation procedure for both project and game/app (how to install the development environment and how to install/run the game/app).
 
       - Development documentation (Updated UML diagrams, Design Patterns used, other relevant design decisions, major difficulties along the way, lessons learned, overall time spent developing, work distribution amongst team members, etc...)
 
       - User manual (with screenshots explaining how to play/use the game/app).
 -----------------------------------------------------------------------------------------------
+To install the apk go to folder sources and you will find FallBall.apk
 
 Architectural pattern used - Model-View-Controller
 Design patterns used:
@@ -18,15 +17,18 @@ We had some setbacks regarding the understanding and application of the physics 
 
 2) Took us some time thinking about the issue in the beggining, but, when macros were created, thinking in terms of actual real world physics was made easier and we used the principle conservation of mechanical energy.
 
-3)
-
-
 
 User Manual
 
 FallBall is a fun, challenging game, in which the goal is to descend through the map and find the big green final platform, thus winning the level; being careful not to hit the red ones.
 
+Main Menu:
+
+![alt text](https://raw.githubusercontent.com/ffriande/LPOO-finalProject/finalRelease/sources/main%20menu.png?token=Aa1WXLeW5CJHQG_L2JjztGIg2xoTqkMNks5bHxiFwA%3D%3D)
+
 Options Menu:
+
+![alt text](https://raw.githubusercontent.com/ffriande/LPOO-finalProject/finalRelease/sources/options.png?token=Aa1WXHReq5lEolUeiGOQjkC9sgDQhJm0ks5bHxiGwA%3D%3D)
 
 1- Sound mute and unmute.(The sound starts muted).
 
@@ -34,19 +36,28 @@ Options Menu:
 
 Level Selector:
 
+![alt text](https://raw.githubusercontent.com/ffriande/LPOO-finalProject/finalRelease/sources/level%20selector.png?token=Aa1WXO3krqhacS3wTMWBaP5FUUICTRPgks5bHxiFwA%3D%3D)
+
 The buttons with ? are the levels that still locked.
 
 How to play: 
 
 Drag the finger anywhere on the screen to move the ball to the sides.
 
+You can pass from one side of the screen to the other.
+
+![alt text](https://raw.githubusercontent.com/ffriande/LPOO-finalProject/finalRelease/sources/bounce.png?token=Aa1WXJBfwKiRQMZvOiSLh5JwjRzDh9aVks5bHxiEwA%3D%3D)
+
 Hit the red platform, you loose.
+
+![alt text](https://raw.githubusercontent.com/ffriande/LPOO-finalProject/finalRelease/sources/win.png?token=Aa1WXFrUssnZqxMlv1W7lxSoJzANgw-Kks5bHxmmwA%3D%3D)
 
 Hit the green platform, you win.
 
 If the ball has fallen from 3 "storeys" high, the next platform it hits (white or red) is destroyed.
 
 The ball can't dodge platforms to the sides, since, when it goes through one side, it comes out of the other.
+
 
 Win levels to unlock new ones.
 
