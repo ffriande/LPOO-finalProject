@@ -30,7 +30,7 @@ public class Controller implements ContactListener {
     /**
      *Gravity force of the simulation
      */
-    public final static float GRAVITY = -18;
+    public final static float GRAVITY = -30;
 
     /**
      * Sensibility of the user's movement of the ball
