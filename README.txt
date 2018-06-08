@@ -24,7 +24,7 @@ FallBall is a fun, challenging game, in which the goal is to descend through the
 
 Main Menu:
 
-https://raw.githubusercontent.com/ffriande/LPOO-finalProject/finalRelease/sources/main%20menu.png?token=Aa1WXLeW5CJHQG_L2JjztGIg2xoTqkMNks5bHxiFwA%3D%3D
+![menu](https://raw.githubusercontent.com/ffriande/LPOO-finalProject/finalRelease/sources/main%20menu.png?token=Aa1WXLeW5CJHQG_L2JjztGIg2xoTqkMNks5bHxiFwA%3D%3D)
 
 Options Menu:
 
